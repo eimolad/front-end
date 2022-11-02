@@ -1,0 +1,18 @@
+.count {
+    border-radius: 50%;
+    height: 30px;
+    width: 30px;
+    background-color: #292929;
+    padding: 15px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-content: center;
+}
+
+.count>span {
+    margin: auto;
+    font-size: 18px;
+    color: white;
+    font-weight: bold;
+}

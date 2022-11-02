@@ -1,0 +1,18 @@
+.root {
+    height: 60px;
+    width: 60px;
+    background-color: #292929;
+    border-radius: 50%;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.8);
+    display: flex;
+    flex-direction: column;
+}
+
+.root:hover {
+    cursor: pointer;
+}
+
+.root img {
+    display: block;
+    margin: auto;
+}

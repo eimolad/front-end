@@ -1,0 +1,44 @@
+.root {
+  background-position: top;
+  background-size: cover;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: start;
+  padding-top: 200px;
+  padding-bottom: 50px;
+}
+
+.buttons {
+  text-align: left;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-content: center;
+}
+
+.buttons > button {
+  margin: auto;
+  width: 200px !important;
+}
+
+.depth {
+  margin-top: 0;
+    margin-bottom: 0;
+    font-style: normal;
+    font-weight: 900;
+    font-size: 70px;
+    letter-spacing: 0.03em;
+    color: #1D1D1D;
+    text-shadow: 0px 0px 5px rgba(0, 0, 0, 0.4);
+    text-align: center;
+}
+
+.accounts_container{
+    border: 1px solid red;
+    width: 500px;
+    height: 500px;
+    display: flex;
+    margin-left: auto;
+  margin-right: auto;
+}

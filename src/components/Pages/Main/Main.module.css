@@ -1,0 +1,46 @@
+.root {
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-content: center;
+    background-position: center !important;
+    background-repeat: no-repeat !important;
+    background-size: cover !important;
+}
+
+.main {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-content: center;
+    margin: auto;
+}
+
+.root h2 {
+    text-align: center;
+    color: white;
+    font-size: 42px;
+}
+
+.decor {
+    text-align: center;
+    margin: auto;
+}
+
+.decor>img {
+    width: 100%;
+    height: auto;
+}
+
+@media screen and (max-width: 768px) {
+    .decor {
+        width: 90%;
+    }
+}
+
+@media screen and (max-width: 540px) {
+    .root h2 {
+        font-size: 28px;
+    }
+}

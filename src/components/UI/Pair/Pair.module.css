@@ -1,0 +1,300 @@
+.root {
+    height: 290px;
+    /*width: 350px;*/
+    position: relative;
+    background: rgba(73, 73, 73, 0.1);
+    box-shadow: 0 0 25px rgba(0, 0, 0, 0.45);
+    border-radius: 20px;
+    overflow: hidden;
+}
+
+.root:hover .wrapBtn {
+    visibility: visible;
+}
+
+.wrapBtn {
+    position: absolute;
+    z-index: 1000;
+    height: 100%;
+    width: 100%;
+    background-color: rgba(13,13,13,0.7);
+    visibility: hidden;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-content: center;
+    border-radius: 20px;
+}
+
+.stakeParams {
+    display: flex;
+    flex-direction: column;
+    justify-content: right;
+    align-content: end;
+    margin: 15px 15px auto auto;
+}
+
+.stakeParams>div {
+    width: 40%;
+    color: white;
+    font-weight: bold;
+    background: rgba(73,73,73,0.2);
+    text-align: center;
+    margin: 5px 0 5px auto;
+    padding: 10px 5px;
+    border-radius: 5px;
+}
+
+.header {
+    height: 60px;
+    box-shadow: 0 4px 4px rgba(0, 0, 0, 0.25), inset 0 3px 10px rgba(255, 255, 255, 0.06);
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-content: center;
+
+}
+
+.header>span {
+    font-size: 18px;
+    font-weight: bold;
+    margin: auto;
+    color: white;
+}
+
+.header>span:first-child {
+    margin-right: 0;
+    font-size: 24px;
+    font-weight: bold;
+    text-transform: uppercase;
+    background: linear-gradient(130.7deg, #D24328 11.94%, #EC832E 95.54%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.header>span.coal {
+    margin-right: 0;
+    font-size: 24px;
+    font-weight: bold;
+    text-transform: uppercase;
+    background: linear-gradient(130.7deg, #9313c0 11.94%, #c45fe5 95.54%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.wrapBtn button {
+    margin: auto;
+}
+
+.picture {
+    width: 250px;
+    height: 250px;
+    position: absolute;
+    left: -70px;
+    bottom: -35px;
+    border-radius: 50%;
+    background: linear-gradient(130.7deg, rgba(210, 67, 40, 1) 11.94%, rgba(236, 131, 46, 1) 95.54%);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-content: center;
+}
+.pictureCoal {
+    width: 250px;
+    height: 250px;
+    position: absolute;
+    left: -70px;
+    bottom: -35px;
+    border-radius: 50%;
+    background: linear-gradient(130.7deg, #490660 11.94%, #79179a 95.54%);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-content: center;
+}
+
+.picture img {
+    margin: auto;
+    width: 235px;
+    height: 235px;
+    border-radius: 50%;
+}
+.pictureCoal img {
+    margin: auto;
+    width: 235px;
+    height: 235px;
+    border-radius: 50%;
+}
+@media screen and (max-width: 1110px) {
+    .root {
+        height: 240px;
+    }
+    .stakeParams {
+        margin: 10px 10px auto auto;
+    }
+
+    .stakeParams>div {
+        width: 45%;
+        color: white;
+        margin: 5px 0 5px auto;
+        padding: 5px 5px;
+        font-size: 14px;
+        border-radius: 5px;
+    }
+    .picture {
+        width: 200px;
+        height: 200px;
+        position: absolute;
+        left: -80px;
+        bottom: -35px;
+        border-radius: 50%;
+        background: linear-gradient(130.7deg, rgba(210, 67, 40, 1) 11.94%, rgba(236, 131, 46, 1) 95.54%);
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-content: center;
+    }
+
+    .picture img {
+        margin: auto;
+        width: 195px;
+        height: 195px;
+        border-radius: 50%;
+    }
+    .pictureCoal {
+        width: 200px;
+        height: 200px;
+        position: absolute;
+        left: -80px;
+        bottom: -35px;
+        border-radius: 50%;
+        background: linear-gradient(130.7deg, rgba(210, 67, 40, 1) 11.94%, rgba(236, 131, 46, 1) 95.54%);
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-content: center;
+    }
+
+    .pictureCoal img {
+        margin: auto;
+        width: 195px;
+        height: 195px;
+        border-radius: 50%;
+    }
+}
+
+@media screen and (max-width: 768px) {
+    .root {
+        height: 240px;
+    }
+    .stakeParams {
+        margin: 10px 15px auto auto;
+    }
+
+    .stakeParams>div {
+        width: 45%;
+        color: white;
+        margin: 5px 0 5px auto;
+        padding: 5px 0;
+        font-size: 12px;
+        border-radius: 5px;
+    }
+    .picture {
+        width: 200px;
+        height: 200px;
+        position: absolute;
+        left: -70px;
+        bottom: -35px;
+        border-radius: 50%;
+        background: linear-gradient(130.7deg, rgba(210, 67, 40, 1) 11.94%, rgba(236, 131, 46, 1) 95.54%);
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-content: center;
+    }
+
+    .picture img {
+        margin: auto;
+        width: 195px;
+        height: 195px;
+        border-radius: 50%;
+    }
+    .pictureCoal {
+        width: 200px;
+        height: 200px;
+        position: absolute;
+        left: -70px;
+        bottom: -35px;
+        border-radius: 50%;
+        background: linear-gradient(130.7deg, rgba(210, 67, 40, 1) 11.94%, rgba(236, 131, 46, 1) 95.54%);
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-content: center;
+    }
+
+    .pictureCoal img {
+        margin: auto;
+        width: 195px;
+        height: 195px;
+        border-radius: 50%;
+    }
+}
+
+@media screen and (max-width: 540px) {
+    .root {
+        height: 155px;
+    }
+    .root:active .wrapBtn {
+        visibility: visible;
+    }
+    .header {
+        height: 40px;
+    }
+
+    .stakeParams {
+        margin: 5px 5px auto auto;
+    }
+
+    .stakeParams>div {
+        width: 45%;
+        color: white;
+        font-weight: bold;
+        font-size: 8px;
+        margin: 0 5px 3px auto;
+        padding: 5px 0;
+    }
+
+    .header span {
+        font-size: 12px;
+    }
+    .header>span:first-child {
+        font-size: 18px;
+    }
+    .picture {
+        width: 120px;
+        height: 120px;
+        left: -40px;
+        bottom: -30px;
+    }
+
+    .picture img {
+        width: 115px;
+        height: 115px;
+    }
+    .pictureCoal {
+        width: 120px;
+        height: 120px;
+        left: -40px;
+        bottom: -30px;
+    }
+
+    .pictureCoal img {
+        width: 115px;
+        height: 115px;
+    }
+    .wrapBtn>button {
+        width: 100px !important;
+        font-size: 10px;
+    }
+}

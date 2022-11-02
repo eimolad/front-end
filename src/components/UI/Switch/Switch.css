@@ -1,0 +1,98 @@
+.rootSwitch {
+    margin: auto 0;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-content: center;
+    background: linear-gradient(136.25deg, rgba(67, 67, 67, 0.61) 5.16%, rgba(150, 150, 150, 0.07) 96.94%);
+    border-radius: 30px;
+    width: 400px;
+    height: 40px;
+}
+
+.rootSwitch>div {
+    width: 50%;
+    font-size: 18px;
+    height: 100%;
+    color: #6f6f6f;
+    text-transform: uppercase;
+    font-weight: bold;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-content: center;
+    margin: auto 0;
+}
+.rootSwitch>div:hover {
+    cursor: pointer;
+}
+
+.rootSwitch>div.active:hover {
+    cursor: auto;
+}
+
+.rootSwitch>div>span {
+    display: block;
+    /*margin-left: 20px;*/
+}
+.rootSwitch>div>span:first-child {
+    margin: auto 10px auto auto;
+}
+.rootSwitch>div>span:last-child {
+    width: 25px;
+    height: 25px;
+    color: white;
+    border-radius: 50%;
+    background-color: #494949;
+    margin: auto auto auto 10px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-content: center;
+}
+
+.rootSwitch>div:first-child>span:first-child {
+    margin: auto;
+}
+
+.active {
+    background: linear-gradient(130.7deg, #D24328 11.94%, #EC832E 95.54%);
+    box-shadow: 2px 0 16px rgba(0, 0, 0, 0.35), inset -2px -9px 13px rgba(137, 46, 9, 0.7), inset 2px 4px 11px rgba(255, 197, 151, 0.5);
+    border-radius: 30px;
+    color: white !important;
+}
+
+.rootSwitch>div:last-child>span:last-child {
+    background-color: rgba(255, 255, 255, 0.3);
+}
+@media screen and (max-width: 1110px) {
+}
+
+@media screen and (max-width: 768px) {
+    .rootSwitch {
+        flex-direction: column;
+        width: 160px;
+        height: 80px;
+    }
+
+    .rootSwitch>div {
+        width: 100%;
+        font-size: 18px;
+        height: 100%;
+    }
+}
+
+@media screen and (max-width: 540px) {
+    .rootSwitch {
+        flex-direction: column;
+        width: 140px;
+        height: 80px;
+    }
+
+    .rootSwitch>div {
+        width: 100%;
+        font-size: 18px;
+        height: 100%;
+    }
+
+}

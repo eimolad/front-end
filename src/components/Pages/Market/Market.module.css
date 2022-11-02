@@ -1,0 +1,105 @@
+.root {
+  background-position: top;
+  background-size: cover;
+  min-height: 100vh;
+  /* padding-top: 200px; */
+  padding-bottom: 50px;
+  font-family: Comfortaa;
+}
+.root > h2 {
+  margin-top: 0;
+  margin-bottom: 0;
+  padding-top: 20;
+  padding-bottom: 0;
+  font-style: normal;
+  font-weight: 900;
+  font-size: 70px;
+  letter-spacing: 0.03em;
+  color: #1d1d1d;
+  text-shadow: 0px 0px 5px rgba(0, 0, 0, 0.4);
+  text-align: center;
+}
+
+.root > .addButton {
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding-top: 10px;
+  font-family: "Comfortaa";
+  font-style: normal;
+  font-weight: 500;
+  font-size: 24px;
+  line-height: 27px;
+  /* identical to box height */
+  letter-spacing: 0.05em;
+  text-decoration-line: underline;
+  background: linear-gradient(130.7deg, #d24328 11.94%, #ec832e 95.54%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.resources {
+  margin-top: 100px;
+}
+
+.NFTforSaleBlock {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.titles_container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-left: auto;
+  margin-right: auto;
+  max-width: 1035px;
+  padding-top: 20px;
+}
+
+.titles {
+  display: grid;
+  place-items: center;
+  min-width: 1035px;
+  gap: 20px;
+  color: #6f6f6f;
+  font-family: "Comfortaa";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 18px;
+  line-height: 20px;
+  grid-template-areas: "A B C D";
+  grid-template-columns: 140px 400px 130px 140px;
+}
+
+.titleIcon {
+  grid-area: A;
+}
+
+.title {
+  grid-area: B;
+}
+
+.titleQuantity {
+  grid-area: C;
+}
+
+.titlePrice {
+  grid-area: D;
+}
+
+.decor {
+  margin-bottom: 25px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding-top: 20px;
+}
+.decor > img {
+  width: 1110px;
+  height: auto;
+}

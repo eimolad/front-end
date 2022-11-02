@@ -1,0 +1,29 @@
+.root {
+    padding: 10px 26px;
+    border-radius: 20px;
+    border: 2px solid #494949;
+    text-transform: uppercase;
+    font-weight: bold;
+    color: #494949;
+    /*background-color: transparent;*/
+    background-color: rgba(22, 22, 22, 0.9);
+    margin: 0 10px;
+}
+
+.root:hover, .active:hover {
+    background-color: rgba(206, 206, 206, 0.9);
+    cursor: pointer;
+}
+
+.active {
+    padding: 10px 26px;
+    margin: 0 10px;
+    border-radius: 20px;
+    font-weight: bold;
+    border: 2px solid #494949;
+    text-transform: uppercase;
+    background: linear-gradient(130.7deg, rgba(210, 67, 40, 0.9) 11.94%, rgba(236, 131, 46, 0.9) 95.54%);
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.8);
+    border-radius: 20px;
+    color: white;
+}

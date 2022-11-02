@@ -1,0 +1,75 @@
+.root {
+    margin-top: 60px;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+}
+
+.standart {
+    margin: auto;
+}
+.standart>button:first-child {
+    margin-right: -25px;
+}
+
+.standart>button:last-child {
+    margin-left: -25px;
+}
+
+.ipad {
+    display: none;
+    flex-direction: column;
+    justify-content: center;
+    align-content: center;
+}
+
+.ipad>div {
+    margin-bottom: 15px;
+}
+
+.ipad>div>button:first-child {
+    margin-right: 0px;
+}
+
+.ipad>div>button:last-child {
+    margin-left: 0px;
+}
+
+.ipad>button {
+    margin: auto;
+}
+
+.phone {
+    display: none;
+    flex-direction: column;
+    justify-content: center;
+    align-content: center;
+}
+
+.phone>button {
+    margin: 7px auto;
+}
+
+@media screen and (max-width: 768px) {
+    .standart {
+        display: none;
+    }
+    .ipad {
+        display: flex;
+    }
+    .phone {
+        display: none;
+    }
+}
+
+@media screen and (max-width: 540px) {
+    .standart {
+        display: none;
+    }
+    .ipad {
+        display: none;
+    }
+    .phone {
+        display: flex;
+    }
+}

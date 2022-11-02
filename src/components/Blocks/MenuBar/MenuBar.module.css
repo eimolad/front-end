@@ -1,0 +1,125 @@
+.root {
+    width: 100%;
+    position: fixed;
+    top: 5px;
+    /*margin-top: -200px;*/
+    z-index: 990;
+}
+.root>div {
+    display: block;
+    background-color: rgba(26, 27, 27, 0.95);
+    /*background-color: rgba(73,73,73,0.1);*/
+    padding: 15px 0;
+    width: 1110px;
+    height: auto;
+    position: relative;
+    margin: 20px auto;
+}
+
+.actions {
+    display: flex;
+    flex-grow: 1;
+    flex-direction: column;
+    justify-content: center;
+    align-content: center;
+    text-align: center;
+    padding-left: 40px;
+    margin: auto;
+}
+
+.actions>div>button {
+    background-size: contain;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+.actions:first-child {
+    display: block;
+    margin: auto;
+}
+
+.root>div>img {
+    height: 120px;
+    width: auto;
+    position: absolute;
+    top: 0;
+}
+
+img.left {
+    left: 15px;
+}
+img.right {
+    right: 15px;
+}
+
+.contentBlock {
+    height: 90px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    border-top: 1px solid #313131;
+    border-bottom: 1px solid #313131;
+}
+
+@media screen and (max-width: 1110px) {
+    .root {
+    }
+    .root>div {
+        padding: 15px 0;
+        width: 760px;
+    }
+    .actions>div>button {
+        width: 170px !important;
+        margin: auto 5px;
+    }
+
+}
+@media screen and (max-width: 768px) {
+    .root {
+    }
+    .root>div {
+        padding: 15px 0;
+        width: 540px;
+    }
+    .root>div>img {
+        height: 180px;
+    }
+    .actions {
+        display: flex;
+        padding: 0 10px 0 50px;
+        flex-direction: column;
+        justify-content: center;
+        align-content: center;
+    }
+    .actions:first-child {
+        /*margin: 10px auto;*/
+    }
+    .contentBlock {
+        height: 150px;
+    }
+    .actions>div>button {
+        margin: 3px auto;
+    }
+}
+
+@media screen and (max-width: 540px) {
+    .root {
+    }
+    .root>div {
+        padding: 15px 0;
+        margin-top: 0;
+        width: 340px;
+    } .root>div>img {
+        height: 160px;
+    }
+    .root>div>img {
+        height: 160px;
+    }
+
+    .actions:first-child {
+        margin: 10px auto;
+    }
+    .contentBlock {
+        height: 130px;
+    }
+}

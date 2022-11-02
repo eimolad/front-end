@@ -1,0 +1,27 @@
+.root {
+    width: 100%;
+    margin-top: 30px;
+    margin-bottom: 0;
+    height: auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-content: center;
+}
+
+.decor {
+    margin: auto;
+    width: 95%;
+    height: auto;
+}
+
+.decor img {
+    width: 100%;
+    height: auto;
+}
+
+.buttons {
+    margin: 20px auto;
+    display: flex;
+    flex-direction: row;
+}

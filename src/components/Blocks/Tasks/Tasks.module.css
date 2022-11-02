@@ -1,0 +1,21 @@
+.root {
+    width: 1110px;
+    margin: 0 auto auto;
+}
+@media screen and (max-width: 1110px) {
+    .root {
+        width: 768px;
+    }
+}
+
+@media screen and (max-width: 768px) {
+    .root {
+        width: 540px;
+    }
+}
+
+@media screen and (max-width: 540px) {
+    .root {
+        width: 340px;
+    }
+}

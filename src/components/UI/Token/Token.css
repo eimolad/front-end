@@ -1,0 +1,159 @@
+.rootToken {
+    max-width: 350px;
+    display: flex;
+    justify-content: center;
+    align-content: center;
+}
+
+.borderToken {
+    margin: auto;
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    background-color: rgba(68,68,70,0.3);
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+.ActiveToken {
+    background: linear-gradient(130.7deg, rgba(210, 67, 40, 1) 11.94%, rgba(236, 131, 46, 1) 95.54%);}
+
+.bgCircleToken {
+    margin: auto;
+    width: 140px;
+    height: 140px;
+    border-radius: 50%;
+    background-color: rgba(68,68,70,0.3);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.bgCircleToken:hover {
+    cursor: pointer;
+}
+
+.SelToken {
+    /*background: #494949;*/
+
+    background: linear-gradient(130.7deg, rgba(53, 25, 19, 1) 11.94%, rgba(52, 33, 22, 1) 95.54%);
+}
+
+.rootToken img {
+    margin: 10px auto auto;
+    height: auto;
+    width: 120px;
+    -webkit-filter: drop-shadow(3px 5px 5px #000);
+    filter: drop-shadow(3px 5px 5px #000);
+}
+
+.tokenInfo {
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-content: center;
+}
+
+.tokenInfo>div {
+    font-weight: bold;
+    text-transform: uppercase;
+    color: white;
+}
+
+.tokenInfo>div.tokenName {
+    margin: 20px auto auto;
+}
+.tokenInfo>div.tokenBalance{
+    margin: auto auto 20px;
+}
+
+@media screen and (max-width: 1110px) {
+    .borderToken {
+        width: 150px;
+        height: 150px;
+    }
+    .bgCircleToken {
+        margin: auto;
+        width: 140px;
+        height: 140px;
+    }
+    .rootToken img {
+        width: 120px;
+    }
+}
+
+@media screen and (max-width: 768px) {
+    .borderToken {
+        width: 180px;
+        height: 180px;
+    }
+    .bgCircleToken {
+        margin: auto;
+        width: 170px;
+        height: 170px;
+    }
+    .rootToken img {
+        width: 140px;
+    }
+    /*.balanceDesc {*/
+    /*    width: 65px;*/
+    /*}*/
+
+    /*.activeBalanceDesc {*/
+    /*    width: 65px;*/
+    /*}*/
+}
+
+@media screen and (max-width: 540px) {
+    .borderToken {
+        width: 120px;
+        height: 120px;
+    }
+    .bgCircleToken {
+        margin: auto;
+        width: 110px;
+        height: 110px;
+    }
+    .rootToken img {
+        width: 100px;
+    }
+
+    /*.balanceDesc {*/
+    /*    width: 48px;*/
+    /*}*/
+
+    /*.activeBalanceDesc {*/
+    /*    width: 45px;*/
+    /*}*/
+    /*.balanceDesc:after {*/
+    /*    right: -10px;*/
+    /*    bottom: -7px;*/
+    /*}*/
+
+    /*.activeBalanceDesc {*/
+    /*    width: 45px;*/
+    /*    position: absolute;*/
+    /*    top: -15px;*/
+    /*    left: -30px;*/
+    /*    border-bottom: 3px solid #D34728;*/
+    /*    color: #FAFAFA;*/
+    /*    font-weight: bold;*/
+    /*    text-align: right;*/
+    /*}*/
+
+    /*.activeBalanceDesc:after {*/
+    /*    display: block;*/
+    /*    content: "";*/
+    /*    position: absolute;*/
+    /*    right: -10px;*/
+    /*    bottom: -7px;*/
+    /*    transform: rotate(45deg);*/
+    /*    width: 13px;*/
+    /*    height: 3px;*/
+    /*    background-color: #D34728;*/
+    /*}*/
+}

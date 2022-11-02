@@ -1,0 +1,22 @@
+@import url('https://fonts.googleapis.com/css2?family=Comfortaa:wght@300;400;700&family=Overlock:wght@400;700;900&display=swap');
+
+body {
+    margin: 0;
+    font-family: Overlock, curcive, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    background-position: top center;
+    background-size: cover;
+    background-repeat: no-repeat;
+    min-height: 100vh;
+}
+
+#root {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-content: center;
+
+    min-height: 100vh;
+    /*height: 100%;*/
+}

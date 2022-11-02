@@ -1,0 +1,23 @@
+.root {
+    background-position: top;
+    background-size: cover;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: start;
+    padding-top: 200px;
+    padding-bottom: 50px;
+}
+
+.buttons{
+    text-align: left;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-content: center;
+}
+
+.buttons>button {
+    margin: auto;
+    width: 200px !important;
+}

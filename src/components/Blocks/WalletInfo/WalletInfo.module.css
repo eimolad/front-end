@@ -1,0 +1,20 @@
+.WalletInfo {
+    top: 15px;
+    right: 15px;
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+    max-width: 200px;
+    color: white;
+    border: 1px solid rgb(82, 82, 82);
+    padding: 15px;
+    border-radius: 3px;
+    background-color: rgba(12, 12, 12, 0.5);
+}
+
+.tokens {
+    display: flex;
+    flex-direction: row;
+    justify-content: end;
+    align-items: center;
+}

@@ -1,0 +1,42 @@
+.formContainer{
+    position: fixed;
+    top:0;
+    bottom: 0;
+    right: 0;
+    left: 0;
+    display: none;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: 999999;
+}
+
+.form{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin:50px 0 35px 0;
+    border: 2px solid orange;
+    background-color: black;
+    border-radius: 30px;
+    min-width: 400px;
+    height: 300px;
+    -webkit-border-radius: 30px;
+    -moz-border-radius: 30px;
+    -ms-border-radius: 30px;
+    -o-border-radius: 30px;
+}
+
+.content{
+    margin-bottom: 10px;
+    display: flex;
+    flex-direction: column;
+    
+}
+
+.content .item{
+    margin-top: 20px;
+}
+
+.active{
+    display: flex;
+    justify-content: center;
+}

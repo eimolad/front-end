@@ -1,0 +1,236 @@
+.rootNFT {
+    width: 200px;
+    display: flex;
+    justify-content: center;
+    align-content: center;
+    position: relative;
+}
+
+.lock {
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    left: 0;
+    top: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-content: center;
+    z-index: 1000;
+    border-radius: 50%;
+    background: rgba(0, 0, 0, 0.5);
+}
+
+.lock:hover {
+    cursor: pointer;
+}
+
+.selectedLock {
+    background: rgba(200, 0, 0, 0.5);
+}
+
+.lock>div {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    height: 50%;
+    /*margin: auto;*/
+}
+.lock>div>img{
+    height: 100%;
+    width: auto;
+    margin: auto;
+    -webkit-filter: drop-shadow(3px 5px 5px #000);
+    filter: drop-shadow(3px 5px 5px #000);
+}
+
+.lock h4 {
+    margin: 0 auto;
+    text-transform: uppercase;
+    background: linear-gradient(130.7deg, #D24328 11.94%, #EC832E 95.54%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    text-fill-color: transparent;
+}
+.lock.stake h4 {
+    margin: auto auto 25px;
+}
+
+.lock.stake {
+    background: none;
+}
+
+.borderNFT {
+    z-index: 1;
+    margin: auto;
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    background-color: rgba(68,68,70,0.3);
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+.ActiveNFT {
+    background: linear-gradient(130.7deg, rgba(210, 67, 40, 1) 11.94%, rgba(236, 131, 46, 1) 95.54%);}
+
+.bgCircleNFT {
+    margin: auto;
+    width: 140px;
+    height: 140px;
+    border-radius: 50%;
+    background-color: rgba(68,68,70,0.3);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.bgCircleNFT:hover {
+    cursor: pointer;
+}
+
+.SelNFT {
+    /*background: #494949;*/
+
+    background: linear-gradient(130.7deg, rgba(53, 25, 19, 1) 11.94%, rgba(52, 33, 22, 1) 95.54%);
+}
+
+.rootNFT img {
+    /*margin: 0 auto auto -15px;*/
+    height: 100%;
+    width: auto;
+    -webkit-filter: drop-shadow(3px 5px 5px #000);
+    filter: drop-shadow(3px 5px 5px #000);
+}
+
+.rarityRate {
+    font-size: 12px;
+    position: absolute;
+    bottom: -20px;
+    left: 0;
+}
+
+.swords>img {
+    height: 10px !important;
+    width: auto !important;
+}
+
+.indexDesc {
+    width: 45px;
+    position: absolute;
+    top: -18px;
+    left: -20px;
+    border-bottom: 3px solid #2E2F30;
+    color: #FAFAFA;
+    font-weight: bold;
+}
+
+.activeDesc {
+    width: 45px;
+    position: absolute;
+    top: -18px;
+    left: -20px;
+    border-bottom: 3px solid #D34728;
+    color: #FAFAFA;
+    font-weight: bold;
+}
+
+.activeDesc:after {
+    display: block;
+    content: "";
+    position: absolute;
+    right: -10px;
+    bottom: -7px;
+    transform: rotate(45deg);
+    width: 13px;
+    height: 3px;
+    background-color: #D34728;
+}
+
+.indexDesc:after {
+    display: block;
+    content: "";
+    position: absolute;
+    right: -10px;
+    bottom: -7px;
+    transform: rotate(45deg);
+    width: 13px;
+    height: 3px;
+    background-color: #2E2F30;
+}
+@media screen and (max-width: 1110px) {
+    .rootNFT {
+        width: 120px;
+        margin: auto 25px;
+    }
+    .borderNFT {
+        width: 120px;
+        height: 120px;
+    }
+    .bgCircleNFT {
+        margin: auto;
+        width: 110px;
+        height: 110px;
+    }
+    .rootNFT img {
+        height: 100%;
+        width: auto;
+    }
+    .indexDesc, .activeDesc {
+        top: -20px;
+        left: -25px;
+    }
+}
+
+@media screen and (max-width: 768px) {
+    .rootNFT {
+        width: 130px;
+        margin: auto 25px;
+    }
+    .borderNFT {
+        width: 130px;
+        height: 130px;
+    }
+    .bgCircleNFT {
+        margin: auto;
+        width: 120px;
+        height: 120px;
+    }
+
+    .rootNFT img {
+        height: 100%;
+        width: auto;
+    }
+
+    .indexDesc, .activeDesc {
+        top: -18px;
+        left: -25px;
+    }
+
+}
+
+@media screen and (max-width: 540px) {
+    .rootNFT {
+        width: 120px;
+        margin: auto 25px;
+    }
+    .borderNFT {
+        width: 120px;
+        height: 120px;
+    }
+    .bgCircleNFT {
+        margin: auto;
+        width: 110px;
+        height: 110px;
+    }
+
+    .rootNFT img {
+        height: 100%;
+        width: auto;
+    }
+    .indexDesc, .activeDesc {
+        top: -20px;
+        left: -22px;
+    }
+}

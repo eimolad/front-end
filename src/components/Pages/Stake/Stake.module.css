@@ -1,0 +1,152 @@
+.root {
+    background-position: top;
+    background-size: cover;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: start;
+    padding-top: 150px;
+    padding-bottom: 50px;
+}
+
+.root h2 {
+    margin-top: 0;
+    margin-bottom: 0;
+    font-style: normal;
+    font-weight: 900;
+    font-size: 70px;
+    letter-spacing: 0.03em;
+    color: #1D1D1D;
+    text-shadow: 0px 0px 5px rgba(0, 0, 0, 0.4);
+    text-align: center;
+}
+
+.switcher {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+}
+
+.stakeBtn>button {
+    display: block;
+    margin: auto;
+}
+
+.wait {
+    height: 100vh;
+    width: 100vw;
+    background-color: rgba(0,0,0,0.6);
+    position: fixed;
+    top: 0;
+    left: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1100;
+    transition: 0.5s;
+}
+.wait>img {
+    height: 100px;
+    width: auto;
+    margin: auto;
+}
+
+.actions {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    /*margin: auto;*/
+    text-align: center;
+}
+
+.actions>button {
+    margin-right: 20px;
+}
+
+.address {
+    width: 140px;
+    color: white;
+    font-weight: bold;
+    display: flex;
+    position: relative;
+    flex-direction: row;
+    justify-content: center;
+    align-content: center;
+    margin: auto 10px;
+}
+.address img {
+    height: 20px;
+    margin-right: 10px;
+    width: auto;
+}
+.address:hover {
+    cursor: pointer;
+}
+
+.address>div {
+    position: absolute;
+    top: -40px;
+    left: 35px;
+    align-content: center;
+    padding: 5px 10px;
+    text-align: center;
+    background-color: #494949;
+    box-shadow: 0 0 5px 3px #141414;
+}
+
+@media screen and (max-width: 1110px) {
+    .root h2 {
+        margin-top: 20px;
+    }
+    .actions>button {
+        width: 150px;
+        font-size: 14px;
+    }
+    .stakeBtn>button {
+        width: 150px !important;
+        margin-top: 20px;
+        font-size: 14px;
+    }
+}
+
+@media screen and (max-width: 768px) {
+    .root h2 {
+        margin-top: 20px;
+    }
+    .actions {
+        flex-direction: column;
+        justify-content: center;
+        align-content: center;
+        margin: auto auto !important;
+        text-align: center;
+    }
+    .address {
+        margin: 10px auto 0;
+        text-align: center;
+    }
+    .switcher {
+        margin: auto;
+        display: flex;
+        flex-direction: column;
+    }
+}
+
+@media screen and (max-width: 540px) {
+    .root h2 {
+        text-transform: uppercase;
+        font-size: 48px !important;
+        margin-top: 20px;
+    }
+    .actions>button {
+        width: 100px;
+        font-size: 14px;
+    }
+    .stakeBtn>button {
+        width: 150px !important;
+        font-size: 14px;
+    }
+    .switcher {
+        display: flex;
+        flex-direction: column;
+    }
+}
