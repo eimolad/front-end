@@ -1,16 +1,16 @@
 .root {
+  background: url(./../../../media/bg.png);
   background-position: top;
   background-size: cover;
   min-height: 100vh;
-  /* padding-top: 200px; */
+  display: flex;
+  flex-direction: column;
+  justify-content: start;
+  align-items: center;
   padding-bottom: 50px;
-  font-family: Comfortaa;
+  padding-top: 140px;
 }
-.root > h2 {
-  margin-top: 0;
-  margin-bottom: 0;
-  padding-top: 20;
-  padding-bottom: 0;
+.root h2 {
   font-style: normal;
   font-weight: 900;
   font-size: 70px;
@@ -18,14 +18,43 @@
   color: #1d1d1d;
   text-shadow: 0px 0px 5px rgba(0, 0, 0, 0.4);
   text-align: center;
+  margin: 20px 0 20px 0;
 }
 
-.root > .addButton {
+.myOffersContainer {
+  width: 1110px;
+}
+
+.myOffersContainer__sell {
+  display: flex;
+  justify-content: start;
+  align-items: center;
+  flex-direction: column;
+  width: 100%;
+}
+
+.myOffersContainer__buy {
+  display: flex;
+  justify-content: start;
+  align-items: center;
+  flex-direction: column;
+  width: 100%;
+}
+
+.marketItemsContainer {
+  display: flex;
+  justify-content: start;
+  align-items: center;
+  flex-direction: column;
+  width: 100%;
+  margin-top: 35px;
+}
+
+.root .addButton {
   cursor: pointer;
   display: flex;
   justify-content: center;
   align-items: center;
-  padding-top: 10px;
   font-family: "Comfortaa";
   font-style: normal;
   font-weight: 500;
@@ -40,8 +69,12 @@
   background-clip: text;
 }
 
-.resources {
-  margin-top: 100px;
+.buttons {
+  text-align: left;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-content: center;
 }
 
 .NFTforSaleBlock {
@@ -51,55 +84,266 @@
   align-items: center;
 }
 
+.offersItems {
+  width: 930px;
+}
+
 .titles_container {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  margin-left: auto;
-  margin-right: auto;
-  max-width: 1035px;
-  padding-top: 20px;
+  width: 730px;
+  margin-left: 200px;
 }
 
 .titles {
   display: grid;
-  place-items: center;
-  min-width: 1035px;
-  gap: 20px;
-  color: #6f6f6f;
+  grid-template-areas: "A B C";
+  grid-template-columns: 340px 230px 130px;
+}
+
+.titles p {
   font-family: "Comfortaa";
   font-style: normal;
   font-weight: 400;
   font-size: 18px;
   line-height: 20px;
-  grid-template-areas: "A B C D";
-  grid-template-columns: 140px 400px 130px 140px;
+  /* identical to box height */
+
+  display: flex;
+  align-items: center;
+  letter-spacing: 0.03em;
+
+  color: #6f6f6f;
 }
 
-.titleIcon {
+.deals {
   grid-area: A;
+  display: grid;
+  align-items: center;
+  justify-items: center;
 }
 
-.title {
+.quantity {
   grid-area: B;
+  display: grid;
+  align-items: center;
+  justify-items: center;
 }
 
-.titleQuantity {
+.price {
   grid-area: C;
+  display: grid;
+  align-items: center;
+  justify-items: center;
 }
 
-.titlePrice {
+.titlesMarket_container {
+  width: 730px;
+  display: flex;
+  align-self: flex-start;
+}
+
+.market_titles {
+  display: grid;
+  grid-template-areas: "A B C D";
+  grid-template-columns: 160px 400px 165px 160px;
+}
+
+.market_titles p {
+  font-family: "Comfortaa";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 18px;
+  line-height: 20px;
+  display: flex;
+  align-items: center;
+  letter-spacing: 0.03em;
+
+  color: #6f6f6f;
+}
+
+.market_icon {
+  grid-area: A;
+  display: grid;
+  align-items: center;
+  justify-items: center;
+}
+.market_title {
+  grid-area: B;
+  display: grid;
+  align-items: center;
+  justify-items: center;
+}
+
+.market_quantity {
+  grid-area: C;
+  display: grid;
+  align-items: center;
+  justify-items: center;
+}
+
+.market_price {
   grid-area: D;
+  display: grid;
+  align-items: center;
+  justify-items: center;
 }
 
 .decor {
-  margin-bottom: 25px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  padding-top: 20px;
+  margin-top: 20px;
+  width: 100%;
 }
-.decor > img {
-  width: 1110px;
+
+.decor img {
+  width: 100%;
   height: auto;
+}
+
+.address {
+  width: 140px;
+  /*margin: auto auto auto 10px;*/
+  margin: auto;
+  color: white;
+  font-weight: bold;
+  display: flex;
+  position: relative;
+  flex-direction: row;
+  justify-content: space-between;
+  align-content: center;
+}
+.address:hover {
+  cursor: pointer;
+}
+
+.address > div {
+  position: absolute;
+  top: -40px;
+  left: 35px;
+  align-content: center;
+  padding: 5px 10px;
+  text-align: center;
+  background-color: #494949;
+  box-shadow: 0 0 5px 3px #141414;
+}
+
+.search {
+  margin-top: 35px;
+}
+
+.filter {
+  margin-top: 35px;
+}
+
+@media screen and (max-width: 1110px) {
+  .decor {
+    margin-top: 20px;
+    width: 768px;
+    display: flex;
+    margin: auto;
+  }
+  .offersItems {
+    width: 610px;
+  }
+
+  .titles_container {
+    width: 610px;
+    margin-left: 80;
+  }
+
+  .titles {
+    display: grid;
+    grid-template-areas: "A B C";
+    grid-template-columns: 300px 100px 130px;
+  }
+
+  .titles p {
+    font-size: 15px;
+  }
+
+  .market_titles {
+    grid-template-columns: 120px 340px 90px 110px;
+  }
+  .market_titles p {
+    font-size: 14px;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .buttons {
+    flex-direction: column;
+    align-items: center;
+  }
+  .address {
+    padding-top: 10px;
+  }
+  .root {
+    padding-top: 160px;
+  }
+  .decor {
+    width: 540px;
+  }
+
+  .offersItems {
+    width: 510px;
+  }
+  .titles_container {
+    width: 510px;
+    margin-left: 90;
+  }
+  .titles {
+    grid-template-columns: 240px 90px 60px;
+  }
+  .titles p {
+    font-size: 13px;
+  }
+
+  .titlesMarket_container {
+    width: 540px;
+  }
+  .market_titles {
+    grid-template-columns: 90px 280px 90px 80px;
+  }
+  .market_titles p {
+    font-size: 12px;
+  }
+}
+
+@media screen and (max-width: 540px) {
+  .root {
+    padding-top: 170px;
+  }
+  .decor {
+    width: 340px;
+  }
+  .addButton p {
+    font-size: 20px;
+  }
+  .root h2 {
+    font-size: 40px;
+  }
+
+  .offersItems {
+    width: 355px;
+  }
+  .titles_container {
+    width: 355px;
+    margin-left: 70;
+  }
+  .titles {
+    display: grid;
+    grid-template-areas: "A B C";
+    grid-template-columns: 160px 65px 30px;
+  }
+  .titles p {
+    font-size: 9px;
+  }
+
+  .titlesMarket_container {
+    width: 320px;
+  }
+  .market_titles {
+    grid-template-columns: 70px 170px 10px 110px;
+  }
+  .market_titles p {
+    font-size: 9px;
+  }
+
 }

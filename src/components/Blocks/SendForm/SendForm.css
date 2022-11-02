@@ -46,3 +46,6 @@
 .modal__content button {
     margin: 20px auto 0;
 }
+.modal__content .border p {
+    margin-bottom: 0;
+}

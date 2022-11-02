@@ -45,8 +45,28 @@ export const TaskDescription = ({active, setActive, title, header, index, descri
                         </> :
                         index == 3 ?
                             <>
+                                <div className={"title"} style={{backgroundImage: `url(${taskDescriptionTitle})`}}>
+                                    <div className={"taskName"}>{title}</div>
+                                    <div className={"taskHeader"}>{header}</div>
+                                    <div className={"closeBtn"}><span onClick={() => setActive(false)}><img src={closeBtn} alt=""/></span></div>
+                                </div>
+                                <div className={"taskdescription"}>
+                                    <p>Stupid orcs dug their graves and sang strange songs. But when they left the cursed places, the dwarfs discovered valuable fossils in them lands. Orcs are truly stupid like strong.</p>
+                                    <p><b>Monthly EARN:</b> Dwarf + Rare Weapon = 10 teOre * Rank(boost)</p>
+                                    <p><b>Rank (boost):</b> Every 30 days, the King grants a new rank to those who have not left the service:</p>
+                                    <img src={c2}/>
+                                </div>
                             </> :
                             <>
+                                <div className={"title"} style={{backgroundImage: `url(${taskDescriptionTitle})`}}>
+                                    <div className={"taskName"}>{title}</div>
+                                    <div className={"taskHeader"}>{header}</div>
+                                    <div className={"closeBtn"}><span onClick={() => setActive(false)}><img src={closeBtn} alt=""/></span></div>
+                                </div>
+                                <div className={"taskdescription"}>
+                                    <p>Ancient magic is available to few. Only the chosen ones are marked with glorious weapons and can turn to the sacred altar. In the bowl of tears they see the way to the fragments of the broken Heart of the Goddess.</p>
+                                    <p><b>Monthly EARN:</b> Dwarf + Superrare Weapon = 1 teAdit</p>
+                                </div>
                             </>
                 }
             </div>

@@ -1,105 +1,166 @@
 .modal {
-    height: 100vh;
-    width: 100vw;
-    background-color: rgba(0,0,0,0.6);
-    position: fixed;
-    top: 0;
-    left: 0;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    z-index: 2000;
-    opacity: 0;
-    pointer-events: none;
-    transition: 0.5s;
+  height: 100vh;
+  width: 100vw;
+  position: fixed;
+  top: 0;
+  left: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 2000;
+  opacity: 0;
+  pointer-events: none;
+  transition: 0.5s;
 }
-.forBorderMarket{
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+.modal a {
+  color: #ec832e;
 }
-.itemMarket{
-    margin: 10px 0 10px 0;
-    padding: 10px 0 10px 0;
-    width: 100px;
-
+.forBorderMarket {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
-
-
+.itemMarket {
+  margin: 10px 0 10px 0;
+  padding: 10px 0 10px 0;
+  width: 100px;
+}
 
 .modal.act {
-    opacity: 1;
-    pointer-events: all;
+  opacity: 1;
+  pointer-events: all;
 }
 
 .warning_modal__content {
-    color: white;
-    text-align: center;
-    padding: 15px;
-    background-color: rgba(13,13,13,1);
+  color: white;
+  text-align: center;
+  padding: 15px;
+  background-color: rgba(13, 13, 13, 1);
 }
 
 .warning_modal__content .forBorderMarket {
-    border: 1px #424141 solid;
-    padding: 40px;
+  background-color: rgba(13, 13, 13, 1);
+  border: 1px #424141 solid;
+  padding: 10px 40px 40px 40px !important;
 }
 
 .modal input::placeholder {
-    color: green;
+  color: green;
 }
 
 .warning {
-    position: relative;
-    padding: 10px;
+  position: relative;
+  padding: 10px;
 }
 
 .warning img {
-    position: absolute;
+  position: absolute;
 }
 
 .cornerDecorLeft {
-    bottom: 0;
-    left: 0;
+  bottom: 0;
+  left: 0;
 }
 .cornerDecorRight {
-    top: 0;
-    right: 0;
+  top: 0;
+  right: 0;
 }
 
-.warning p, .warning ul {
-    font-size: 18px;
-    margin-bottom: 30px;
+.warning p,
+.warning ul {
+  font-size: 18px;
+  margin-bottom: 30px;
 }
 .warning h3 {
-    font-size: 36px;
-    font-weight: bold;
-    text-transform: capitalize;
-    background: linear-gradient(130.7deg, #D24328 11.94%, #EC832E 95.54%);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    text-fill-color: transparent;
+  font-size: 36px;
+  font-weight: bold;
+  text-transform: capitalize;
+  background: linear-gradient(130.7deg, #d24328 11.94%, #ec832e 95.54%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  text-fill-color: transparent;
 }
 
 .warning li {
-    text-align: left;
+  text-align: left;
 }
+
+.registation__loader img {
+  width: 50px;
+  position: relative !important;
+  margin: auto;
+}
+
+.close__container {
+  position: relative;
+  margin-bottom: 25px;
+  cursor: pointer;
+  /* background-color: #424141; */
+  width: 45px;
+  height: 45px;
+  /* border-radius: 50%; */
+  /* -webkit-border-radius: 50%; */
+  /* -moz-border-radius: 50%; */
+  /* -ms-border-radius: 50%; */
+  /* -o-border-radius: 50%; */
+}
+
+.close {
+  /* position: absolute; */
+  /* right: 32px; */
+  /* top: 32px; */
+  width: 32px;
+  height: 32px;
+  /* background-color: #ec832e; */
+  margin: 0;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  margin-right: -50%;
+  transform: translate(-50%, -50%);
+}
+.close:hover {
+  opacity: 1;
+}
+.close:before,
+.close:after {
+  position: absolute;
+  margin: 0;
+  content: " ";
+  height: 33px;
+  width: 2px;
+  background-color: #ec832e;
+}
+.close:before {
+  transform: rotate(45deg);
+}
+.close:after {
+  transform: rotate(-45deg);
+}
+
 @media screen and (max-width: 1110px) {
-    .warning_modal__content {
-        margin: auto 30px;
-        color: white;
-        text-align: center;
-        padding: 15px;
-        background-color: rgba(13,13,13,1);
-    }
+  .warning_modal__content {
+    margin: auto 30px;
+    color: white;
+    text-align: center;
+    padding: 15px;
+    background-color: rgba(13, 13, 13, 1);
+  }
 }
 
 @media screen and (max-width: 768px) {
+  .forBorderMarket h2 {
+    font-size: 18px;
+  }
+  .forBorderMarket p {
+    font-size: 14px;
+  }
 }
 
 @media screen and (max-width: 540px) {
-    .warning button {
-        width: 150px;
-        height: 35px;
-        font-size: 14px;
-    }
+  .warning button {
+    width: 150px;
+    height: 35px;
+    font-size: 14px;
+  }
 }

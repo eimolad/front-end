@@ -1,16 +1,21 @@
 /* global BigInt */
 import React, { useState, useEffect } from "react";
-import "./ModalWindow.css";
+import classes from './ModalWindow.module.css'
 import cornerDecorRight from "./cornerDecorRight.png";
 import cornerDecorLeft from "./cornerDecorLeft.png";
 
 export const ModalWindow = ({ active, setActive,children}) => {
+  
+  const rootClasses=[classes.modal]
+  if (active){
+    rootClasses.push(classes.act)
+  }
 
   return (
-    <div className={active ? "modal act" : "modal"} onClick={() => {setActive(false)}}>
+    <div className={rootClasses.join(' ')} onClick={() => {setActive(false)}}>
       <div
         className="warning_modal__content warning"
-        //onClick={(e) => e.stopPropagation()}
+        onClick={(e) => e.stopPropagation()}
       >
         <img
           className="cornerDecorLeft"

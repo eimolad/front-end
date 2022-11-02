@@ -72,4 +72,7 @@
     .phone {
         display: flex;
     }
+    .root {
+        margin-top: 30px;
+    }
 }

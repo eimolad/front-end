@@ -1,0 +1,118 @@
+.root {
+    margin: 0 auto;
+    width: 1110px;
+    display: flex;
+    flex-direction: column;
+}
+
+.tokens {
+    margin: auto auto 30px;
+    grid-template-columns: repeat(5, 1fr);
+    grid-row-gap: 50px;
+    display: grid;
+}
+
+.header {
+    margin-bottom: -15px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-content: center;
+}
+
+.collectName {
+    font-size: 36px;
+    margin: auto;
+    margin-left: 0;
+    text-transform: capitalize;
+    background: linear-gradient(130.7deg, #D24328 11.94%, #EC832E 95.54%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    text-fill-color: transparent;
+}
+
+.count {
+    border-radius: 50%;
+    height: 30px;
+    width: 30px;
+    background-color: #292929;
+    padding: 15px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-content: center;
+}
+
+.count>span {
+    margin: auto;
+    font-size: 18px;
+    color: white;
+    font-weight: bold;
+}
+
+.decor {
+    margin-bottom: 25px;
+}
+
+.decor>img {
+    width: 100%;
+    height: auto;
+}
+
+.noNFT {
+    width: 1110px;
+    margin: auto;
+    flex-grow: 1;
+    color: #FAFAFA;
+    font-weight: bold;
+    font-size: 41px;
+}
+
+
+@media screen and (max-width: 1110px) {
+    .root {
+        width: 768px;
+    }
+    .tokens {
+        width: 100%;
+        margin: auto auto 30px;
+        grid-template-columns: repeat(4, 1fr);
+        grid-row-gap: 20px;
+        display: grid;
+    }
+    .tokens>div {
+    }
+}
+
+@media screen and (max-width: 768px) {
+    .root {
+        width: 540px;
+    }
+    .tokens {
+        width: 100%;
+        margin: auto auto 30px;
+        grid-template-columns: repeat(2, 1fr);
+        grid-row-gap: 20px;
+        display: grid;
+    }
+    .tokens>div {
+    }
+    .count {
+        height: 20px;
+        width: 20px;
+        padding: 10px;
+    }
+
+    .count>span {
+        font-size: 14px;
+    }
+}
+
+@media screen and (max-width: 540px) {
+    .root {
+        width: 320px;
+    }
+    .tokens {
+        width: 320px;
+    }
+}

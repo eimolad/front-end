@@ -31,14 +31,14 @@ export const NFTsOfCollect = ({
   setCharacterCount,
   weaponCount,
   characterCount,
+  wrapped
 }) => {
   let loader = true;
   let NFTs = [];
   let collectInfo = getCollectInfo(collect, nfts ? JSON.parse(nfts) : {});
 
-  
   if (nfts && nfts != "{}" && loader) {
-    let count=0;
+    let count = 0;
     for (let tid in JSON.parse(nfts)) {
       if (JSON.parse(nfts)[tid].collection == collect) {
         NFTs.push(
@@ -58,6 +58,7 @@ export const NFTsOfCollect = ({
             setSelectedToken={setSelectedToken}
             selectedWNFTs={selectedWNTFs}
             setSelectedWNFTs={setSelectedWNFTs}
+            wrapped={wrapped}
           />
         );
       }
@@ -111,7 +112,6 @@ export const NFTsOfCollect = ({
     );
   }
 
-
   if (page == "registration") {
     return (
       <div className={classes.root}>
@@ -123,7 +123,7 @@ export const NFTsOfCollect = ({
           <div className={classes.grid}>{NFTs}</div>
         ) : !loader && NFTs.length == 0 ? null : (
           <div className={classes.loader}>
-            <h2>You do not have unregistered nft</h2>
+            <img src={loaderGif} alt="loader" />
           </div>
         )}
       </div>

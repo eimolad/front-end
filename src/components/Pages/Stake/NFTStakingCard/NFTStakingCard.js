@@ -3,6 +3,7 @@ import { Grid, Card, Typography, CardContent, CardActions, Button, CardMedia } f
 import { AuthClient } from '@dfinity/auth-client'
 import kernelDid from '../../../../utils/candid/kernel.did'
 import {Actor, HttpAgent} from "@dfinity/agent";
+import { kernelCanister } from '../../../../canisters';
 
 async function setUnWrapState (nft) {
     if (localStorage.getItem("ic-delegation")) {
@@ -15,7 +16,7 @@ async function setUnWrapState (nft) {
 
         const actor = Actor.createActor(kernelDid, {
             agent: agent,
-            canisterId: "ylwtf-viaaa-aaaan-qaddq-cai",
+            canisterId: kernelCanister,
         });
 
         if (nft.metadata.dwarves) {

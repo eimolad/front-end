@@ -1,391 +1,375 @@
 import React, { useEffect, useState } from "react";
 import Unity, { UnityContext } from "react-unity-webgl";
 import classes from "./Play.module.css";
-import bg from "../../../media/bgAccount.png";
-import { getAddress } from "../../../utils/utils";
+import { getAddress, clipboardCopy, getSubAccountArray, getPrincipal } from "./../../../utils/utils";
 import { MenuBar } from "../../Blocks/MenuBar/MenuBar";
 import { Button } from "../../UI/Button/Button";
-import { NFT } from "../../UI/NFT/NFT";
-import { NFTs } from "../..//Blocks/NFTs/NFTs";
-import { Actor, HttpAgent } from "@dfinity/agent";
-import { AuthClient } from "@dfinity/auth-client";
-import kernelDid from "../../../utils/candid/kernel.did";
 import { Registration } from "./Registration/Registration";
-import { TextField } from "@mui/material";
-import dwarvesDid from "../../../utils/candid/dwarves.did";
-import { canisters, ICcanister, tokenCanisters } from "./../../../canisters";
-import {
-  fromHexString,
-  principalToAccountIdentifier,
-  tokenIdentifier,
-} from "./../../../utils/utils";
-import { Null } from "@dfinity/agent/lib/cjs/idl";
-
-const getTokenInfo = async (collection, tid, callback) => {
-  const authClient = await AuthClient.create({
-    _storage: localStorage.getItem("ic-delegation"),
-  });
-
-  const agent = new HttpAgent({
-    host: "https://ic0.app",
-    identity: authClient.getIdentity(),
-  });
-
-  const actor = Actor.createActor(kernelDid, {
-    agent: agent,
-    //test canister
-    canisterId: "dwyty-piaaa-aaaan-qagma-cai",
-  });
-  const args = {};
-  args[collection] = tid;
-  await actor.getTokenInfoRare(args).then((data) => {
-    callback(data);
-  });
-};
-
-const getSigned = async (tid, callback) => {
-  const authClient = await AuthClient.create({
-    _storage: localStorage.getItem("ic-delegation"),
-  });
-
-  const agent = new HttpAgent({
-    host: "https://ic0.app",
-    identity: authClient.getIdentity(),
-  });
-  const actor = Actor.createActor(kernelDid, {
-    agent: agent,
-    canisterId: "dwyty-piaaa-aaaan-qagma-cai",
-  });
-
-  actor.getSigned(tid).then((data) => {
-    callback(data);
-  });
-};
-
-const getAllSignedAccounts = async (nfts, callback) => {
-  // console.log(nfts)
-  const authClient = await AuthClient.create({
-    _storage: localStorage.getItem("ic-delegation"),
-  });
-
-  const agent = new HttpAgent({
-    host: "https://ic0.app",
-    identity: authClient.getIdentity(),
-  });
-
-  let fb = {};
-
-  const actor = Actor.createActor(dwarvesDid, {
-    agent: agent,
-    canisterId: canisters["dwarves"],
-  });
-
-  await actor
-    .tokens_ext(
-      principalToAccountIdentifier(
-        authClient.getIdentity().getPrincipal().toText(),
-        0
-      )
-    )
-    .then(async (data) => {
-      //console.log(data)
-      if (data && data.ok) {
-        for (let i = 0; i < data.ok.length; i++) {
-          await getSigned(
-            tokenIdentifier(canisters["dwarves"], data.ok[i][0]),
-            (dataSinged) => {
-              //console.log(dataSinged)
-              if (dataSinged.length != 0) {
-                getTokenInfo("dwarves", dataSinged[0].tid, (dataTokenInfo) => {
-                  //console.log(dataTokenInfo.tokenInfo[Object.keys(dataTokenInfo.tokenInfo)[0]][0]['rase']) //dwarves
-                  //console.log(dataTokenInfo.tokenInfo[Object.keys(dataTokenInfo.tokenInfo)[0]][0])
-
-                  //console.log()
-                  let nft = {
-                    name: dataSinged[0].name,
-                    type: "character",
-                    index: data.ok[i][0],
-                    collection: "dwarves",
-                    rare: dataTokenInfo.tokenRarity[0],
-                    metadata:
-                      dataTokenInfo.tokenInfo[
-                        Object.keys(dataTokenInfo.tokenInfo)[0]
-                      ][0],
-                  };
-                  fb[
-                    tokenIdentifier(
-                      dataTokenInfo.tokenInfo[
-                        Object.keys(dataTokenInfo.tokenInfo)[0]
-                      ][0].ledgerCanister,
-                      data.ok[i][0]
-                    )
-                  ] = nft;
-
-                  //console.log(nft)
-                  if (JSON.stringify(fb) !== nfts) {
-                    callback(fb);
-                  } else {
-                    callback(null);
-                  }
-                });
-              }
-            }
-          );
-        }
-      }
-    });
-  //console.log(fb)
-  if (JSON.stringify(fb) !== nfts) {
-    callback(fb);
-  } else {
-    callback(null);
-  }
-};
+import { tokenCanisters } from "./../../../canisters";
+import { ModalWindow } from "../../UI/ModalWindow/ModalWindow";
+import copy from "./copy.png";
+import loader from "../../../media/loader.gif";
+import { CollectionsForStake } from "../../Blocks/CollectionsForStake/CollectionsForStake";
+import { AccountInfo } from "../../Blocks/AccountInfo/AccountInfo";
+import { Game } from "../Game/Game";
+import { Tokens } from "../../Blocks/Tokens/Tokens";
+import { lootUsed, rewardLoot, saveAttributes, saveProgres, startGame } from "../../../utils/gameUtils";
+import { getAccountBalance, getAllSignedAccounts } from "../../../utils/canisterUtils";
 
 const unityContext = new UnityContext({
-  loaderUrl: "./webgl/build/test_2.loader.js",
-  dataUrl: "./webgl/build/test_2.data",
-  frameworkUrl: "./webgl/build/test_2.framework.js",
-  codeUrl: "./webgl/build/test_2.wasm",
+  loaderUrl: "./webgl/build/eimolad.loader.js",
+  dataUrl: "./webgl/build/eimolad.data",
+  frameworkUrl: "./webgl/build/eimolad.framework.js",
+  codeUrl: "./webgl/build/eimolad.wasm",
 });
 
-function Mess(message) {
+function sendPlayerDataMessage(message) {
   unityContext.send("Canvas_Game", "Text_Message", message);
 }
 
-const startGame = async (selectedNFTs, callback) => {
-  const authClient = await AuthClient.create({
-    _storage: localStorage.getItem("ic-delegation"),
-  });
-
-  const agent = new HttpAgent({
-    host: "https://ic0.app",
-    identity: authClient.getIdentity(),
-  });
-
-  const actor = Actor.createActor(kernelDid, {
-    agent: agent,
-    canisterId: "dwyty-piaaa-aaaan-qagma-cai",
-  });
-
-  let tidCharacter;
-  let tidWeapon;
-
-  for (let tid in JSON.parse(selectedNFTs)) {
-    if (JSON.parse(selectedNFTs)[tid].type == "character") tidCharacter = tid;
-  }
-
-  actor.startGame(tidCharacter).then((data) => {
-    callback(data);
-  });
-};
+function sendAttributesMessage(message) {
+  unityContext.send("Canvas_Game", "Text_Message_Attributes", message);
+}
 
 export const Play = ({
   address,
   setAddress,
   nfts,
+  setNfts,
   setTask,
   signedAccounts,
   setSignedAccounts,
   unsignedNFTs,
   setUnsignedNFTs,
+  principal,
+  setPrincipal,
 }) => {
-  if (!address) {
-    if (localStorage.getItem("ic-delegation")) {
+  if (!address || address == "1c7a48ba6a562aa9eaa2481a9049cdf0433b9738c992d698c31d8abf89cadc79") {
+    if (localStorage.getItem("ic-delegation") && localStorage.getItem("ic-delegation") !== "" && localStorage.getItem("ic-identity") !== "") {
       getAddress((addr) => setAddress(addr));
     } else {
       window.location.assign("/");
     }
   }
+  if (!principal || principal === "2vxsx-fae") {
+    getPrincipal((princ) => {
+      setPrincipal(princ);
+    });
+  }
 
   const [play, setPlay] = useState(true);
-  const [refresh, setRefresh] = useState(true);
-  const [selectedNFT, setSelectedNFT] = useState("nft not found");
-  const [NFTsOwned, setNFTsOwned] = useState([]);
-  const [nftSelectValue, setNftSelectValue] = useState();
 
   const [clickedMenu, setClickedMenu] = useState(false);
-  const [filt, setFilt] = useState(
-    JSON.stringify({ tokens: true, dwarves: true, weapons: true })
-  );
-  const [selectedNFTs, setSelectedNFTs] = useState(JSON.stringify({}));
+  const [copied, setCopied] = useState(false);
+
+  const [filt, setFilt] = useState(JSON.stringify({ tokens: true, dwarves: true, weapons: true }));
   const [selectedWNFTs, setSelectedWNFTs] = useState(JSON.stringify({}));
-  const [selectedToken, setSelectedToken] = useState(null);
 
   const [modal, setModal] = useState(false);
-  const [characterCount, setCharacterCount] = useState(0);
-  const [weaponCount, setWeaponCount] = useState(0);
   const [startGameData, setStartGameData] = useState("empty data");
-  // const [signedAccounts,setSignedAccounts] = useState(null)
+  const [currentMintNumber, setCurrentMintNumber] = useState(null);
 
-  //let NFTs = [];
+  const [modalWindow, setModalWindow] = useState(false);
+  const [errorModal, setErrorModal] = useState(false);
+  const [inventoryModal, setInventoryModal] = useState(false);
 
-  // if (address && signedAccounts === null && refresh) {
-  //   getAllSignedAccounts(signedAccounts, (data) => {
-  //     //console.log(data);
-  //     if (data.length !=0) {
-  //       setSignedAccounts(JSON.stringify(data));
-  //       // setRefresh(false);
-  //     }
-  //   });
-  // }
+  const [wait, setWait] = useState(false);
+  const [progression, setProgression] = useState(0);
+  const [confirm, setConfirm] = useState(false);
 
-  // useEffect(()=>{
-  //   getAllSignedAccounts(signedAccounts, (data) => {
-  //     //console.log(data);
-  //     if (data !==null && data.length !=0) {
-  //       setSignedAccounts(JSON.stringify(data));
-  //       // setRefresh(false);
-  //     }
-  //   });
-  // },[modal])
+  const [accountIsRegistered, setAccountIsRegistered] = useState(false);
+  const [accountInfoData, setAccountInfoData] = useState("{}");
 
-  // useEffect(() => {
-  //   setTimeout(() => {
-  //     getAllUnsignedAccounts(unsignedNFTs, (data) => {
-  //       // console.log(Object.keys(data).length)
-  //       if (data!={} && data!=null && data )  {
-  //           setUnsignedNFTs(JSON.stringify(data));
-  //           setRefresh(false);
-  //         }
-  //       setRefresh(!refresh);
-  //     });
-  //   }, 10000);
-  // }, [refresh]);
+  const [accountBalance, setAccountBalance] = useState(null);
 
+  const [displayP, setDisplayP] = useState("none");
+
+  useEffect(() => {
+    window.onload = () => {
+      let iframeName = document.getElementById("iframeName");
+      let iframeContent = iframeName.contentDocument;
+      iframeContent.body.innerHTML = iframeContent.body.innerHTML + "<style>.iframe-css{width:400px}</style>";
+    };
+  });
+
+  useEffect(() => {
+    if (selectedWNFTs !== JSON.stringify({})) {
+      setCurrentMintNumber(JSON.parse(selectedWNFTs)[Object.keys(JSON.parse(selectedWNFTs))[0]]?.index);
+      getAccountBalance(accountBalance, 1e6 + currentMintNumber + 1, (data) => {
+        setAccountBalance(JSON.stringify(data));
+        console.log(data);
+      });
+    }
+  }, [selectedWNFTs]);
+
+  if (accountIsRegistered) {
+    setAccountIsRegistered(false);
+    getAllSignedAccounts(signedAccounts, (data) => {
+      //console.log(data);
+      if (data !== null && data.length != 0) {
+        setSignedAccounts(JSON.stringify(data));
+        setWait(false);
+      }
+    });
+  }
   useEffect(function () {
     unityContext.on("Info_Player", function (data) {
-      //событие нажатия кнопки
       console.log(data);
-      Mess(startGameData);
+
+      if (data === "player?") {
+        let dataForGame;
+        if (startGameData !== "empty data") dataForGame = JSON.parse(startGameData)[0];
+        console.log(JSON.stringify(dataForGame));
+        sendPlayerDataMessage(JSON.stringify(dataForGame));
+      }
+      if (data.includes("pickedUpTeleport")) {
+        let amount = Number(data.split("=")[1]);
+
+        let successTransfer = false;
+
+        console.log(tokenCanisters["tp"], principal, getSubAccountArray(1e6 + currentMintNumber + 1), amount);
+
+        rewardLoot(tokenCanisters["tp"], principal, getSubAccountArray(1e6 + currentMintNumber + 1), amount, (lootData) => {
+          console.log(lootData);
+          if (lootData.ok) successTransfer = true;
+          while (!successTransfer) {
+            rewardLoot(tokenCanisters["tp"], principal, getSubAccountArray(1e6 + currentMintNumber + 1), amount, (repeatLootData) => {
+              console.log(repeatLootData + " replay");
+              if (repeatLootData.ok) successTransfer = true;
+            });
+          }
+        });
+      }
+      if (data.includes("teleportUsed")) {
+        let amount = Number(data.split("=")[1]);
+
+        console.log(tokenCanisters["tp"], 1e6 + currentMintNumber + 1, amount);
+        lootUsed(tokenCanisters["tp"], principal, getSubAccountArray(1e6 + currentMintNumber + 1), amount, (dataUse) => {
+          console.log(dataUse);
+        });
+      }
+
+      if (data !== "player?" && !data.includes("teleportUsed") && !data.includes("pickedUpTeleport")) {
+        console.log("Saving...");
+
+        saveProgres(data, (savedData) => {
+          console.log(savedData);
+        });
+      }
     });
+
     return function () {
       //unityContext.removeEventListener("Info_Player");
     };
   });
 
-  if (nfts && nfts != "{}") {
-    //загружает нфт с аккаунта в массив
-    if (Object.keys(JSON.parse(nfts)).length != NFTsOwned.length) {
-      for (let tid in JSON.parse(nfts)) {
-        if (JSON.parse(nfts)[tid].type == "character") {
-          //console.log(JSON.parse(nfts)[tid])
-          NFTsOwned.push(JSON.parse(nfts)[tid]);
+  useEffect(function () {
+    unityContext.on("Attributes_Player", function (attribute_data) {
+      console.log(attribute_data);
+
+      if (attribute_data === "attributes?") {
+        let attributesForGame;
+        if (startGameData !== "empty data") attributesForGame = JSON.parse(startGameData)[1];
+
+        console.log(attributesForGame);
+        sendAttributesMessage(attributesForGame);
+      }
+
+      if (attribute_data !== "attributes?") {
+        console.log(attribute_data);
+        if (JSON.parse(startGameData)) {
+          saveAttributes(JSON.parse(startGameData)[0].charId, attribute_data, (data) => {
+            console.log(data);
+            if (data.ok) {
+              console.log("successful save");
+            }
+          });
         }
       }
-    }
-  }
+    });
 
-  if (nfts && nfts != "{}") {
-    for (let i in NFTsOwned) {
-      // NFTs.push(<NFT nft={JSON.parse(nfts)[i]} key={tid} selected={selected} setSelected={setSelected} refresh={refresh} setRefresh={setRefresh}
-      //                  setSelectedToken={setSelectedToken} selectedWNFTs={selectedWNTFs}
-      //                  setSelectedWNFTs={setSelectedWNFTs}/>)
-    }
-  }
-  // console.log(JSON.parse(nfts));
-  //console.log(nickname)
-  // for (let tid in JSON.parse(selectedNFTs)){
-  //   console.log(tid)
-  // }
-  //console.log((selectedNFTs))
+    return function () {
+      //unityContext.removeEventListener("Attributes_Player");
+    };
+  });
+
+  useEffect(function () {
+    unityContext.on("progress", function (progression) {
+      setProgression(progression);
+    });
+  }, []);
+
+  setTimeout(() => {
+    setDisplayP("block");
+    return null;
+  }, 8000);
+
   return (
-    <div className={classes.root} style={{ backgroundImage: `url(${bg})` }}>
+    <div className={classes.root}>
       {play ? (
-        <>
-          <Registration
-            address={address}
-            nfts={nfts}
-            unsignedNFTs={unsignedNFTs}
-            setUnsignedNFTs={setUnsignedNFTs}
-            active={modal}
-            setActive={setModal}
-          ></Registration>
-          <MenuBar
-            address={address}
-            clicked={clickedMenu}
-            setClicked={setClickedMenu}
-            curLink="Play"
-            setTask={setTask}
-          >
-            <div className={classes.buttons}>
-              <Button
-                active={true}
-                style={{}}
-                buttonType="middleBtn"
-                onClick={() => {
-                  setModal(true);
-                  // registryAcc(selectedNFTs,nickname,(data)=>{
-                  //   console.log(data)
-                  // })
-                }}
-              >
-                Create account
-              </Button>
-              {characterCount == 1 ? (
+        address ? (
+          <>
+            <ModalWindow active={modalWindow} setActive={setModalWindow}>
+              <h2>Account successfully registered</h2>
+            </ModalWindow>
+
+            <ModalWindow active={errorModal} setActive={setErrorModal}>
+              <h2 style={{ color: "red" }}>ERROR</h2>
+              <p>Please make sure your character is wrapped</p>
+            </ModalWindow>
+
+            <ModalWindow active={inventoryModal} setActive={setInventoryModal}>
+              <h2>Account Inventory</h2>
+              <Tokens decoration={false} balances={accountBalance} />
+              {accountBalance !== null ||
+              accountBalance == `{"icp":0,"gold":0,"coal":0,"ore":0,"adit":0,"lgs":0,"leather":0,"bronze":0,"tp":0}` ? null : (
+                <img style={{ paddingTop: "55px" }} className={classes.miniLoading} src={loader} alt="loader" />
+              )}
+            </ModalWindow>
+
+            <Registration
+              nfts={nfts}
+              setNfts={setNfts}
+              unsignedNFTs={unsignedNFTs}
+              setUnsignedNFTs={setUnsignedNFTs}
+              setAccountIsRegistered={setAccountIsRegistered}
+              active={modal}
+              setActive={setModal}
+              setModalWindow={setModalWindow}
+              setAccountInfoData={setAccountInfoData}
+              setWait={setWait}
+            ></Registration>
+            <MenuBar address={address} clicked={clickedMenu} setClicked={setClickedMenu} curLink="Play" setTask={setTask}>
+              <div className={classes.buttons}>
                 <Button
                   active={true}
                   style={{}}
                   buttonType="middleBtn"
                   onClick={() => {
-                    startGame(selectedNFTs, (data) => {
-                      console.log(data.ok);
-                      let gameData = data.ok;
-                      setStartGameData(
-                        JSON.stringify(gameData, (_, v) =>
-                          typeof v === "bigint" ? v.toString() : v
-                        )
-                      );
-                    });
-                    setPlay(false);
+                    setModal(true);
                   }}
                 >
-                  Play
+                  Create account
                 </Button>
-              ) : (
-                <Button active={false} style={{}} buttonType="middleBtn">
-                  Play
-                </Button>
-              )}
+                {selectedWNFTs === "{}" ? (
+                  <Button active={false} style={{}} buttonType="middleBtn">
+                    Play
+                  </Button>
+                ) : (
+                  <Button
+                    active={true}
+                    style={{}}
+                    buttonType="middleBtn"
+                    onClick={() => {
+                      setWait(true);
+                      startGame(selectedWNFTs, getSubAccountArray(2), (data) => {
+                        console.log(data);
+                        if (data.ok) {
+                          let gameData = data.ok;
+                          console.log(gameData);
+                          setStartGameData(JSON.stringify(gameData, (_, v) => (typeof v === "bigint" ? v.toString() : v)));
+                          console.log(JSON.stringify(gameData, (_, v) => (typeof v === "bigint" ? v.toString() : v)));
+                          setPlay(false);
+                        } else {
+                          setWait(false);
+                          setErrorModal(true);
+                        }
+                      });
+                    }}
+                  >
+                    Play
+                  </Button>
+                )}
+
+                <div
+                  className={classes.address}
+                  onClick={() => {
+                    clipboardCopy(address);
+                    setCopied(true);
+                    setTimeout(() => setCopied(false), 1000);
+                  }}
+                >
+                  {copied ? <div>Copied</div> : null}
+                  <img src={copy} alt="Copy address" />
+                  {address.substr(0, 6) + "..." + address.substr(58, 64)}
+                </div>
+              </div>
+            </MenuBar>
+            <div>
+              <h2 className={classes.depth} title="Select your account">
+                Select your account
+              </h2>
             </div>
-          </MenuBar>
-          <h1 className={classes.depth} title="Select your account">
-            Select your account
-          </h1>
-          {/* <div className={classes.accounts_container}>
-        <div className={classes.accounts_items}>
-         
-        </div>
-      </div> */}
-          <NFTs
-            page={"play"}
-            setWeaponCount={setWeaponCount}
-            setCharacterCount={setCharacterCount}
-            weaponCount={weaponCount}
-            characterCount={characterCount}
-            accounts={NFTsOwned}
-            address={address}
-            nfts={signedAccounts}
-            filt={filt}
-            selected={selectedNFTs}
-            setSelected={setSelectedNFTs}
-            setSelectedToken={setSelectedToken}
-            selectedWNFTs={selectedWNFTs}
-            setSelectedWNFTs={setSelectedWNFTs}
-          />
-        </>
+            {wait ? (
+              <div className={classes.wait}>
+                <img src={loader} alt="Wait" />
+              </div>
+            ) : null}
+            {signedAccounts === "{}" || signedAccounts === null ? (
+              <div className={classes.emptyAccounts}>
+                <p>You have to have wrapped NFT Hero</p>
+                <div style={{ display: displayP === "block" ? "none" : "flex" }} className={classes.miniLoading__container}>
+                  <img className={classes.miniLoading} src={loader} alt="loader" />
+                </div>
+                <p style={{ display: displayP }}>
+                  It seems your cache is full. Click <a onClick={() => window.location.assign("/play?js=" + Math.ceil(Math.random() * 1000))}>here</a>
+                </p>
+              </div>
+            ) : (
+              <div>
+                <CollectionsForStake
+                  page={"play"}
+                  nfts={signedAccounts}
+                  task={1}
+                  selectedWNFTs={selectedWNFTs}
+                  setSelectedWNFTs={setSelectedWNFTs}
+                  filt={filt}
+                  setAccountInfoData={setAccountInfoData}
+                />
+              </div>
+            )}
+
+            {selectedWNFTs != "{}" ? (
+              <div className={classes.accountInfoContainer}>
+                <div className={classes.accountAsset}>
+                  <iframe
+                    id="iframeName"
+                    scrolling="no"
+                    frameBorder={0}
+                    className={classes.iframe}
+                    src={
+                      "https://" +
+                      JSON.parse(selectedWNFTs)[Object.keys(JSON.parse(selectedWNFTs))[0]].metadata.ledgerCanister +
+                      ".raw.ic0.app/?cc=0&tokenid=" +
+                      Object.keys(JSON.parse(selectedWNFTs))[0]
+                    }
+                    alt=""
+                  ></iframe>
+                </div>
+                <div className={classes.accountInfo}>
+                  <AccountInfo
+                    setSelectedWNFTs={setSelectedWNFTs}
+                    setWait={setWait}
+                    setSignedAccounts={setSignedAccounts}
+                    signedAccounts={signedAccounts}
+                    account={accountInfoData}
+                    setAccountInfoData={setAccountInfoData}
+                    accountInfoData={accountInfoData}
+                    inventoryOnClick={() => {
+                      setInventoryModal(true);
+                    }}
+                  ></AccountInfo>
+                </div>
+              </div>
+            ) : (
+              <></>
+            )}
+          </>
+        ) : (
+          <></>
+        )
       ) : (
-        <>
-          <Unity
-            unityContext={unityContext}
-            style={{
-              height: 1180,
-              width: "100%",
-              border: "2px solid black",
-              background: "grey",
-            }}
-          />
-        </>
+        <Game progression={progression} confirm={confirm} setConfirm={setConfirm} unityContext={unityContext} />
       )}
     </div>
   );

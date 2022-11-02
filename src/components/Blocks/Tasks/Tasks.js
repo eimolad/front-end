@@ -7,8 +7,8 @@ export const Tasks = ({setTask}) => {
         <div className={classes.root}>
             <Task index={1} title="Gold" setTask={setTask}>In the service of the king!</Task>
             <Task index={2} title="Coal" setTask={setTask}>All for use</Task>
-            {/*<Task index={3} descript={desc}>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Rem, rerum!</Task>*/}
-            {/*<Task index={4} descript={desc}>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Blanditiis, iusto?</Task>*/}
+            <Task index={3} title="Ore" setTask={setTask}>Bolder and Deeper</Task>
+            <Task index={4} title="Adit" setTask={setTask}>The cry of Eida</Task>
         </div>
     );
 };

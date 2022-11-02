@@ -19,6 +19,7 @@ export const NFTs = ({
   setSelectedWNFTs,
   filt,
   page,
+  wrapped
 }) => {
   let content = [];
   switch (page) {
@@ -69,6 +70,7 @@ export const NFTs = ({
                 setSelectedToken={setSelectedToken}
                 selectedWNTFs={selectedWNFTs}
                 setSelectedWNFTs={setSelectedWNFTs}
+                wrapped={wrapped}
               />
             </div>
           );

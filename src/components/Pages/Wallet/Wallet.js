@@ -1,74 +1,39 @@
 import React, { useEffect, useState } from "react";
 import { NFTs } from "../../Blocks/NFTs/NFTs";
-import { clipboardCopy, getAddress } from "../../../utils/utils";
+import { clipboardCopy, getAddress, getPrincipal, getSubAccountArray, principalToAccountIdentifier } from "../../../utils/utils";
 import { MenuBar } from "../../Blocks/MenuBar/MenuBar";
-import { Footer } from "../../Blocks/Footer/Footer";
 import { Button } from "../../UI/Button/Button";
 import { Filter } from "../../Blocks/Filter/Filter";
 import classes from "./Wallet.module.css";
 import bg from "../../../media/bg.png";
 import { Tokens } from "../../Blocks/Tokens/Tokens";
-import { AuthClient } from "@dfinity/auth-client";
-import { Actor, HttpAgent } from "@dfinity/agent";
-import kernelDid from "../../../utils/candid/kernel.did";
 import { SendForm } from "../../Blocks/SendForm/SendForm";
 import loader from "../../../media/loader.gif";
 import copy from "./copy.png";
 import { WalletWarning } from "../../Blocks/WalletWarning/WalletWarning";
-// import {Resources} from "../../Blocks/Resources/Resources";
-
-const setWrapped = async (selectedNFTs, callback) => {
-  const authClient = await AuthClient.create({
-    _storage: localStorage.getItem("ic-delegation"),
-  });
-
-  const agent = new HttpAgent({
-    host: "https://ic0.app",
-    identity: authClient.getIdentity(),
-  });
-
-  const actor = Actor.createActor(kernelDid, {
-    agent: agent,
-    canisterId: "dwyty-piaaa-aaaan-qagma-cai",
-  });
-  const args = [];
-  for (let tid in JSON.parse(selectedNFTs)) {
-    args.push(tid);
-  }
-  await actor.wrap(args).then((data) => {
-    callback(data);
-  });
-};
-
-const setUnWrapped = async (selectedWNFTs, callback) => {
-  const authClient = await AuthClient.create({
-    _storage: localStorage.getItem("ic-delegation"),
-  });
-
-  const agent = new HttpAgent({
-    host: "https://ic0.app",
-    identity: authClient.getIdentity(),
-  });
-
-  const actor = Actor.createActor(kernelDid, {
-    agent: agent,
-    canisterId: "dwyty-piaaa-aaaan-qagma-cai",
-  });
-  const args = [];
-  for (let tid in JSON.parse(selectedWNFTs)) {
-    args.push(tid);
-  }
-  await actor.unWrap(args).then((data) => {
-    callback(data);
-  });
-};
+import { Licenses } from "../../Blocks/Licenses/Licenses";
+import { NFTsSend } from "../../../utils/canisterUtils";
 
 const changeState = (nfts, selected, state) => {
   let n = JSON.parse(nfts);
+
+  console.log(n);
+
   for (let tid in JSON.parse(selected)) {
+    console.log(tid, JSON.parse(selected));
     // JSON.parse(selected)[tid].metadata.state = state;
     n[tid].metadata.state = state;
     console.log(tid, n[tid]);
+  }
+  return JSON.stringify(n);
+};
+
+const changeNfts = (nfts, selected) => {
+  let n = JSON.parse(nfts);
+
+  for (let tid in JSON.parse(selected)) {
+    // JSON.parse(selected)[tid].metadata.state = state;
+    delete n[tid];
   }
   return JSON.stringify(n);
 };
@@ -81,18 +46,30 @@ export const Wallet = ({
   setTask,
   balances,
   setBalances,
+  setSignedAccounts,
+  signedAccounts,
+  setUnsignedNFTs,
+  unsignedNFTs,
+  principal,
+  setPrincipal,
+  setWrappedNfts,
+  wrappedNfts,
+  wrappedAddress,
+
 }) => {
-  if (!address) {
-    if (localStorage.getItem("ic-delegation")) {
+  if (!address || address == "1c7a48ba6a562aa9eaa2481a9049cdf0433b9738c992d698c31d8abf89cadc79") {
+    if (localStorage.getItem("ic-delegation") && localStorage.getItem("ic-delegation") !== "" && localStorage.getItem("ic-identity") !== "") {
       getAddress((addr) => setAddress(addr));
     } else {
       window.location.assign("/");
     }
   }
-
-  const [filt, setFilt] = useState(
-    JSON.stringify({ tokens: true, dwarves: true, weapons: true })
-  );
+  if (!principal || principal==='2vxsx-fae') {
+    getPrincipal((princ) => {
+      setPrincipal(princ);
+    });
+  }
+  const [filt, setFilt] = useState(JSON.stringify({ tokens: true, licenses: true, dwarves: true, weapons: true }));
   const [clickedMenu, setClickedMenu] = useState(false);
   const [copied, setCopied] = useState(false);
   const [activeSendForm, setActiveSendForm] = useState(false);
@@ -135,6 +112,7 @@ export const Wallet = ({
       setActiveSendBtn(true);
     }
   }, [selectedToken]);
+
   return (
     <div
       className={classes.root}
@@ -155,19 +133,15 @@ export const Wallet = ({
           <WalletWarning active={activeWarning} setActive={setActiveWarning} />
           <SendForm
             active={activeSendForm}
+            nfts={nfts}
             balances={balances}
             setBalances={setBalances}
             setActive={setActiveSendForm}
             selected={selectedNFTs != "{}" ? selectedNFTs : selectedWNFTs}
             selToken={selectedToken}
+            setNFTs={setNfts}
           />
-          <MenuBar
-            address={address}
-            clicked={clickedMenu}
-            setClicked={setClickedMenu}
-            curLink="wallet"
-            setTask={setTask}
-          >
+          <MenuBar address={address} clicked={clickedMenu} setClicked={setClickedMenu} curLink="wallet" setTask={setTask}>
             <div className={classes.buttons}>
               <Button
                 active={activeWrapBtn}
@@ -176,19 +150,19 @@ export const Wallet = ({
                 onClick={() => {
                   if (selectedWNFTs === "{}") {
                     setWait(true);
-                    setWrapped(selectedNFTs, (res) => {
-                      setNfts(changeState(nfts, selectedNFTs, "wrapped"));
-                      setSelectedNFTs("{}");
-                      // setRefresh(true)
+                    NFTsSend(selectedNFTs, principalToAccountIdentifier(principal, 2), getSubAccountArray(0), (res) => {
+                      setNfts(changeNfts(nfts, selectedNFTs));
                       setWait(false);
+                      setSelectedNFTs("{}");
+                      console.log(res);
                     });
                   } else {
                     setWait(true);
-                    setUnWrapped(selectedWNFTs, (res) => {
-                      setNfts(changeState(nfts, selectedWNFTs, "none"));
-                      setSelectedWNFTs("{}");
-                      // setRefresh(true)
+                    NFTsSend(selectedWNFTs, address, getSubAccountArray(2), (res) => {
+                      setNfts(changeNfts(nfts, selectedNFTs));
                       setWait(false);
+                      setSelectedWNFTs("{}");
+                      console.log(res);
                     });
                   }
                 }}
@@ -222,30 +196,58 @@ export const Wallet = ({
           </MenuBar>{" "}
           {/*<Resources address={address}/>*/}
           <Filter filt={filt} setFilt={setFilt} />
-          {JSON.parse(filt).tokens ? (
-            <Tokens
+          <div className={classes.walletContent}>
+            {JSON.parse(filt).tokens ? (
+              <Tokens
+                address={address}
+                selected={selectedToken}
+                setSelected={setSelectedToken}
+                selectedNFTs={selectedNFTs}
+                setSelectedNFTs={setSelectedNFTs}
+                balances={balances}
+                setBalances={setBalances}
+                selectedWNFTs={selectedWNFTs}
+                setSelectedWNFTs={setSelectedWNFTs}
+              />
+            ) : null}
+            {JSON.parse(filt).licenses ? (
+              <Licenses
+                address={address}
+                selected={selectedToken}
+                setSelected={setSelectedToken}
+                selectedNFTs={selectedNFTs}
+                setSelectedNFTs={setSelectedNFTs}
+                balances={balances}
+                setBalances={setBalances}
+                selectedWNFTs={selectedWNFTs}
+                setSelectedWNFTs={setSelectedWNFTs}
+              />
+            ) : null}
+            <NFTs
+              page="wallet"
               address={address}
-              selected={selectedToken}
-              setSelected={setSelectedToken}
-              selectedNFTs={selectedNFTs}
-              setSelectedNFTs={setSelectedNFTs}
-              balances={balances}
-              setBalances={setBalances}
+              nfts={nfts}
+              filt={filt}
+              selected={selectedNFTs}
+              setSelected={setSelectedNFTs}
+              setSelectedToken={setSelectedToken}
               selectedWNFTs={selectedWNFTs}
               setSelectedWNFTs={setSelectedWNFTs}
             />
-          ) : null}
-          <NFTs
-            page="wallet"
-            address={address}
-            nfts={nfts}
-            filt={filt}
-            selected={selectedNFTs}
-            setSelected={setSelectedNFTs}
-            setSelectedToken={setSelectedToken}
-            selectedWNFTs={selectedWNFTs}
-            setSelectedWNFTs={setSelectedWNFTs}
-          />
+            <h3 style={{ display: "flex", justifyContent: "center" }}>Wrapped NFTs</h3>
+            <NFTs
+              page="wallet"
+              address={address}
+              nfts={wrappedNfts}
+              filt={filt}
+              selected={selectedNFTs}
+              setSelected={setSelectedNFTs}
+              setSelectedToken={setSelectedToken}
+              selectedWNFTs={selectedWNFTs}
+              setSelectedWNFTs={setSelectedWNFTs}
+              wrapped={true}
+            />
+          </div>
         </>
       ) : null}
     </div>

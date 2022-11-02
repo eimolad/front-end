@@ -13,7 +13,6 @@
 }
 
 .header {
-    margin-bottom: -15px;
     display: flex;
     flex-direction: row;
     justify-content: space-between;
@@ -106,6 +105,9 @@
     .count>span {
         font-size: 14px;
     }
+    .header{
+        margin-bottom: 10px;
+    }
 }
 
 @media screen and (max-width: 540px) {
@@ -114,5 +116,8 @@
     }
     .tokens {
         width: 320px;
+    }
+    .header {
+        margin-bottom: -15px;
     }
 }

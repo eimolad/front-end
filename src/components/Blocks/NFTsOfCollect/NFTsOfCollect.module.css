@@ -102,6 +102,7 @@
         height: 20px;
         width: 20px;
         padding: 10px;
+        margin-bottom: 12px;
     }
 
     .count>span {

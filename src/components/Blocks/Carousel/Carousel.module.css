@@ -1,225 +1,596 @@
 .root {
-    /*height: 340px;*/
+  /*height: 340px;*/
 }
 .carousel {
-    width: 1110px;
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    align-content: center;
-    margin: auto;
+  width: 1110px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-content: center;
+  margin: auto;
 }
 
 .carouselWrapper {
-    display: flex;
-    width: 1000px;
-    height: 200px;
-    flex-direction: row;
-    overflow: hidden;
+  display: flex;
+  width: 1000px;
+  height: 200px;
+  flex-direction: row;
+  overflow: hidden;
 }
 
 .decor {
-    width: 100%;
-    margin: auto;
+  width: 100%;
+  margin: auto;
 }
 
-.decor>img {
-    width: 100%;
-    height: auto;
+.decor > img {
+  width: 100%;
+  height: auto;
 }
 
 .items {
-    display: flex;
-    width: 1000px;
-    flex-direction: row;
-    justify-content: start;
-    align-content: center;
-    transition: 0.5s;
+  display: flex;
+  width: 1000px;
+  flex-direction: row;
+  justify-content: start;
+  align-content: center;
+  transition: 0.5s;
 }
 
 .rootNFT {
-    width: 200px ;
-    margin: 0 25px;
+  width: 200px;
+  margin: 0 25px;
 }
 
-.leftArr, .rightArr {
-    margin: auto;
-    height: 30px;
-    width: 30px;
-    border-radius: 50%;
-    background-color: #494949;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-content: center;
-    box-shadow: 0 0 5px 3px #141414;
+.leftArr,
+.rightArr {
+  margin: auto;
+  height: 30px;
+  width: 30px;
+  border-radius: 50%;
+  background-color: #494949;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-content: center;
+  box-shadow: 0 0 5px 3px #141414;
 }
 
-.leftArr>img, .rightArr>img {
-    height: 15px;
-    width: 15px;
-    display: block;
-    margin: auto;
-
+.leftArr > img,
+.rightArr > img {
+  height: 15px;
+  width: 15px;
+  display: block;
+  margin: auto;
 }
-.leftArr:hover, .rightArr:hover {
-    cursor: pointer;
+.leftArr:hover,
+.rightArr:hover {
+  cursor: pointer;
 }
 
 .header {
-    margin-bottom: -15px;
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    align-content: center;
+  margin-bottom: -15px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-content: center;
 }
 
 .collectName {
-    font-size: 36px;
-    margin: auto;
-    margin-left: 0;
-    text-transform: capitalize;
-    background: linear-gradient(130.7deg, #D24328 11.94%, #EC832E 95.54%);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    text-fill-color: transparent;
+  font-size: 36px;
+  margin: auto;
+  margin-left: 0;
+  text-transform: capitalize;
+  background: linear-gradient(130.7deg, #d24328 11.94%, #ec832e 95.54%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  text-fill-color: transparent;
 }
 .count {
-    border-radius: 50%;
-    height: 30px;
-    width: 30px;
-    background-color: #292929;
-    padding: 10px;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-content: center;
+  border-radius: 50%;
+  height: 30px;
+  width: 30px;
+  background-color: #292929;
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-content: center;
 }
 
-.count>span {
-    margin: auto;
-    font-size: 18px;
-    color: white;
-    font-weight: bold;
+.count > span {
+  margin: auto;
+  font-size: 18px;
+  color: white;
+  font-weight: bold;
 }
 
 .nothing {
-    font-size: 32px;
+  font-size: 28px;
+  color: #fafafa;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+  margin-left: auto;
+  margin-right: auto;
 }
+
+.nothing p {
+  margin-bottom: 0;
+}
+
+
+.rootForPlay {
+  /*height: 340px;*/
+}
+.carouselForPlay {
+  width: 1110px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-content: center;
+  margin: auto;
+}
+
+.carouselWrapperForPlay {
+  display: flex;
+  width: 1000px;
+  height: 200px;
+  flex-direction: row;
+  overflow: hidden;
+}
+
+.leftArrForPlay,
+.rightArrForPlay {
+  margin: auto;
+  height: 30px;
+  width: 30px;
+  border-radius: 50%;
+  background-color: #494949;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-content: center;
+  box-shadow: 0 0 5px 3px #141414;
+}
+
+.leftArrForPlay > img,
+.rightArrForPlay > img {
+  height: 15px;
+  width: 15px;
+  display: block;
+  margin: auto;
+}
+.leftArrForPlay:hover,
+.rightArrForPlay:hover {
+  cursor: pointer;
+}
+
+.rootForReg {
+  width: 768px;
+  position: relative;
+  margin-bottom: 30px;
+}
+.carouselForReg {
+  position: relative;
+  width: 768px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-content: center;
+  margin: auto;
+  margin-top: 0;
+}
+
+.carouselWrapperForReg {
+  display: flex;
+  width: 680px;
+  height: 100%;
+  flex-direction: row;
+  overflow: hidden;
+}
+
+.itemsForReg {
+  display: flex;
+  width: 1000px;
+  flex-direction: row;
+  justify-content: start;
+  align-content: center;
+  transition: 0.5s;
+  margin-top: 20px;
+}
+
+.rootNFTForReg {
+  width: 200px;
+  margin: 0 25px;
+}
+
+.leftArrForReg,
+.rightArrForReg {
+  margin: auto auto auto auto;
+  height: 30px;
+  width: 30px;
+  border-radius: 50%;
+  background-color: #494949;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-content: center;
+  box-shadow: 0 0 5px 3px #141414;
+}
+
+.leftArrForReg > img {
+  height: 15px;
+  width: 15px;
+  display: block;
+  margin-left: 6;
+  margin-right: 5;
+}
+.rightArrForReg > img {
+  height: 15px;
+  width: 15px;
+  display: block;
+  margin-left: 9;
+  margin-right: 5;
+}
+.leftArrForReg:hover,
+.rightArrForReg:hover {
+  cursor: pointer;
+}
+
+.leftArrForReg,
+.rightArrForReg {
+  margin: auto auto auto auto;
+  height: 30px;
+  width: 30px;
+  border-radius: 50%;
+  background-color: #494949;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-content: center;
+  box-shadow: 0 0 5px 3px #141414;
+}
+
+.leftArrForReg > img {
+  height: 15px;
+  width: 15px;
+  display: block;
+  margin-left: 6;
+  margin-right: 5;
+}
+.rightArrForReg > img {
+  height: 15px;
+  width: 15px;
+  display: block;
+  margin-left: 9;
+  margin-right: 5;
+}
+.leftArrForReg:hover,
+.rightArrForReg:hover {
+  cursor: pointer;
+}
+
+.headerForReg {
+  margin-bottom: -15px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-content: center;
+}
+
+.countForReg > span {
+  margin: auto;
+  font-size: 18px;
+  color: white;
+  font-weight: bold;
+}
+
+.nothingForReg {
+  font-size: 32px;
+}
+
+.countForPlay {
+  border-radius: 50%;
+  height: 30px;
+  width: 30px;
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-content: center;
+}
+.buyCharacter{
+  color: white;
+  margin: 0 0 0 50px;
+  
+  
+}
+
+.buyCharacter a{
+  color: #EC832E;
+}
+
 @media screen and (max-width: 1110px) {
-    .root {
-        width: 768px;
-        /*height: 170px;*/
-        position: relative;
-    }
+  .root {
+    width: 768px;
+    /*height: 170px;*/
+    position: relative;
+  }
 
-    .carousel {
-        width: 768px;
-    }
-    .carouselWrapper {
-        width: 680px;
-        height: 100%;
-        overflow: hidden;
-    }
-    .items {
-        display: flex;
-        width: 100%;
-        height: 160px;
-    }
-    .decor {
-        margin: 20px auto;
-    }
+  .carousel {
+    width: 768px;
+  }
+  .carouselWrapper {
+    width: 680px;
+    height: 100%;
+    overflow: hidden;
+  }
+  .items {
+    display: flex;
+    width: 100%;
+    height: 160px;
+  }
+  .decor {
+    margin: 20px auto;
+  }
 
-    /*.header {*/
-    /*    margin-left: 120px;*/
-    /*}*/
-    /*.leftArr {*/
-    /*    position: absolute;*/
-    /*    left: 20px;*/
-    /*    top: 10px;*/
-    /*}*/
-    /*.rightArr {*/
-    /*    position: absolute;*/
-    /*    left: 70px;*/
-    /*    top: 10px;*/
-    /*}*/
+  .rootForPlay {
+    width: 768px;
+    /*height: 170px;*/
+    position: relative;
+  }
 
+  .carouselForPlay {
+    width: 768px;
+  }
+  .carouselWrapperForPlay {
+    width: 680px;
+    height: 100%;
+    overflow: hidden;
+  }
+}
+
+.leftArrForWal,
+.rightArrForWal {
+  margin: auto auto auto auto;
+  height: 30px;
+  width: 30px;
+  border-radius: 50%;
+  background-color: #494949;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-content: center;
+  box-shadow: 0 0 5px 3px #141414;
+}
+
+.leftArrForWal > img {
+  height: 15px;
+  width: 15px;
+  display: block;
+  margin-left: 6;
+  margin-right: 5;
+}
+.rightArrForWal > img {
+  height: 15px;
+  width: 15px;
+  display: block;
+  margin-left: 9;
+  margin-right: 5;
+}
+.leftArrForWal:hover,
+.rightArrForWal:hover {
+  cursor: pointer;
+}
+
+.leftArrForWal,
+.rightArrForWal {
+  margin: auto auto auto auto;
+  height: 30px;
+  width: 30px;
+  border-radius: 50%;
+  background-color: #494949;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-content: center;
+  box-shadow: 0 0 5px 3px #141414;
+}
+
+.leftArrForWal > img {
+  height: 15px;
+  width: 15px;
+  display: block;
+  margin-left: 6;
+  margin-right: 5;
+}
+.rightArrForWal > img {
+  height: 15px;
+  width: 15px;
+  display: block;
+  margin-left: 9;
+  margin-right: 5;
+}
+.leftArrForWal:hover,
+.rightArrForWal:hover {
+  cursor: pointer;
 }
 
 @media screen and (max-width: 768px) {
-    .root {
-        width: 540px;
-        /*height: 170px;*/
-        position: relative;
-    }
+  .root {
+    width: 540px;
+    /*height: 170px;*/
+    position: relative;
+  }
 
-    .carousel {
-        width: 540px;
-    }
-    .carouselWrapper {
-        width: 540px;
-        height: 100%;
-        overflow: hidden;
-    }
-    .items {
-        display: flex;
-        width: 100%;
-        height: 160px;
-    }
-    .decor {
-        margin: 20px auto;
-    }
+  .carousel {
+    width: 540px;
+  }
+  .carouselWrapper {
+    width: 540px;
+    height: 100%;
+    overflow: hidden;
+  }
+  .items {
+    display: flex;
+    width: 100%;
+    height: 160px;
+  }
+  .decor {
+    margin: 20px auto;
+  }
 
-    .header {
-        margin-left: 120px;
-    }
-    .leftArr {
-        position: absolute;
-        left: 20px;
-        top: 10px;
-    }
-    .rightArr {
-        position: absolute;
-        left: 70px;
-        top: 10px;
-    }
+  .header {
+    margin-left: 120px;
+  }
+  .leftArr {
+    position: absolute;
+    left: 20px;
+    top: 10px;
+  }
+  .rightArr {
+    position: absolute;
+    left: 70px;
+    top: 10px;
+  }
+  .rootForReg {
+    width: 540px;
+  }
+  .carouselForReg {
+    width: 540px;
+  }
+  .leftArrForReg {
+    position: absolute;
+    left: 20px;
+    top: 10px;
+  }
+  .rightArrForReg {
+    position: absolute;
+    left: 70px;
+    top: 10px;
+  }
+  .carouselWrapperForReg {
+    margin: 50 auto auto auto;
+  }
 
+  .rootForPlay {
+    width: 540px;
+    /*height: 170px;*/
+    position: relative;
+  }
+
+  .carouselForPlay {
+    width: 540px;
+  }
+  .carouselWrapperForPlay {
+    width: 540px;
+    height: 100%;
+    overflow: hidden;
+    padding-top: 40px;
+  }
+  .leftArrForPlay {
+    position: absolute;
+    left: 20px;
+    top: -2px;
+  }
+  .rightArrForPlay {
+    position: absolute;
+    left: 70px;
+    top: -2px;
+  }
+
+  .leftArrForWal {
+    position: absolute;
+    left: 0px;
+    top: -13px;
+  }
+
+  .rightArrForWal {
+    position: absolute;
+    left: 50px;
+    top: -13px;
+  }
 }
 
 @media screen and (max-width: 540px) {
-    .root {
-        width: 340px;
-        /*height: 170px;*/
-        position: relative;
-    }
+  .root {
+    width: 340px;
+    /*height: 170px;*/
+    position: relative;
+  }
 
-    .carousel {
-        width: 340px;
-    }
-    .carouselWrapper {
-        width: 340px;
-        height: 100%;
-        overflow: hidden;
-    }
-    .decor {
-        margin: 20px auto;
-    }
-    .items {
-        display: flex;
-        width: 100%;
-        height: 160px;
-    }
-    .header {
-        margin-left: 120px;
-    }
-    .leftArr {
-        position: absolute;
-        left: 20px;
-        top: 10px;
-    }
-    .rightArr {
-        position: absolute;
-        left: 70px;
-        top: 10px;
-    }
+  .carousel {
+    width: 340px;
+  }
+  .carouselWrapper {
+    width: 340px;
+    height: 100%;
+    overflow: hidden;
+  }
+  .decor {
+    margin: 20px auto;
+  }
+  .items {
+    display: flex;
+    width: 100%;
+    height: 160px;
+  }
+  .header {
+    margin-left: 120px;
+  }
+  .leftArr {
+    position: absolute;
+    left: 20px;
+    top: 10px;
+  }
+  .rightArr {
+    position: absolute;
+    left: 70px;
+    top: 10px;
+  }
+  .rootForReg {
+    width: 340px;
+  }
+  .carouselForReg {
+    width: 340px;
+  }
+
+  .rootForPlay {
+    width: 340px;
+    /*height: 170px;*/
+    position: relative;
+  }
+
+  .carouselForPlay {
+    width: 340px;
+  }
+  .carouselWrapperForPlay {
+    width: 340px;
+    height: 100%;
+    overflow: hidden;
+  }
+  .leftArrForPlay {
+    position: absolute;
+    left: 20px;
+    top: 0;
+  }
+  .rightArrForPlay {
+    position: absolute;
+    left: 70px;
+    top: 0;
+  }
+
+  .leftArrForWal {
+    position: absolute;
+    left: 0px;
+    top: 25px;
+  }
+
+  .rightArrForWal {
+    position: absolute;
+    left: 50px;
+    top: 25px;
+  }
 }

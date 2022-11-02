@@ -25,7 +25,7 @@ const getRefBook = async (callback) => {
     });
 }
 
-export const NFTforSale = ({ nfts, collect}) => {
+export const NFTforSale = ({ nfts, collect }) => {
     const [refBook, setRefBook] = useState();
 
     useEffect(() => {

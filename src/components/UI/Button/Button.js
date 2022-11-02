@@ -8,7 +8,6 @@ import leftArrDecorDisabled from "./leftArrDecorDisabled.png";
 import leftArrDisabled from "./leftArrDisabled.png";
 import middleRightDecor from "./middleRightDecor.png"
 import middleRightDecorDisabled from "./middleRightDecorDisabled.png"
-import middleLongDecor from "./middleLongDecorButton.png"
 
 export const Button = ({onClick, buttonType, active, selected, children, style}) => {
     let bgBtn = middleActive;
@@ -33,11 +32,6 @@ export const Button = ({onClick, buttonType, active, selected, children, style})
             active ? bgBtn = middleRightDecor : bgBtn = middleRightDecorDisabled;
             st.backgroundImage = `url(${bgBtn})`
             st.width = "231px"
-            break;
-        case 'middleLongDecor':                                        //FIXME: some kind problem
-            active ? bgBtn = middleLongDecor : bgBtn = middleLongDecor;
-            st.backgroundImage=`url(${bgBtn})`
-            st.width = "241px"
             break;
         default:
             active ? bgBtn = middleActive : bgBtn = middleDisabled;

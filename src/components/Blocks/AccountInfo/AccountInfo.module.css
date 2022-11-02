@@ -1,0 +1,250 @@
+.container {
+  max-width: 665px;
+  max-height: 484px;
+  /* background-color: grey; */
+  color: #fafafa;
+}
+
+.nickname {
+  font-size: 36px;
+  margin-bottom: 15px;
+}
+
+.form {
+  padding: 15px;
+  /* background-color: rgb(145, 145, 145); */
+  border: 2px solid #313131;
+  display: grid;
+  gap: 5px;
+  grid-template-columns: 315px 315px;
+  grid-template-areas:
+    "Q Q"
+    "W E"
+    "R T"
+    "Y U"
+    "I O"
+    "P P";
+  font-size: 16px;
+}
+b {
+  background: linear-gradient(130.7deg, #d24328 11.94%, #ec832e 95.54%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  text-fill-color: transparent;
+}
+
+.form b {
+  font-size: 22px;
+  padding-right: 15px;
+}
+
+.form p {
+  font-family: "Comfortaa";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 140%;
+  display: flex;
+  align-items: center;
+  text-transform: uppercase;
+  color: #fafafa;
+  padding-left: 15px;
+}
+
+.form .saveButton p {
+  text-transform: none;
+  padding-left: 0;
+}
+
+.changeNickname {
+  grid-area: Q;
+  background: rgba(49, 49, 49, 0.6);
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+  position: relative;
+  height: 54px;
+}
+
+.nicknameForChange {
+  margin-left: 2px;
+  position: absolute;
+  left: 0;
+}
+
+.imputNickname {
+  align-self: center;
+}
+
+.imputNicknameTrue {
+  background: none;
+  color: white;
+  font-size: 16px;
+  padding: 10px;
+}
+
+.editButton {
+  margin-left: 10px;
+  align-self: center;
+}
+
+.saveButton {
+  align-self: center;
+  margin: 0 5px 0 5px;
+}
+
+.changeNicknameLeftSide {
+}
+
+.grid1 {
+  grid-area: W;
+  background: rgba(49, 49, 49, 0.6);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.grid2 {
+  grid-area: E;
+  background: rgba(49, 49, 49, 0.6);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.grid3 {
+  grid-area: R;
+  background: rgba(49, 49, 49, 0.6);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.grid4 {
+  grid-area: T;
+  background: rgba(49, 49, 49, 0.6);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.grid5 {
+  grid-area: Y;
+  background: rgba(49, 49, 49, 0.6);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.grid6 {
+  grid-area: U;
+  background: rgba(49, 49, 49, 0.6);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.grid7 {
+  grid-area: I;
+  background: rgba(49, 49, 49, 0.6);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.grid8 {
+  grid-area: O;
+  background: rgba(49, 49, 49, 0.6);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.buttons {
+  padding-top: 15px;
+  display: grid;
+  grid-template-columns: 370px 285px;
+  grid-template-areas: "left right";
+  gap: 10px;
+}
+
+.leftButton {
+  grid-area: left;
+}
+
+.rightButton {
+  grid-area: right;
+}
+
+@media screen and (max-width: 1110px) {
+  .container {
+    max-width: 412px;
+    max-height: 301px;
+  }
+  .form {
+    grid-template-columns: 195px 195px;
+    padding: 5px;
+  }
+  .form b {
+    font-size: 16px;
+  }
+  .form p {
+    font-size: 10px;
+  }
+  .nicknameForChange {
+    top: 10;
+  }
+  .nickname {
+    font-size: 26px;
+  }
+  .imputNicknameTrue {
+    background: none;
+    color: white;
+    font-size: 14px;
+  }
+  .buttons {
+    grid-template-columns: 195px 195px;
+    gap: 52px;
+  }
+}
+
+@media screen and (max-width: 768px) {
+}
+
+@media screen and (max-width: 540px) {
+  .container {
+    max-width: 296px;
+    max-height: 187px;
+  }
+  .form {
+    grid-template-columns: 128px 128px;
+    padding: 10px;
+  }
+  .form b {
+    font-size: 14px;
+  }
+  .form p {
+    font-size: 8px;
+  }
+  .changeNickname {
+    height: 35px;
+  }
+  .nicknameForChange {
+    top: 5;
+  }
+  .nickname {
+    font-size: 26px;
+  }
+  .imputNicknameTrue {
+    background: none;
+    color: white;
+    font-size: 12px;
+  }
+  .buttons {
+    grid-template-columns: 128px 128px;
+    gap: 46px;
+  }
+  .changeNickname input{
+    width: 100px;
+  }
+}

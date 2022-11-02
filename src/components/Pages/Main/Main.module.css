@@ -1,46 +1,105 @@
 .root {
-    height: 100vh;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    align-content: center;
-    background-position: center !important;
-    background-repeat: no-repeat !important;
-    background-size: cover !important;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-content: center;
+  background-position: center !important;
+  background-repeat: no-repeat !important;
+  background-size: cover !important;
 }
 
 .main {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-content: center;
-    margin: auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-content: center;
+  margin: 30px auto auto auto;
+}
+
+.mainLog {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-content: center;
+  margin: auto;
+}
+
+.manual {
+  color: white;
+  background-color: rgba(59, 59, 59, 0.4);
+  position: relative;
+}
+.manual__content {
+  padding: 45px;
+}
+.cornerDecorRight {
+  position: absolute;
+  z-index: 1;
+  right: 0;
+  width: 70px;
+  padding: 0;
+}
+.cornerDecorLeft {
+  position: absolute;
+  bottom: 0;
+  z-index: 1;
+  width: 70px;
+  padding: 0;
+}
+.manual__title {
+  display: flex;
+  justify-content: center;
+}
+
+.manual h3 {
+  text-transform: none;
+  margin-left: auto;
+  margin-right: auto;
+  color: #ea944c;
+}
+
+.manual a {
+  color: #ea944c;
+}
+
+ p{
+  justify-content: flex-start !important;
 }
 
 .root h2 {
-    text-align: center;
-    color: white;
-    font-size: 42px;
+  text-align: center;
+  color: white;
+  font-size: 42px;
 }
 
 .decor {
-    text-align: center;
-    margin: auto;
+  text-align: center;
+  margin: auto;
 }
 
-.decor>img {
-    width: 100%;
-    height: auto;
+.decor > img {
+  width: 100%;
+  height: auto;
 }
 
 @media screen and (max-width: 768px) {
-    .decor {
-        width: 90%;
-    }
+  .decor {
+    width: 90%;
+  }
+  .manual__content {
+    padding: 35px;
+  }
 }
 
 @media screen and (max-width: 540px) {
-    .root h2 {
-        font-size: 28px;
-    }
+  .root h2 {
+    font-size: 28px;
+  }
+  .manual__content {
+    padding: 25px;
+  }
+  .cornerDecorLeft,.cornerDecorRight{
+    width: 50px;
+  }
 }

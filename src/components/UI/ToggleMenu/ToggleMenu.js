@@ -28,10 +28,11 @@ export const ToggleMenu = ({address, clicked, setClicked, curLink, setTask}) => 
                             </div>
                         </div>
                         <div className={classes.menuButtonsBlock}>
+                            {/* target="_blank" */}
                             <Link to='/play'><Button active={true} style={curLink == 'play' ? sel : {}} buttonType="middleBtn">Play</Button></Link>
                             <Link to='/wallet'><Button active={true} style={curLink == 'wallet' ? sel : {}} buttonType="middleBtn">Wallet</Button></Link>
                             <Link to='/stake'><Button active={true} style={curLink == 'stake' ? sel : {}} buttonType="middleBtn" onClick={() => {setTask(null); setClicked(false)}}>Stake</Button></Link>
-                            <Link to='/market'><Button active={true} style={curLink == 'market' ? sel : {}} buttonType="middleBtn">Market</Button></Link>
+                            <Link to='/#'><Button active={false} style={{}} buttonType="middleBtn">Market</Button></Link>
                             <Link to='/'><Button active={true} style={{}} buttonType="middleBtn">LogOut</Button></Link>
                         </div>
                     </div>

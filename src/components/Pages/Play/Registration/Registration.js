@@ -10,42 +10,17 @@ import kernelDid from "../../../../utils/candid/kernel.did";
 import Autocomplete from "@mui/material/Autocomplete";
 import Stack from "@mui/material/Autocomplete";
 import { Modal, TextField } from "@mui/material";
-import { canisters, ICcanister, tokenCanisters } from "./../../../../canisters";
-import {
-  fromHexString,
-  principalToAccountIdentifier,
-  tokenIdentifier,
-} from "./../../../../utils/utils";
+import { canisters, ICcanister, kernelCanister, tokenCanisters } from "./../../../../canisters";
+import { fromHexString, getSubAccountArray, principalToAccountIdentifier, tokenIdentifier } from "./../../../../utils/utils";
 import dwarvesDid from "../../../../utils/candid/dwarves.did";
 import { NFTs } from "./../../../Blocks/NFTs/NFTs";
 import { ModalWindow } from "../../../UI/ModalWindow/ModalWindow";
+import { CollectionsForStake } from "../../../Blocks/CollectionsForStake/CollectionsForStake";
 
-const getTokenInfo = async (collection, tid, callback) => {
-  const authClient = await AuthClient.create({
-    _storage: localStorage.getItem("ic-delegation"),
-  });
+import loader from "./../../../../media/loader.gif";
+import { getAllUnsignedAccounts } from "../../../../utils/canisterUtils";
 
-  const agent = new HttpAgent({
-    host: "https://ic0.app",
-    identity: authClient.getIdentity(),
-  });
-
-  const actor = Actor.createActor(kernelDid, {
-    agent: agent,
-    //test canister
-    canisterId: "dwyty-piaaa-aaaan-qagma-cai",
-  });
-  const args = {};
-  args[collection] = tid;
-  //console.log(args);
-  if (args.dwarves != undefined) {
-    await actor.getTokenInfoRare(args).then((data) => {
-      callback(data);
-    });
-  }
-};
-
-const registryAcc = async (selectedCharater, nickname, callback) => {
+const registryAcc = async (selectedCharacter, nickname,subAccArr, callback) => {
   const authClient = await AuthClient.create({
     _storage: localStorage.getItem("ic-delegation"),
   });
@@ -56,160 +31,63 @@ const registryAcc = async (selectedCharater, nickname, callback) => {
   });
   const actor = Actor.createActor(kernelDid, {
     agent: agent,
-    canisterId: "dwyty-piaaa-aaaan-qagma-cai",
+    canisterId: kernelCanister,
   });
 
   let charID;
+  let nickEnd;
 
-  //console.log(selectedCharater);
-  for (let tid in JSON.parse(selectedCharater)) {
+  for (let tid in JSON.parse(selectedCharacter)) {
     charID = tid;
+    if (JSON.parse(selectedCharacter)[tid].metadata.rase == "dwarves") {
+      nickEnd = "#D" + (Number(JSON.parse(selectedCharacter)[tid].index) + 1);
+    }
   }
+  nickname = nickname + nickEnd;
 
-  actor.registryAcc(charID, nickname).then((data) => {
+  actor.registryAcc(charID, nickname,subAccArr).then((data) => {
     callback(data);
   });
 };
 
-const getUnsigned = async (id, callback) => {
-  const authClient = await AuthClient.create({
-    _storage: localStorage.getItem("ic-delegation"),
-  });
+const changeNfts = (nfts, selected) => {
+  let n = JSON.parse(nfts);
 
-  const agent = new HttpAgent({
-    host: "https://ic0.app",
-    identity: authClient.getIdentity(),
-  });
-  const actor = Actor.createActor(kernelDid, {
-    agent: agent,
-    canisterId: "dwyty-piaaa-aaaan-qagma-cai",
-  });
-
-  actor.getUnsigned(id).then((data) => {
-    callback(data);
-  });
-};
-
-const getAllUnsignedAccounts = async (nfts, callback) => {
-  // console.log(nfts)
-  const authClient = await AuthClient.create({
-    _storage: localStorage.getItem("ic-delegation"),
-  });
-
-  const agent = new HttpAgent({
-    host: "https://ic0.app",
-    identity: authClient.getIdentity(),
-  });
-
-  let fb = {};
-
-  const actor = Actor.createActor(dwarvesDid, {
-    agent: agent,
-    canisterId: canisters["dwarves"],
-  });
-
-  await actor
-    .tokens_ext(
-      principalToAccountIdentifier(
-        authClient.getIdentity().getPrincipal().toText(),
-        0
-      )
-    )
-    .then(async (data) => {
-      //console.log(data)
-      if (data && data.ok) {
-        for (let i = 0; i < data.ok.length; i++) {
-          await getUnsigned(
-            tokenIdentifier(canisters["dwarves"], data.ok[i][0]),
-            (dataUnsing) => {
-              //console.log(dataUnsing)
-              if (dataUnsing != undefined) {
-                getTokenInfo("dwarves", dataUnsing[0], (dataTokenInfo) => {
-                  //console.log(dataTokenInfo.tokenInfo[Object.keys(dataTokenInfo.tokenInfo)[0]][0]['rase']) //dwarves
-                  //console.log(dataTokenInfo.tokenInfo[Object.keys(dataTokenInfo.tokenInfo)[0]][0])
-
-                  //console.log(dataTokenInfo)
-                  let nft = {
-                    type: "character",
-                    index: data.ok[i][0],
-                    collection: "dwarves",
-                    rare: dataTokenInfo.tokenRarity[0],
-                    metadata:
-                      dataTokenInfo.tokenInfo[
-                        Object.keys(dataTokenInfo.tokenInfo)[0]
-                      ][0],
-                  };
-                  fb[
-                    tokenIdentifier(
-                      dataTokenInfo.tokenInfo[
-                        Object.keys(dataTokenInfo.tokenInfo)[0]
-                      ][0].ledgerCanister,
-                      data.ok[i][0]
-                    )
-                  ] = nft;
-
-                  if (JSON.stringify(fb) !== nfts) {
-                    callback(fb);
-                  } else {
-                    callback(null);
-                  }
-                });
-              }
-            }
-          );
-        }
-      }
-    });
-  //console.log(fb)
-  if (JSON.stringify(fb) !== nfts) {
-    callback(fb);
-  } else {
-    callback(null);
+  for (let tid in JSON.parse(selected)) {
+    // JSON.parse(selected)[tid].metadata.state = state;
+    delete n[tid];
   }
+  return JSON.stringify(n);
 };
 
-export const Registration = ({ active, setActive, address, nfts,unsignedNFTs,setUnsignedNFTs }) => {
-  const [weaponCount, setWeaponCount] = useState(0);
-  const [NFTsOwned, setNFTsOwned] = useState([]);
-  const [filt, setFilt] = useState(
-    JSON.stringify({ tokens: true, dwarves: true, weapons: true })
-  );
-  const [selectedNFT, setSelectedNFT] = useState(JSON.stringify({}));
-  const [selectedToken, setSelectedToken] = useState(null);
+export const Registration = ({
+  active,
+  setActive,
+  unsignedNFTs,
+  setUnsignedNFTs,
+  setModalWindow,
+  setAccountIsRegistered,
+  setAccountInfoData,
+  setWait,
+  nfts,
+  setNfts,
+}) => {
+  const [filt, setFilt] = useState(JSON.stringify({ tokens: true, dwarves: true, weapons: true }));
   const [selectedWNFTs, setSelectedWNFTs] = useState(JSON.stringify({}));
-
   const [refresh, setRefresh] = useState(true);
-  //const [unsignedNFTs, setUnsignedNFTs] = useState(null);
 
-  const [selectedUnsignedNFT, setSelectedUnsignedNFT] = useState(
-    JSON.stringify({})
-  );
-  const [characterCount, setCharacterCount] = useState(0);
   const [nickname, setNickname] = useState("");
+  const [error, setError] = useState("none");
 
-  const [modalWindow,setModalWindow] =useState(false)
+  const [loading, setLoading] = useState(false);
 
-  // if (address && unsignedNFTs === null && refresh) {
-  //   getAllUnsignedAccounts(unsignedNFTs, (data) => {
-  //     if (data) {
-  //       setUnsignedNFTs(JSON.stringify(data));
-  //     }
-  //   });
-  // }
-
-  // useEffect(() => {
-  //   setTimeout(() => {
-  //     getAllUnsignedAccounts(unsignedNFTs, (data) => {
-  //       // console.log(Object.keys(data).length)
-  //       if (data!={} && data!=null && data )  {
-  //           setUnsignedNFTs(JSON.stringify(data));
-  //           setRefresh(false);
-  //         }
-  //       setRefresh(!refresh);
-  //     });
-  //   }, 10000);
-  // }, [refresh]);
-
+  useEffect(() => {
+    setLoading(true);
+    getAllUnsignedAccounts(unsignedNFTs, (data) => {
+      setUnsignedNFTs(JSON.stringify(data));
+      setLoading(false);
+    });
+  }, [nfts]);
 
   return (
     <div
@@ -218,46 +96,48 @@ export const Registration = ({ active, setActive, address, nfts,unsignedNFTs,set
         setActive(false);
       }}
     >
-      <div
-        className="warning_modal__content warning"
-        onClick={(e) => e.stopPropagation()}
-      >
-        <img
-          className="cornerDecorLeft"
-          src={cornerDecorLeft}
-          alt="Corner Decor"
-        />
-        <img
-          className="cornerDecorRight"
-          src={cornerDecorRight}
-          alt="Corner Decor"
-        />
+      <div className="warning_modal__content warning" onClick={(e) => e.stopPropagation()}>
+        <img className="cornerDecorLeft" src={cornerDecorLeft} alt="Corner Decor" />
+        <img className="cornerDecorRight" src={cornerDecorRight} alt="Corner Decor" />
         <div className="forBorderMarket">
-          <ModalWindow active={modalWindow} setActive={setModalWindow}>
-            <h2>Account successfully registered</h2>
-          </ModalWindow>
-          <NFTs
+          <div className="close__container" onClick={()=>{setActive(false)}}>
+            <span className="close"></span>
+          </div>
+
+          <h2>You must have a Wrapped or Staked NFT character to create an account</h2>
+          <p>
+            You can buy a dwarf on{" "}
+            <a target="_blank" href="https://entrepot.app/marketplace/dwarves">
+              Entrepot
+            </a>
+          </p>
+          {loading ? (
+            <div className="registation__loader">
+              <img src={loader} alt="Wait" />
+            </div>
+          ) : null}
+
+          <CollectionsForStake
             page={"registration"}
-            setWeaponCount={setWeaponCount}
-            setCharacterCount={setCharacterCount}
-            weaponCount={weaponCount}
-            characterCount={characterCount}
-            accounts={NFTsOwned}
-            address={address}
             nfts={unsignedNFTs}
-            filt={filt}
-            selected={selectedNFT}
-            setSelected={setSelectedNFT}
-            setSelectedToken={setSelectedToken}
+            setNfts={setNfts}
+            allNfts={nfts}
+            task={1}
             selectedWNFTs={selectedWNFTs}
             setSelectedWNFTs={setSelectedWNFTs}
-          />
+            filt={filt}
+            setWait={setWait}
 
+            // selected={selectedNFTs}
+            // setSelected={setSelectedNFTs}
+          />
+          <p style={{ display: error, fontSize: "14px", color: "gray" }}>Nickname must not be empty and less than 11 characters</p>
           <TextField
             id="outlined-basic"
             label="Nickname"
             variant="outlined"
-            onChange={(event) => setNickname(event.target.value)}
+            value={nickname}
+            onChange={(event) => setNickname(event.target.value.replace(/[\W_]/gm, ""))}
             style={{
               marginBottom: "30px",
               padding: "0",
@@ -276,27 +156,28 @@ export const Registration = ({ active, setActive, address, nfts,unsignedNFTs,set
               },
             }}
           />
-          {characterCount == 1 ? (
+          {selectedWNFTs !== "{}" ? (
             <Button
               active={true}
               style={{}}
               buttonType="middleBtn"
               onClick={() => {
-                registryAcc(selectedNFT, nickname, (data) => {});
-                setActive(false);
-                setModalWindow(true);
-                setNickname("");
-                setSelectedUnsignedNFT(JSON.stringify({}));
-                setCharacterCount(0);
-                getAllUnsignedAccounts(unsignedNFTs, (data) => {
-                  //console.log(data);
-                  if (data) {
-                    setUnsignedNFTs(JSON.stringify(data));
-                    // setRefresh(false);
-                  }
-                });
+                if (nickname !== "" && nickname.length < 11 && !nickname.includes("_")) {
+                  setWait(true);
+                  registryAcc(selectedWNFTs, nickname,getSubAccountArray(2), (data) => {
+                    console.log(data);
+                    setAccountIsRegistered(true);
+                  });
+                  setActive(false);
+                  setNickname("");
+                  setAccountInfoData(JSON.stringify({}));
+                  setModalWindow(true);
 
-                // console.log(selectedNFT)
+                  setUnsignedNFTs(changeNfts(unsignedNFTs, selectedWNFTs));
+                  setSelectedWNFTs(JSON.stringify({}));
+                } else {
+                  setError("block");
+                }
               }}
             >
               Create

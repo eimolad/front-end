@@ -1,50 +1,127 @@
-.root {
-    width: 100%;
-    position: fixed;
-    display: flex;
-    top: 160px;
-    flex-direction: column;
-    justify-content: center;
-    align-content: center;
-    z-index: 900;
-}
-.root>div {
-    width: 1110px;
-    margin: auto;
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-    align-content: center;
+.filterTitle {
+  color: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-left: auto;
+  margin-right: auto;
+  font-size: 24px;
+  padding-bottom: 10px;
 }
 
+.filterTitle h3 {
+  padding-right: 10px;
+  text-transform: uppercase;
+}
+
+.filterTitle svg {
+  cursor: pointer;
+  text-transform: capitalize;
+  color: #ec832e;
+}
+
+.root {
+  width: 100%;
+  position: fixed;
+  display: flex;
+  top: 160px;
+  flex-direction: column;
+  justify-content: center;
+  align-content: center;
+  z-index: 900;
+}
+.rootNoneFixed {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-content: center;
+  z-index: 900;
+}
+
+.rootNoneFixed > div {
+  width: 1110px;
+  margin: auto;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-content: center;
+}
+
+.root > div {
+  width: 1110px;
+  margin: auto;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-content: center;
+}
+
+
 @media screen and (max-width: 1110px) {
-    .root {
-        top: 160px;
-    }
-    .root>div {
-        width: 760px;
-    }
+  .root {
+    top: 160px;
+  }
+  .root > div {
+    width: 760px;
+  }
+  .rootNoneFixed {
+    top: 160px;
+  }
+  .rootNoneFixed > div {
+    width: 760px;
+  }
+  .accordion {
+    width: 760px;
+  }
 }
 
 @media screen and (max-width: 768px) {
-    .root>div {
-        width: 540px;
-        grid-template-columns: repeat(2, 1fr);
-        grid-row-gap: 10px;
-        display: grid;
-    }
+  .root > div {
+    width: 540px;
+    grid-template-columns: repeat(2, 1fr);
+    grid-row-gap: 10px;
+    display: grid;
+  }
 
-    .root {
-        top: 220px;
-    }
+  .root {
+    top: 220px;
+  }
 
+  .rootNoneFixed > div {
+    width: 540px;
+    grid-template-columns: repeat(2, 1fr);
+    grid-row-gap: 10px;
+    display: grid;
+  }
+  .rootNoneFixed {
+    top: 220px;
+  }
+  .accordion {
+    width: 540px;
+  }
+  .filterTitle h3 {
+    font-size: 24px;
+  }
 }
 
 @media screen and (max-width: 540px) {
-    .root {
-        top: 175px;
-    }
-    .root>div {
-        width: 320px;
-    }
+  .root {
+    top: 175px;
+  }
+  .root > div {
+    width: 320px;
+  }
+  .rootNoneFixed {
+    top: 175px;
+  }
+  .rootNoneFixed > div {
+    width: 320px;
+  }
+  .accordion {
+    width: 340px;
+  }
+  .filterTitle h3 {
+    font-size: 22px;
+  }
 }

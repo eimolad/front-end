@@ -82,11 +82,30 @@
     -webkit-text-fill-color: transparent;
 }
 
+.header>span.ore {
+    margin-right: 0;
+    font-size: 24px;
+    font-weight: bold;
+    text-transform: uppercase;
+    background: linear-gradient(130.7deg, #333231 11.94%, #757270 95.54%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+.header>span.adit {
+    margin-right: 0;
+    font-size: 24px;
+    font-weight: bold;
+    text-transform: uppercase;
+    background: linear-gradient(130.7deg, #880634 11.94%, #9f224e 95.54%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
 .wrapBtn button {
     margin: auto;
 }
 
-.picture {
+.picture, .pictureCoal, .pictureOre, .pictureAdit {
     width: 250px;
     height: 250px;
     position: absolute;
@@ -100,26 +119,18 @@
     align-content: center;
 }
 .pictureCoal {
-    width: 250px;
-    height: 250px;
-    position: absolute;
-    left: -70px;
-    bottom: -35px;
-    border-radius: 50%;
     background: linear-gradient(130.7deg, #490660 11.94%, #79179a 95.54%);
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-content: center;
 }
 
-.picture img {
-    margin: auto;
-    width: 235px;
-    height: 235px;
-    border-radius: 50%;
+.pictureOre {
+    background: linear-gradient(130.7deg, #333231 11.94%, #757270 95.54%);
 }
-.pictureCoal img {
+
+.pictureAdit {
+    background: linear-gradient(130.7deg, #880634 11.94%, #9d385c 95.54%);
+}
+
+.picture img, .pictureCoal img, .pictureOre img, .pictureAdit img {
     margin: auto;
     width: 235px;
     height: 235px;
@@ -141,7 +152,7 @@
         font-size: 14px;
         border-radius: 5px;
     }
-    .picture {
+    .picture, .pictureCoal, .pictureOre, .pictureAdit {
         width: 200px;
         height: 200px;
         position: absolute;
@@ -155,32 +166,24 @@
         align-content: center;
     }
 
-    .picture img {
-        margin: auto;
-        width: 195px;
-        height: 195px;
-        border-radius: 50%;
-    }
     .pictureCoal {
-        width: 200px;
-        height: 200px;
-        position: absolute;
-        left: -80px;
-        bottom: -35px;
-        border-radius: 50%;
-        background: linear-gradient(130.7deg, rgba(210, 67, 40, 1) 11.94%, rgba(236, 131, 46, 1) 95.54%);
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        align-content: center;
+        background: linear-gradient(130.7deg, #490660 11.94%, #79179a 95.54%);
     }
 
-    .pictureCoal img {
+    .pictureOre {
+        background: linear-gradient(130.7deg, #333231 11.94%, #757270 95.54%);
+    }
+
+    .pictureAdit {
+        background: linear-gradient(130.7deg, #880634 11.94%, #9d385c 95.54%);
+    }
+    .picture img, .pictureCoal img, .pictureOre img, .pictureAdit img {
         margin: auto;
         width: 195px;
         height: 195px;
         border-radius: 50%;
     }
+
 }
 
 @media screen and (max-width: 768px) {
@@ -199,7 +202,7 @@
         font-size: 12px;
         border-radius: 5px;
     }
-    .picture {
+    .picture, .pictureCoal, .pictureOre, .pictureAdit {
         width: 200px;
         height: 200px;
         position: absolute;
@@ -211,29 +214,20 @@
         flex-direction: column;
         justify-content: center;
         align-content: center;
-    }
-
-    .picture img {
-        margin: auto;
-        width: 195px;
-        height: 195px;
-        border-radius: 50%;
     }
     .pictureCoal {
-        width: 200px;
-        height: 200px;
-        position: absolute;
-        left: -70px;
-        bottom: -35px;
-        border-radius: 50%;
-        background: linear-gradient(130.7deg, rgba(210, 67, 40, 1) 11.94%, rgba(236, 131, 46, 1) 95.54%);
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        align-content: center;
+        background: linear-gradient(130.7deg, #490660 11.94%, #79179a 95.54%);
     }
 
-    .pictureCoal img {
+    .pictureOre {
+        background: linear-gradient(130.7deg, #333231 11.94%, #757270 95.54%);
+    }
+
+    .pictureAdit {
+        background: linear-gradient(130.7deg, #880634 11.94%, #9d385c 95.54%);
+    }
+
+    .picture img, .pictureCoal img, .pictureOre img, .pictureAdit img {
         margin: auto;
         width: 195px;
         height: 195px;
@@ -271,28 +265,30 @@
     .header>span:first-child {
         font-size: 18px;
     }
-    .picture {
+    .picture, .pictureCoal, .pictureOre, .pictureAdit {
         width: 120px;
         height: 120px;
         left: -40px;
         bottom: -30px;
     }
 
-    .picture img {
-        width: 115px;
-        height: 115px;
-    }
     .pictureCoal {
-        width: 120px;
-        height: 120px;
-        left: -40px;
-        bottom: -30px;
+        background: linear-gradient(130.7deg, #490660 11.94%, #79179a 95.54%);
     }
 
-    .pictureCoal img {
+    .pictureOre {
+        background: linear-gradient(130.7deg, #333231 11.94%, #757270 95.54%);
+    }
+
+    .pictureAdit {
+        background: linear-gradient(130.7deg, #880634 11.94%, #9d385c 95.54%);
+    }
+    .picture img, .pictureCoal img, .pictureOre img, .pictureAdit img {
+        margin: auto;
         width: 115px;
         height: 115px;
     }
+
     .wrapBtn>button {
         width: 100px !important;
         font-size: 10px;

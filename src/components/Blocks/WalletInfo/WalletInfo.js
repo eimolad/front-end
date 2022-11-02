@@ -5,7 +5,7 @@ import { AccountIdentifier, LedgerCanister } from '@dfinity/nns';
 import ICTokens from "../../../utils/candid/ic.did.js"
 import KernelDid from "../../../utils/candid/kernel.did.js"
 import { Principal } from '@dfinity/principal';
-import { eGoldCanister, ICcanister } from '../../../canisters.js';
+import { eGoldCanister, ICcanister, kernelCanister } from '../../../canisters.js';
 import { AuthClient } from '@dfinity/auth-client';
 import { HttpAgent, Actor } from '@dfinity/agent';
 import { principalToAccountIdentifier, fromHexString } from '../../../utils/utils.js';
@@ -51,7 +51,7 @@ const getICBallanceNew = async (ic) => {
 
         const actor = Actor.createActor(KernelDid, {
             agent: agent,
-            canisterId: "ylwtf-viaaa-aaaan-qaddq-cai",
+            canisterId: kernelCanister,
         });
         const user = { 'address': principalToAccountIdentifier(authClient.getIdentity().getPrincipal().toText(), 0)}
         const token = ''

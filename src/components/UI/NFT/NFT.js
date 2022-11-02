@@ -1,14 +1,11 @@
 import React, { useEffect, useState } from "react";
-import {
-  principalToAccountIdentifier,
-  tokenIdentifier,
-} from "../../../utils/utils";
+import { principalToAccountIdentifier, tokenIdentifier } from "../../../utils/utils";
 import "./NFT.css";
 import { AuthClient } from "@dfinity/auth-client";
 import { Actor, HttpAgent } from "@dfinity/agent";
 import { canisters } from "../../../canisters";
 import kernelDid from "../../../utils/candid/kernel.did";
-import wrapped from "./wrapped.png";
+import wrappedImg from "./wrapped.png";
 import swords from "./swords.png";
 
 export const NFT = ({
@@ -27,116 +24,81 @@ export const NFT = ({
   setCharacterCount,
   weaponCount,
   characterCount,
+  wrapped,
 }) => {
-
-  const [nickname,setNickname] = useState('')
+  const [nickname, setNickname] = useState("");
 
   if (page == "play") {
-
     return (
       <>
         <div className={"rootNFT"}>
           <div
-            className={
-              !JSON.parse(selected)[
-                tokenIdentifier(nft.metadata.ledgerCanister, nft.index)
-              ]
-                ? "borderNFT"
-                : "borderNFT ActiveNFT"
-            }
+            className={!JSON.parse(selected)[tokenIdentifier(nft.metadata.ledgerCanister, nft.index)] ? "borderNFT" : "borderNFT ActiveNFT"}
             onClick={() => {
-              if (
-                nft.metadata.state == "none" ||
-                nft.metadata.state == "listed" //TODO: убрать проверку на listed
-              ) {
-                const sl = JSON.parse(selected);
-                setSelectedToken(null);
-                setSelectedWNFTs("{}");
-                if (
-                  sl[tokenIdentifier(nft.metadata.ledgerCanister, nft.index)]
-                ) {
-                  if (nft.type == "character") {
-                    setCharacterCount(characterCount - 1);
-                  }
-                  if (nft.type == "equipment") {
-                    setWeaponCount(weaponCount - 1);
-                  }
-                  delete sl[
-                    tokenIdentifier(nft.metadata.ledgerCanister, nft.index)
-                  ];
-                } else {
-                  if (nft.type == "character") {
-                    setCharacterCount(characterCount + 1);
-                  }
-                  if (nft.type == "equipment") {
-                    setWeaponCount(weaponCount + 1);
-                  }
-                  sl[tokenIdentifier(nft.metadata.ledgerCanister, nft.index)] =
-                    nft;
-                }
-                setSelected(JSON.stringify(sl));
-              }
+              // if (
+              //   nft.metadata.state == "none" ||
+              //   nft.metadata.state == "listed" //TODO: убрать проверку на listed
+              // ) {
+              //   const sl = JSON.parse(selected);
+              //   setSelectedToken(null);
+              //   setSelectedWNFTs("{}");
+              //   if (
+              //     sl[tokenIdentifier(nft.metadata.ledgerCanister, nft.index)]
+              //   ) {
+              //     if (nft.type == "character") {
+              //       setCharacterCount(characterCount - 1);
+              //     }
+              //     if (nft.type == "equipment") {
+              //       setWeaponCount(weaponCount - 1);
+              //     }
+              //     delete sl[
+              //       tokenIdentifier(nft.metadata.ledgerCanister, nft.index)
+              //     ];
+              //   } else {
+              //     if (nft.type == "character") {
+              //       setCharacterCount(characterCount + 1);
+              //     }
+              //     if (nft.type == "equipment") {
+              //       setWeaponCount(weaponCount + 1);
+              //     }
+              //     sl[tokenIdentifier(nft.metadata.ledgerCanister, nft.index)] =
+              //       nft;
+              //   }
+              //   setSelected(JSON.stringify(sl));
+              // }
             }}
           >
-            {nft.metadata.state == "wrapped" ||
-            nft.metadata.state == "stake" ? (
+            {nft.metadata.state == "wrapped" || nft.metadata.state == "stake" ? (
               <>
                 <div
-                  className={
-                    !JSON.parse(selectedWNFTs)[
-                      tokenIdentifier(nft.metadata.ledgerCanister, nft.index)
-                    ]
-                      ? "lock"
-                      : "lock selectedLock"
-                  }
+                  className={!JSON.parse(selectedWNFTs)[tokenIdentifier(nft.metadata.ledgerCanister, nft.index)] ? "lock" : "lock selectedLock"}
                   onClick={() => {
-                    if (nft.metadata.state == "wrapped") {
+                    if (nft.metadata.state == "wrapped" || nft.metadata.state == "stake") {
                       setSelectedToken(null);
                       setSelected(JSON.stringify({}));
                       const slW = JSON.parse(selectedWNFTs);
-                      if (
-                        slW[
-                          tokenIdentifier(
-                            nft.metadata.ledgerCanister,
-                            nft.index
-                          )
-                        ]
-                      ) {
-                        delete slW[
-                          tokenIdentifier(
-                            nft.metadata.ledgerCanister,
-                            nft.index
-                          )
-                        ];
+                      if (slW[tokenIdentifier(nft.metadata.ledgerCanister, nft.index)]) {
+                        if (nft.type == "character") {
+                          setCharacterCount(characterCount - 1);
+                        }
+                        delete slW[tokenIdentifier(nft.metadata.ledgerCanister, nft.index)];
                       } else {
-                        slW[
-                          tokenIdentifier(
-                            nft.metadata.ledgerCanister,
-                            nft.index
-                          )
-                        ] = nft;
+                        if (nft.type == "character") {
+                          setCharacterCount(characterCount + 1);
+                        }
+                        slW[tokenIdentifier(nft.metadata.ledgerCanister, nft.index)] = nft;
                       }
                       setSelectedWNFTs(JSON.stringify(slW));
+                      setSelected(JSON.stringify(slW));
                     }
                   }}
                 >
-                  <div>
-                    <img src={wrapped} alt="Wrapped" />
-                  </div>
-                  <h4>
-                    {nft.metadata.state == "wrapped" ? "Wrapped" : "Staked"}
-                  </h4>
+                  <h4>{nft.metadata.state == "wrapped" ? "Wrapped" : "Staked"}</h4>
                 </div>
               </>
             ) : null}
             <div
-              className={
-                !JSON.parse(selected)[
-                  tokenIdentifier(nft.metadata.ledgerCanister, nft.index)
-                ]
-                  ? "indexDesc"
-                  : "activeDesc"
-              }
+              className={!JSON.parse(selected)[tokenIdentifier(nft.metadata.ledgerCanister, nft.index)] ? "indexDesc" : "activeDesc"}
               onClick={() => {}}
             >
               {nft.name}
@@ -161,15 +123,7 @@ export const NFT = ({
                 </span>
               )}
             </div>
-            <div
-              className={
-                !JSON.parse(selected)[
-                  tokenIdentifier(nft.metadata.ledgerCanister, nft.index)
-                ]
-                  ? "bgCircleNFT"
-                  : "bgCircleNFT SelNFT"
-              }
-            >
+            <div className={!JSON.parse(selected)[tokenIdentifier(nft.metadata.ledgerCanister, nft.index)] ? "bgCircleNFT" : "bgCircleNFT SelNFT"}>
               <img
                 src={
                   "https://" +
@@ -191,91 +145,65 @@ export const NFT = ({
       <>
         <div className={"rootNFT"}>
           <div
-            className={
-              !JSON.parse(selected)[
-                tokenIdentifier(nft.metadata.ledgerCanister, nft.index)
-              ]
-                ? "borderNFT"
-                : "borderNFT ActiveNFT"
-            }
+            className={!JSON.parse(selected)[tokenIdentifier(nft.metadata.ledgerCanister, nft.index)] ? "borderNFT" : "borderNFT ActiveNFT"}
             onClick={() => {
-              if (nft.metadata.state == "none") {
+              if (!wrapped) {
+                //TODO:убрать листед
                 const sl = JSON.parse(selected);
                 setSelectedToken(null);
                 setSelectedWNFTs("{}");
-                if (
-                  sl[tokenIdentifier(nft.metadata.ledgerCanister, nft.index)]
-                ) {
-                  delete sl[
-                    tokenIdentifier(nft.metadata.ledgerCanister, nft.index)
-                  ];
+                if (sl[tokenIdentifier(nft.metadata.ledgerCanister, nft.index)]) {
+                  delete sl[tokenIdentifier(nft.metadata.ledgerCanister, nft.index)];
                 } else {
-                  sl[tokenIdentifier(nft.metadata.ledgerCanister, nft.index)] =
-                    nft;
+                  sl[tokenIdentifier(nft.metadata.ledgerCanister, nft.index)] = nft;
+                }
+                setSelected(JSON.stringify(sl));
+              }
+
+              if (nft.metadata.state == "none" && !wrapped) {
+                //TODO:убрать листед
+                const sl = JSON.parse(selected);
+                setSelectedToken(null);
+                setSelectedWNFTs("{}");
+                if (sl[tokenIdentifier(nft.metadata.ledgerCanister, nft.index)]) {
+                  delete sl[tokenIdentifier(nft.metadata.ledgerCanister, nft.index)];
+                } else {
+                  sl[tokenIdentifier(nft.metadata.ledgerCanister, nft.index)] = nft;
                 }
                 setSelected(JSON.stringify(sl));
               }
             }}
           >
-            {nft.metadata.state == "wrapped" ||
-            nft.metadata.state == "stake" ? (
+            {nft.metadata.state == "wrapped" || nft.metadata.state == "stake" || wrapped  ? (
               <>
                 <div
-                  className={
-                    !JSON.parse(selectedWNFTs)[
-                      tokenIdentifier(nft.metadata.ledgerCanister, nft.index)
-                    ]
-                      ? "lock"
-                      : "lock selectedLock"
-                  }
+                  className={!JSON.parse(selectedWNFTs)[tokenIdentifier(nft.metadata.ledgerCanister, nft.index)] ? "lock" : "lock selectedLock"}
                   onClick={() => {
-                    if (nft.metadata.state == "wrapped") {
+                    if (nft.metadata.state == "wrapped" || wrapped) {
                       setSelectedToken(null);
                       setSelected(JSON.stringify({}));
                       const slW = JSON.parse(selectedWNFTs);
-                      if (
-                        slW[
-                          tokenIdentifier(
-                            nft.metadata.ledgerCanister,
-                            nft.index
-                          )
-                        ]
-                      ) {
-                        delete slW[
-                          tokenIdentifier(
-                            nft.metadata.ledgerCanister,
-                            nft.index
-                          )
-                        ];
+                      if (slW[tokenIdentifier(nft.metadata.ledgerCanister, nft.index)]) {
+                        delete slW[tokenIdentifier(nft.metadata.ledgerCanister, nft.index)];
                       } else {
-                        slW[
-                          tokenIdentifier(
-                            nft.metadata.ledgerCanister,
-                            nft.index
-                          )
-                        ] = nft;
+                        slW[tokenIdentifier(nft.metadata.ledgerCanister, nft.index)] = nft;
                       }
                       setSelectedWNFTs(JSON.stringify(slW));
                     }
                   }}
                 >
                   <div>
-                    <img src={wrapped} alt="Wrapped" />
+                    <img src={wrappedImg} alt="Wrapped" />
                   </div>
                   <h4>
-                    {nft.metadata.state == "wrapped" ? "Wrapped" : "Staked"}
+                    {nft.metadata.state == "wrapped" || wrapped ? "Wrapped" : "Staked"}
+                    {/* {wrapped ? "Wrapped" : "Staked"} */}
                   </h4>
                 </div>
               </>
             ) : null}
             <div
-              className={
-                !JSON.parse(selected)[
-                  tokenIdentifier(nft.metadata.ledgerCanister, nft.index)
-                ]
-                  ? "indexDesc"
-                  : "activeDesc"
-              }
+              className={!JSON.parse(selected)[tokenIdentifier(nft.metadata.ledgerCanister, nft.index)] ? "indexDesc" : "activeDesc"}
               onClick={() => {}}
             >
               #{nft.index + 1}
@@ -300,15 +228,7 @@ export const NFT = ({
                 </span>
               )}
             </div>
-            <div
-              className={
-                !JSON.parse(selected)[
-                  tokenIdentifier(nft.metadata.ledgerCanister, nft.index)
-                ]
-                  ? "bgCircleNFT"
-                  : "bgCircleNFT SelNFT"
-              }
-            >
+            <div className={!JSON.parse(selected)[tokenIdentifier(nft.metadata.ledgerCanister, nft.index)] ? "bgCircleNFT" : "bgCircleNFT SelNFT"}>
               <img
                 src={
                   "https://" +
@@ -326,17 +246,11 @@ export const NFT = ({
   }
 
   if (page == "registration") {
-    return (
+    return nft.metadata.state == "wrapped" || nft.metadata.state == "stake" ? (
       <>
         <div className={"rootNFT"}>
           <div
-            className={
-              !JSON.parse(selected)[
-                tokenIdentifier(nft.metadata.ledgerCanister, nft.index)
-              ]
-                ? "borderNFT"
-                : "borderNFT ActiveNFT"
-            }
+            className={!JSON.parse(selected)[tokenIdentifier(nft.metadata.ledgerCanister, nft.index)] ? "borderNFT" : "borderNFT ActiveNFT"}
             onClick={() => {
               if (
                 nft.metadata.state == "none" ||
@@ -345,18 +259,14 @@ export const NFT = ({
                 const sl = JSON.parse(selected);
                 setSelectedToken(null);
                 setSelectedWNFTs("{}");
-                if (
-                  sl[tokenIdentifier(nft.metadata.ledgerCanister, nft.index)]
-                ) {
+                if (sl[tokenIdentifier(nft.metadata.ledgerCanister, nft.index)]) {
                   if (nft.type == "character") {
                     setCharacterCount(characterCount - 1);
                   }
                   if (nft.type == "equipment") {
                     setWeaponCount(weaponCount - 1);
                   }
-                  delete sl[
-                    tokenIdentifier(nft.metadata.ledgerCanister, nft.index)
-                  ];
+                  delete sl[tokenIdentifier(nft.metadata.ledgerCanister, nft.index)];
                 } else {
                   if (nft.type == "character") {
                     setCharacterCount(characterCount + 1);
@@ -364,72 +274,43 @@ export const NFT = ({
                   if (nft.type == "equipment") {
                     setWeaponCount(weaponCount + 1);
                   }
-                  sl[tokenIdentifier(nft.metadata.ledgerCanister, nft.index)] =
-                    nft;
+                  sl[tokenIdentifier(nft.metadata.ledgerCanister, nft.index)] = nft;
                 }
                 setSelected(JSON.stringify(sl));
               }
             }}
           >
-            {nft.metadata.state == "wrapped" ||
-            nft.metadata.state == "stake" ? (
+            {nft.metadata.state == "wrapped" || nft.metadata.state == "stake" ? (
               <>
                 <div
-                  className={
-                    !JSON.parse(selectedWNFTs)[
-                      tokenIdentifier(nft.metadata.ledgerCanister, nft.index)
-                    ]
-                      ? "lock"
-                      : "lock selectedLock"
-                  }
+                  className={!JSON.parse(selectedWNFTs)[tokenIdentifier(nft.metadata.ledgerCanister, nft.index)] ? "lock" : "lock selectedLock"}
                   onClick={() => {
-                    if (nft.metadata.state == "wrapped") {
+                    if (nft.metadata.state == "wrapped" || nft.metadata.state == "stake") {
                       setSelectedToken(null);
                       setSelected(JSON.stringify({}));
                       const slW = JSON.parse(selectedWNFTs);
-                      if (
-                        slW[
-                          tokenIdentifier(
-                            nft.metadata.ledgerCanister,
-                            nft.index
-                          )
-                        ]
-                      ) {
-                        delete slW[
-                          tokenIdentifier(
-                            nft.metadata.ledgerCanister,
-                            nft.index
-                          )
-                        ];
+                      if (slW[tokenIdentifier(nft.metadata.ledgerCanister, nft.index)]) {
+                        if (nft.type == "character") {
+                          setCharacterCount(characterCount - 1);
+                        }
+                        delete slW[tokenIdentifier(nft.metadata.ledgerCanister, nft.index)];
                       } else {
-                        slW[
-                          tokenIdentifier(
-                            nft.metadata.ledgerCanister,
-                            nft.index
-                          )
-                        ] = nft;
+                        if (nft.type == "character") {
+                          setCharacterCount(characterCount + 1);
+                        }
+                        slW[tokenIdentifier(nft.metadata.ledgerCanister, nft.index)] = nft;
                       }
                       setSelectedWNFTs(JSON.stringify(slW));
+                      setSelected(JSON.stringify(slW));
                     }
                   }}
                 >
-                  <div>
-                    <img src={wrapped} alt="Wrapped" />
-                  </div>
-                  <h4>
-                    {nft.metadata.state == "wrapped" ? "Wrapped" : "Staked"}
-                  </h4>
+                  <h4>{nft.metadata.state == "wrapped" ? "Wrapped" : "Staked"}</h4>
                 </div>
               </>
             ) : null}
             <div
-              className={
-                !JSON.parse(selected)[
-                  tokenIdentifier(nft.metadata.ledgerCanister, nft.index)
-                ]
-                  ? "indexDesc"
-                  : "activeDesc"
-              }
+              className={!JSON.parse(selected)[tokenIdentifier(nft.metadata.ledgerCanister, nft.index)] ? "indexDesc" : "activeDesc"}
               onClick={() => {}}
             >
               #{nft.index + 1}
@@ -454,15 +335,7 @@ export const NFT = ({
                 </span>
               )}
             </div>
-            <div
-              className={
-                !JSON.parse(selected)[
-                  tokenIdentifier(nft.metadata.ledgerCanister, nft.index)
-                ]
-                  ? "bgCircleNFT"
-                  : "bgCircleNFT SelNFT"
-              }
-            >
+            <div className={!JSON.parse(selected)[tokenIdentifier(nft.metadata.ledgerCanister, nft.index)] ? "bgCircleNFT" : "bgCircleNFT SelNFT"}>
               <img
                 src={
                   "https://" +
@@ -476,6 +349,8 @@ export const NFT = ({
           </div>
         </div>
       </>
+    ) : (
+      <></>
     );
   }
 };

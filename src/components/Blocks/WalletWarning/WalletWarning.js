@@ -10,9 +10,9 @@ import loader from "../../../media/loader.gif";
 
 
 export const WalletWarning = ({active, setActive, setRefresh, selected, selToken} ) => {
-    const [inputVal, setInputVal] = useState('');
-    const [val, setVal] = useState(0)
-    const [clicked, setClicked] = useState(false);
+    const [inputVal, setInputVal] = React.useState('');
+    const [val, setVal] = React.useState(0)
+    const [clicked, setClicked] = React.useState(false);
 
     return (
         <div className={active ? "modal act" : "modal"}  onClick={() => {  }}>

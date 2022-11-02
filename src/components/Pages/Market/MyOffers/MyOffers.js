@@ -1,20 +1,11 @@
 import React, { useState, useEffect } from "react";
-import { Actor, HttpAgent } from "@dfinity/agent";
-import { AuthClient } from "@dfinity/auth-client";
-import kernelDid from "../../../../utils/candid/kernel.did";
-import {
-  clipboardCopy,
-  getAddress,
-  tokenIdentifier,
-} from "../../../../utils/utils";
 import classes from "./MyOffers.module.css";
 
-export const MyOffers = ({ purpose }) => {
-  if (purpose == "Sell") {
+export const MyOffers = ({ }) => {
     return (
       <div className={classes.root}>
         <div className={classes.closeButton}>
-          <div className={classes.close}>x</div>
+          <div className={classes.close}>&#x2716;</div>
         </div>
         <div className={classes.titleDescription}>
           <p>Dwarf 1</p>
@@ -27,9 +18,4 @@ export const MyOffers = ({ purpose }) => {
         </div>
       </div>
     );
-  }
-
-  if (purpose == "Buy") {
-    return <div className={classes.root}></div>;
-  }
 };

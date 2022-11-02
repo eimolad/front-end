@@ -1,0 +1,84 @@
+.root {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-content: center;
+    height: 100vh;
+    background-size: cover;
+    background-repeat: no-repeat;
+}
+
+
+.window {
+    width: 800px;
+    height: 600px;
+    padding: 15px;
+    background-color: rgba(13,13,13,0.7);
+    margin: auto;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-content: center;
+}
+
+.window h4 {
+    font-size: 36px;
+    font-weight: bold;
+    text-align: center;
+    text-transform: capitalize;
+    background: linear-gradient(130.7deg, #D24328 11.94%, #EC832E 95.54%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    text-fill-color: transparent;
+}
+
+.window p {
+    text-align: center;
+    color: white;
+    font-size: 21px;
+}
+.border {
+    padding: 15px;
+    height: 100%;
+    border: 1px solid #424141;
+    margin: auto;
+    /*display: flex;*/
+    /*flex-direction: column;*/
+    /*justify-content: center;*/
+    /*align-content: center;*/
+    text-align: center;
+}
+.window .cornerLeft {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+}
+
+.window .cornerRight{
+    position: absolute;
+    top: 0;
+    right: 0;
+}
+
+.progressBar {
+    border-radius: 3px;
+    width: 60%;
+    border: 2px solid #D34728;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-content: center;
+    padding: 2px;
+    margin: auto;
+}
+.progressBar>span {
+    border-radius: 2px;
+    margin: auto auto auto 0;
+    height: 20px;
+    background: linear-gradient(130.7deg, #D24328 11.94%, #EC832E 95.54%);
+}
+
+.button {
+    margin: auto;
+}
