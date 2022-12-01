@@ -14,6 +14,8 @@ import classes from "../../Pages/Wallet/Wallet.module.css";
 import loader from "../../../media/loader.gif";
 import cornerRight from "./cornerDecorRight.png";
 import cornerLeft from "./cornerDecorLeft.png";
+import { tokenTransfer } from "../../../utils/canisterUtils";
+import { NFTsOfCollect } from "../../Blocks/NFTsOfCollect/NFTsOfCollect";
 
 const NFTsSend = async (selected, tto, subAccArr, callback) => {
   const authClient = await AuthClient.create();
@@ -37,43 +39,6 @@ const NFTsSend = async (selected, tto, subAccArr, callback) => {
   });
 };
 
-const tokenTransfer = async (token, tto, amount, callback) => {
-  const authClient = await AuthClient.create();
-
-  const agent = new HttpAgent({
-    host: "https://boundary.ic0.app",
-    identity: authClient.getIdentity(),
-  });
-
-  if (token === "icp") {
-    const actor = Actor.createActor(icDid, {
-      agent: agent,
-      canisterId: ICcanister,
-    });
-    const fee = 10000;
-    const args = {
-      to: fromHexString(tto), //Should be an address
-      fee: { e8s: fee },
-      memo: 0,
-      from_subaccount: [getSubAccountArray(0)],
-      created_at_time: [],
-      amount: { e8s: amount * 100000000 },
-    };
-    await actor.transfer(args).then((res) => {
-      callback(res);
-    });
-  } else {
-    const actor = Actor.createActor(kernelDid, {
-      agent: agent,
-      canisterId: kernelCanister,
-    });
-    console.log(token, tto, parseInt(amount));
-    await actor.transfer_tokens(token, tto, parseInt(amount)).then((data) => {
-      callback(data);
-    });
-  }
-};
-
 const changeNfts = (nfts, selected) => {
   let n = JSON.parse(nfts);
 
@@ -83,6 +48,44 @@ const changeNfts = (nfts, selected) => {
   }
   return JSON.stringify(n);
 };
+
+// export const tokenTransferTest = async (token, canisterId, from_owner, from_subaccounttoken, tto, amount, callback) => {
+//   const authClient = await AuthClient.create();
+
+//   const agent = new HttpAgent({
+//     host: "https://boundary.ic0.app",
+//     identity: authClient.getIdentity(),
+//   });
+
+//   if (token === "icp") {
+//     const actor = Actor.createActor(icDid, {
+//       agent: agent,
+//       canisterId: ICcanister,
+//     });
+//     const fee = 10000;
+//     const args = {
+//       to: fromHexString(tto), //Should be an address
+//       fee: { e8s: fee },
+//       memo: 0,
+//       from_subaccount: [getSubAccountArray(0)],
+//       created_at_time: [],
+//       amount: { e8s: amount * 100000000 },
+//     };
+//     await actor.transfer(args).then((res) => {
+//       callback(res);
+//     });
+//   } else {
+//     const actor = Actor.createActor(kernelDid, {
+//       agent: agent,
+//       canisterId: kernelCanister,
+//     });
+
+//     console.log(canisterId, from_owner, from_subaccounttoken, tto, parseInt(amount));
+//     await actor.transfer_tokens(canisterId, from_owner, from_subaccounttoken, tto, parseInt(amount)).then((data) => {
+//       callback(data);
+//     });
+//   }
+// };
 
 export const SendForm = ({ active, nfts, setActive, balances, setBalances, setNFTs, selected, selToken }) => {
   const [inputVal, setInputVal] = useState("");
@@ -190,25 +193,46 @@ export const SendForm = ({ active, nfts, setActive, balances, setBalances, setNF
                   setClicked(false);
                   if (!selToken) {
                     setWait(true);
-                    NFTsSend(selected, validatePrincipal(inputVal) ? principalToAccountIdentifier(inputVal, 0) : inputVal,getSubAccountArray(0), (res) => {
-                      setWait(false);
-                      setActive(false);
-                      setNFTs(changeNfts(nfts, selected));
-                      setInputVal("");
-                      console.log(res)
-                    });
+                    NFTsSend(
+                      selected,
+                      validatePrincipal(inputVal) ? principalToAccountIdentifier(inputVal, 0) : inputVal,
+                      getSubAccountArray(0),
+                      (res) => {
+                        setWait(false);
+                        setActive(false);
+                        setNFTs(changeNfts(nfts, selected));
+                        setInputVal("");
+                        console.log(res);
+                      }
+                    );
                   } else {
                     setWait(true);
-                    tokenTransfer(selToken, validatePrincipal(inputVal) ? principalToAccountIdentifier(inputVal, 0) : inputVal, val, (res) => {
-                      console.log(res);
-                      setWait(false);
-                      let cBal = JSON.parse(balances);
-                      cBal[selToken] = cBal[selToken] - val;
-                      setBalances(JSON.stringify(cBal));
-                      setInputVal("");
-                      setVal(0);
-                      setActive(false);
-                    });
+                    // tokenTransfer(selToken, validatePrincipal(inputVal) ? principalToAccountIdentifier(inputVal, 0) : inputVal, val, (res) => {
+                    //   console.log(res);
+                    //   setWait(false);
+                    //   let cBal = JSON.parse(balances);
+                    //   cBal[selToken] = cBal[selToken] - val;
+                    //   setBalances(JSON.stringify(cBal));
+                    //   setInputVal("");
+                    //   setVal(0);
+                    //   setActive(false);
+                    // });
+                    tokenTransfer(
+                      selToken,
+                      getSubAccountArray(0),
+                      validatePrincipal(inputVal) ? principalToAccountIdentifier(inputVal, 0) : inputVal,
+                      val,
+                      (res) => {
+                        console.log(res);
+                        setWait(false);
+                        let cBal = JSON.parse(balances);
+                        cBal[selToken] = cBal[selToken] - val;
+                        setBalances(JSON.stringify(cBal));
+                        setInputVal("");
+                        setVal(0);
+                        setActive(false);
+                      }
+                    );
                   }
                 }}
                 buttonType="middleBtn"

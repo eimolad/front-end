@@ -1,20 +1,23 @@
 import React, { useEffect, useState } from "react";
-import Unity, { UnityContext } from "react-unity-webgl";
+import { UnityContext } from "react-unity-webgl";
 import classes from "./Play.module.css";
 import { getAddress, clipboardCopy, getSubAccountArray, getPrincipal } from "./../../../utils/utils";
 import { MenuBar } from "../../Blocks/MenuBar/MenuBar";
 import { Button } from "../../UI/Button/Button";
 import { Registration } from "./Registration/Registration";
-import { tokenCanisters } from "./../../../canisters";
+import { kernelCanister, tokenCanisters } from "./../../../canisters";
 import { ModalWindow } from "../../UI/ModalWindow/ModalWindow";
 import copy from "./copy.png";
 import loader from "../../../media/loader.gif";
 import { CollectionsForStake } from "../../Blocks/CollectionsForStake/CollectionsForStake";
 import { AccountInfo } from "../../Blocks/AccountInfo/AccountInfo";
 import { Game } from "../Game/Game";
-import { Tokens } from "../../Blocks/Tokens/Tokens";
 import { lootUsed, rewardLoot, saveAttributes, saveProgres, startGame } from "../../../utils/gameUtils";
-import { getAccountBalance, getAllSignedAccounts } from "../../../utils/canisterUtils";
+import { getAccountBalance, getAllMiniNFTs, getAllNFTs, getAllSignedAccounts } from "../../../utils/canisterUtils";
+import { Storage } from "./Storage/Storage";
+import { AuthClient } from "@dfinity/auth-client";
+import { Actor, HttpAgent } from "@dfinity/agent";
+import kernelDid from "../../../utils/candid/kernel.did";
 
 const unityContext = new UnityContext({
   loaderUrl: "./webgl/build/eimolad.loader.js",
@@ -31,6 +34,24 @@ function sendAttributesMessage(message) {
   unityContext.send("Canvas_Game", "Text_Message_Attributes", message);
 }
 
+export const mintNft = async (callback) => {
+  const authClient = await AuthClient.create();
+
+  const agent = new HttpAgent({
+    host: "https://boundary.ic0.app",
+    identity: authClient.getIdentity(),
+  });
+
+  const actor = Actor.createActor(kernelDid, {
+    agent: agent,
+    canisterId: kernelCanister,
+  });
+
+  await actor.mintNft("6spgj-fiaaa-aaaan-qa4sa-cai", "f335c96f18eb2c5f727ce2732795f7b42e1c21495f9200f0f535bb04f2fd4c74").then((data) => {
+    callback(data);
+  });
+};
+
 export const Play = ({
   address,
   setAddress,
@@ -43,8 +64,12 @@ export const Play = ({
   setUnsignedNFTs,
   principal,
   setPrincipal,
+  balances,
+  setBalances,
+  updateStateNFTs,
+  miniNfts,
 }) => {
-  if (!address || address == "1c7a48ba6a562aa9eaa2481a9049cdf0433b9738c992d698c31d8abf89cadc79") {
+  if (!address || address === "1c7a48ba6a562aa9eaa2481a9049cdf0433b9738c992d698c31d8abf89cadc79") {
     if (localStorage.getItem("ic-delegation") && localStorage.getItem("ic-delegation") !== "" && localStorage.getItem("ic-identity") !== "") {
       getAddress((addr) => setAddress(addr));
     } else {
@@ -71,7 +96,7 @@ export const Play = ({
 
   const [modalWindow, setModalWindow] = useState(false);
   const [errorModal, setErrorModal] = useState(false);
-  const [inventoryModal, setInventoryModal] = useState(false);
+  const [mobileErrorModal, setMobileErrorModal] = useState(false);
 
   const [wait, setWait] = useState(false);
   const [progression, setProgression] = useState(0);
@@ -80,9 +105,14 @@ export const Play = ({
   const [accountIsRegistered, setAccountIsRegistered] = useState(false);
   const [accountInfoData, setAccountInfoData] = useState("{}");
 
-  const [accountBalance, setAccountBalance] = useState(null);
+  const [characterBalance, setCharacterBalance] = useState(null);
+  const [characterNfts, setCharacterNfts] = useState(null);
+  const [characterMiniNfts, setCharacterMiniNfts] = useState(null);
 
   const [displayP, setDisplayP] = useState("none");
+
+  const [displayStorage, setDisplayStorage] = useState(false);
+  const [storageLoading, setStorageLoading] = useState(true);
 
   useEffect(() => {
     window.onload = () => {
@@ -92,13 +122,44 @@ export const Play = ({
     };
   });
 
+  const updateCharacterBalance = () => {
+    setStorageLoading(true);
+    // console.log(JSON.parse(selectedWNFTs));
+    setCurrentMintNumber(JSON.parse(selectedWNFTs)[Object.keys(JSON.parse(selectedWNFTs))[0]]?.index);
+    // console.log(JSON.parse(selectedWNFTs)[Object.keys(JSON.parse(selectedWNFTs))[0]]?.index);
+    // console.log(currentMintNumber);
+    getAccountBalance(characterBalance, 1e6 + JSON.parse(selectedWNFTs)[Object.keys(JSON.parse(selectedWNFTs))[0]]?.index + 1, (data) => {
+      if (data) {
+        setCharacterBalance(JSON.stringify(data));
+        // console.log(data);
+      }
+      setStorageLoading(false);
+    });
+
+    getAllNFTs(nfts, 0, (data) => {
+      if (data) {
+        setNfts(JSON.stringify(data));
+        // console.log(data);
+      }
+    });
+
+    getAllNFTs(characterNfts, 1e6 + JSON.parse(selectedWNFTs)[Object.keys(JSON.parse(selectedWNFTs))[0]]?.index + 1, (data) => {
+      if (data) {
+        setCharacterNfts(JSON.stringify(data));
+        // console.log(data);
+      }
+    });
+    getAllMiniNFTs(characterMiniNfts, 1e6 + JSON.parse(selectedWNFTs)[Object.keys(JSON.parse(selectedWNFTs))[0]]?.index + 1, (data) => {
+      if (data) {
+        setCharacterMiniNfts(JSON.stringify(data));
+        // console.log(data);
+      }
+    });
+  };
+
   useEffect(() => {
     if (selectedWNFTs !== JSON.stringify({})) {
-      setCurrentMintNumber(JSON.parse(selectedWNFTs)[Object.keys(JSON.parse(selectedWNFTs))[0]]?.index);
-      getAccountBalance(accountBalance, 1e6 + currentMintNumber + 1, (data) => {
-        setAccountBalance(JSON.stringify(data));
-        console.log(data);
-      });
+      updateCharacterBalance();
     }
   }, [selectedWNFTs]);
 
@@ -106,7 +167,7 @@ export const Play = ({
     setAccountIsRegistered(false);
     getAllSignedAccounts(signedAccounts, (data) => {
       //console.log(data);
-      if (data !== null && data.length != 0) {
+      if (data !== null && data.length !== 0) {
         setSignedAccounts(JSON.stringify(data));
         setWait(false);
       }
@@ -119,9 +180,11 @@ export const Play = ({
       if (data === "player?") {
         let dataForGame;
         if (startGameData !== "empty data") dataForGame = JSON.parse(startGameData)[0];
+
         console.log(JSON.stringify(dataForGame));
         sendPlayerDataMessage(JSON.stringify(dataForGame));
       }
+
       if (data.includes("pickedUpTeleport")) {
         let amount = Number(data.split("=")[1]);
 
@@ -218,13 +281,8 @@ export const Play = ({
               <p>Please make sure your character is wrapped</p>
             </ModalWindow>
 
-            <ModalWindow active={inventoryModal} setActive={setInventoryModal}>
-              <h2>Account Inventory</h2>
-              <Tokens decoration={false} balances={accountBalance} />
-              {accountBalance !== null ||
-              accountBalance == `{"icp":0,"gold":0,"coal":0,"ore":0,"adit":0,"lgs":0,"leather":0,"bronze":0,"tp":0}` ? null : (
-                <img style={{ paddingTop: "55px" }} className={classes.miniLoading} src={loader} alt="loader" />
-              )}
+            <ModalWindow active={mobileErrorModal} setActive={setMobileErrorModal}>
+              <h2>Only available on PC</h2>
             </ModalWindow>
 
             <Registration
@@ -241,6 +299,7 @@ export const Play = ({
             ></Registration>
             <MenuBar address={address} clicked={clickedMenu} setClicked={setClickedMenu} curLink="Play" setTask={setTask}>
               <div className={classes.buttons}>
+
                 <Button
                   active={true}
                   style={{}}
@@ -295,74 +354,107 @@ export const Play = ({
                 </div>
               </div>
             </MenuBar>
-            <div>
-              <h2 className={classes.depth} title="Select your account">
-                Select your account
-              </h2>
-            </div>
-            {wait ? (
-              <div className={classes.wait}>
-                <img src={loader} alt="Wait" />
-              </div>
-            ) : null}
-            {signedAccounts === "{}" || signedAccounts === null ? (
-              <div className={classes.emptyAccounts}>
-                <p>You have to have wrapped NFT Hero</p>
-                <div style={{ display: displayP === "block" ? "none" : "flex" }} className={classes.miniLoading__container}>
-                  <img className={classes.miniLoading} src={loader} alt="loader" />
-                </div>
-                <p style={{ display: displayP }}>
-                  It seems your cache is full. Click <a onClick={() => window.location.assign("/play?js=" + Math.ceil(Math.random() * 1000))}>here</a>
-                </p>
-              </div>
-            ) : (
-              <div>
-                <CollectionsForStake
-                  page={"play"}
-                  nfts={signedAccounts}
-                  task={1}
-                  selectedWNFTs={selectedWNFTs}
-                  setSelectedWNFTs={setSelectedWNFTs}
-                  filt={filt}
-                  setAccountInfoData={setAccountInfoData}
-                />
-              </div>
-            )}
 
-            {selectedWNFTs != "{}" ? (
-              <div className={classes.accountInfoContainer}>
-                <div className={classes.accountAsset}>
-                  <iframe
-                    id="iframeName"
-                    scrolling="no"
-                    frameBorder={0}
-                    className={classes.iframe}
-                    src={
-                      "https://" +
-                      JSON.parse(selectedWNFTs)[Object.keys(JSON.parse(selectedWNFTs))[0]].metadata.ledgerCanister +
-                      ".raw.ic0.app/?cc=0&tokenid=" +
-                      Object.keys(JSON.parse(selectedWNFTs))[0]
-                    }
-                    alt=""
-                  ></iframe>
+            {displayStorage === false ? (
+              <>
+                <div>
+                  <h2 className={classes.depth} title="Select your account">
+                    Select your account
+                  </h2>
                 </div>
-                <div className={classes.accountInfo}>
-                  <AccountInfo
-                    setSelectedWNFTs={setSelectedWNFTs}
-                    setWait={setWait}
-                    setSignedAccounts={setSignedAccounts}
-                    signedAccounts={signedAccounts}
-                    account={accountInfoData}
-                    setAccountInfoData={setAccountInfoData}
-                    accountInfoData={accountInfoData}
-                    inventoryOnClick={() => {
-                      setInventoryModal(true);
-                    }}
-                  ></AccountInfo>
-                </div>
-              </div>
+                {wait ? (
+                  <div className={classes.wait}>
+                    <img src={loader} alt="Wait" />
+                  </div>
+                ) : null}
+                {signedAccounts === "{}" || signedAccounts === null ? (
+                  <div className={classes.emptyAccounts}>
+                    <p>You have to have wrapped NFT Hero</p>
+                    <div style={{ display: displayP === "block" ? "none" : "flex" }} className={classes.miniLoading__container}>
+                      <img className={classes.miniLoading} src={loader} alt="loader" />
+                    </div>
+                    <p style={{ display: displayP }}>
+                      It seems your cache is full. Click{" "}
+                      <a onClick={() => window.location.assign("/play?js=" + Math.ceil(Math.random() * 1000))}>here</a>
+                    </p>
+                  </div>
+                ) : (
+                  <div>
+                    <CollectionsForStake
+                      page={"play"}
+                      nfts={signedAccounts}
+                      task={1}
+                      selectedWNFTs={selectedWNFTs}
+                      setSelectedWNFTs={setSelectedWNFTs}
+                      filt={filt}
+                      setAccountInfoData={setAccountInfoData}
+                    />
+                  </div>
+                )}
+
+                {selectedWNFTs !== "{}" ? (
+                  <div className={classes.accountInfoContainer}>
+                    <div className={classes.accountAsset}>
+                      <iframe
+                        id="iframeName"
+                        scrolling="no"
+                        frameBorder={0}
+                        className={classes.iframe}
+                        title="iframe"
+                        src={
+                          "https://" +
+                          JSON.parse(selectedWNFTs)[Object.keys(JSON.parse(selectedWNFTs))[0]].metadata.ledgerCanister +
+                          ".raw.ic0.app/?cc=0&tokenid=" +
+                          Object.keys(JSON.parse(selectedWNFTs))[0]
+                        }
+                        alt=""
+                      ></iframe>
+                    </div>
+                    <div className={classes.accountInfo}>
+                      <AccountInfo
+                        setSelectedWNFTs={setSelectedWNFTs}
+                        setWait={setWait}
+                        setSignedAccounts={setSignedAccounts}
+                        signedAccounts={signedAccounts}
+                        account={accountInfoData}
+                        setAccountInfoData={setAccountInfoData}
+                        accountInfoData={accountInfoData}
+                        inventoryOnClick={() => {
+                          if (window.screen.width >= 1100) {
+                            setDisplayStorage(true);
+                          } else {
+                            setMobileErrorModal(true);
+                          }
+                        }}
+                      ></AccountInfo>
+                    </div>
+                  </div>
+                ) : (
+                  <></>
+                )}
+              </>
             ) : (
-              <></>
+              <Storage
+                principal={principal}
+                balances={balances}
+                setBalances={setBalances}
+                characterBalance={characterBalance}
+                characterNfts={characterNfts}
+                characterMiniNfts={characterMiniNfts}
+                nfts={nfts}
+                miniNfts={miniNfts}
+                setDisplayStorage={setDisplayStorage}
+                storageLoading={storageLoading}
+                updateCharacterBalance={updateCharacterBalance}
+                selectedNFT={selectedWNFTs !== "{}" ? selectedWNFTs : null}
+                characterAddress={
+                  selectedWNFTs !== "{}"
+                    ? // ? principalToAccountIdentifier(principal, 1e6 + JSON.parse(selectedWNFTs)[Object.keys(JSON.parse(selectedWNFTs))[0]]?.index + 1)
+                      1e6 + JSON.parse(selectedWNFTs)[Object.keys(JSON.parse(selectedWNFTs))[0]]?.index + 1
+                    : null
+                }
+                updateStateNFTs={updateStateNFTs}
+              />
             )}
           </>
         ) : (

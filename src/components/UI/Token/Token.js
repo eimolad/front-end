@@ -10,6 +10,8 @@ import lgs from "./lgs.png";
 import leather from "./eLeather.png";
 import bronze from "./bronze.png";
 import tp from "./tp.png";
+import tpSVG from "./tp.svg";
+
 
 import { Tooltip } from "@mui/material";
 
@@ -94,7 +96,7 @@ export const Token = ({ name, balances, selected, setSelected, setSelectedNFTs, 
               ) : name === "bronze" ? (
                 <img className={"tokenImg"} src={bronze} alt={name} />
               ) : name === "tp" ? (
-                <img className={"tokenImg"} src={tp} alt={name} />
+                <img className={"tokenImg"} src={tpSVG} alt={name} />
               ) : (
                 <img className={"tokenImg"} src={eAdit} alt={name} />
               )}

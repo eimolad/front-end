@@ -1,0 +1,34 @@
+.root {
+    margin: 0 auto;
+    width: 1110px;
+}
+
+.loader {
+    margin: auto;
+}
+
+.noNFT {
+    width: 1110px;
+    margin: auto;
+    flex-grow: 1;
+    color: #FAFAFA;
+    font-weight: bold;
+    font-size: 41px;
+}
+@media screen and (max-width: 1110px) {
+    .root {
+        width: 760px;
+    }
+}
+
+@media screen and (max-width: 768px) {
+    .root {
+        width: 540px;
+    }
+}
+
+@media screen and (max-width: 540px) {
+    .root {
+        width: 320px;
+    }
+}

@@ -14,16 +14,7 @@
   padding: 15px;
   /* background-color: rgb(145, 145, 145); */
   border: 2px solid #313131;
-  display: grid;
-  gap: 5px;
-  grid-template-columns: 315px 315px;
-  grid-template-areas:
-    "Q Q"
-    "W E"
-    "R T"
-    "Y U"
-    "I O"
-    "P P";
+
   font-size: 16px;
 }
 b {
@@ -64,6 +55,8 @@ b {
   justify-content: flex-end;
   position: relative;
   height: 54px;
+  width: 635px;
+  margin-bottom: 5px;
 }
 
 .nicknameForChange {
@@ -72,11 +65,11 @@ b {
   left: 0;
 }
 
-.imputNickname {
+.inputNickname {
   align-self: center;
 }
 
-.imputNicknameTrue {
+.inputNicknameTrue {
   background: none;
   color: white;
   font-size: 16px;
@@ -96,70 +89,6 @@ b {
 .changeNicknameLeftSide {
 }
 
-.grid1 {
-  grid-area: W;
-  background: rgba(49, 49, 49, 0.6);
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-
-.grid2 {
-  grid-area: E;
-  background: rgba(49, 49, 49, 0.6);
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-
-.grid3 {
-  grid-area: R;
-  background: rgba(49, 49, 49, 0.6);
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-
-.grid4 {
-  grid-area: T;
-  background: rgba(49, 49, 49, 0.6);
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-
-.grid5 {
-  grid-area: Y;
-  background: rgba(49, 49, 49, 0.6);
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-
-.grid6 {
-  grid-area: U;
-  background: rgba(49, 49, 49, 0.6);
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-
-.grid7 {
-  grid-area: I;
-  background: rgba(49, 49, 49, 0.6);
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-
-.grid8 {
-  grid-area: O;
-  background: rgba(49, 49, 49, 0.6);
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-
 .buttons {
   padding-top: 15px;
   display: grid;
@@ -174,6 +103,10 @@ b {
 
 .rightButton {
   grid-area: right;
+}
+
+.grid {
+  width: 635px;
 }
 
 @media screen and (max-width: 1110px) {
@@ -197,7 +130,7 @@ b {
   .nickname {
     font-size: 26px;
   }
-  .imputNicknameTrue {
+  .inputNicknameTrue {
     background: none;
     color: white;
     font-size: 14px;
@@ -205,6 +138,12 @@ b {
   .buttons {
     grid-template-columns: 195px 195px;
     gap: 52px;
+  }
+  .changeNickname {
+    width: 395px;
+  }
+  .grid {
+    width: 395px;
   }
 }
 
@@ -226,16 +165,13 @@ b {
   .form p {
     font-size: 8px;
   }
-  .changeNickname {
-    height: 35px;
-  }
   .nicknameForChange {
     top: 5;
   }
   .nickname {
     font-size: 26px;
   }
-  .imputNicknameTrue {
+  .inputNicknameTrue {
     background: none;
     color: white;
     font-size: 12px;
@@ -244,7 +180,14 @@ b {
     grid-template-columns: 128px 128px;
     gap: 46px;
   }
-  .changeNickname input{
+  .changeNickname input {
     width: 100px;
+  }
+  .changeNickname {
+    width: 275px;
+    height: 35px;
+  }
+  .grid {
+    width: 275px;
   }
 }

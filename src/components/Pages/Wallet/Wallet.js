@@ -14,19 +14,6 @@ import { WalletWarning } from "../../Blocks/WalletWarning/WalletWarning";
 import { Licenses } from "../../Blocks/Licenses/Licenses";
 import { NFTsSend } from "../../../utils/canisterUtils";
 
-const changeState = (nfts, selected, state) => {
-  let n = JSON.parse(nfts);
-
-  console.log(n);
-
-  for (let tid in JSON.parse(selected)) {
-    console.log(tid, JSON.parse(selected));
-    // JSON.parse(selected)[tid].metadata.state = state;
-    n[tid].metadata.state = state;
-    console.log(tid, n[tid]);
-  }
-  return JSON.stringify(n);
-};
 
 const changeNfts = (nfts, selected) => {
   let n = JSON.parse(nfts);
@@ -46,30 +33,28 @@ export const Wallet = ({
   setTask,
   balances,
   setBalances,
-  setSignedAccounts,
-  signedAccounts,
-  setUnsignedNFTs,
-  unsignedNFTs,
   principal,
   setPrincipal,
-  setWrappedNfts,
   wrappedNfts,
-  wrappedAddress,
-
+  setRefresh,
+  updateStateNFTs,
+  miniNfts,
+  miniWrappedNfts,
+  stakedNfts,
 }) => {
-  if (!address || address == "1c7a48ba6a562aa9eaa2481a9049cdf0433b9738c992d698c31d8abf89cadc79") {
+  if (!address || address === "1c7a48ba6a562aa9eaa2481a9049cdf0433b9738c992d698c31d8abf89cadc79") {
     if (localStorage.getItem("ic-delegation") && localStorage.getItem("ic-delegation") !== "" && localStorage.getItem("ic-identity") !== "") {
       getAddress((addr) => setAddress(addr));
     } else {
       window.location.assign("/");
     }
   }
-  if (!principal || principal==='2vxsx-fae') {
+  if (!principal || principal === "2vxsx-fae") {
     getPrincipal((princ) => {
       setPrincipal(princ);
     });
   }
-  const [filt, setFilt] = useState(JSON.stringify({ tokens: true, licenses: true, dwarves: true, weapons: true }));
+  const [filt, setFilt] = useState(JSON.stringify({ tokens: true, licenses: true, dwarves: true, weapons: true, nfts: true }));
   const [clickedMenu, setClickedMenu] = useState(false);
   const [copied, setCopied] = useState(false);
   const [activeSendForm, setActiveSendForm] = useState(false);
@@ -92,7 +77,7 @@ export const Wallet = ({
   }, [selectedNFTs]);
 
   useEffect(() => {
-    if (selectedWNFTs === "{}" && selectedNFTs == "{}") {
+    if (selectedWNFTs === "{}" && selectedNFTs === "{}") {
       setActiveWrapBtn(false);
       setActiveSendBtn(false);
     } else if (selectedNFTs == "{}") {
@@ -103,7 +88,7 @@ export const Wallet = ({
 
   useEffect(() => {
     if (selectedToken === null) {
-      if (selectedNFTs != "{}") {
+      if (selectedNFTs !== "{}") {
         setActiveSendBtn(true);
       } else {
         setActiveSendBtn(false);
@@ -137,7 +122,7 @@ export const Wallet = ({
             balances={balances}
             setBalances={setBalances}
             setActive={setActiveSendForm}
-            selected={selectedNFTs != "{}" ? selectedNFTs : selectedWNFTs}
+            selected={selectedNFTs !== "{}" ? selectedNFTs : selectedWNFTs}
             selToken={selectedToken}
             setNFTs={setNfts}
           />
@@ -151,18 +136,22 @@ export const Wallet = ({
                   if (selectedWNFTs === "{}") {
                     setWait(true);
                     NFTsSend(selectedNFTs, principalToAccountIdentifier(principal, 2), getSubAccountArray(0), (res) => {
+                      setRefresh(true);
                       setNfts(changeNfts(nfts, selectedNFTs));
                       setWait(false);
                       setSelectedNFTs("{}");
                       console.log(res);
+                      updateStateNFTs();
                     });
                   } else {
                     setWait(true);
                     NFTsSend(selectedWNFTs, address, getSubAccountArray(2), (res) => {
+                      setRefresh(true);
                       setNfts(changeNfts(nfts, selectedNFTs));
                       setWait(false);
                       setSelectedWNFTs("{}");
                       console.log(res);
+                      updateStateNFTs();
                     });
                   }
                 }}
@@ -227,6 +216,8 @@ export const Wallet = ({
               page="wallet"
               address={address}
               nfts={nfts}
+              wrappedNfts={wrappedNfts}
+              stakedNfts={stakedNfts}
               filt={filt}
               selected={selectedNFTs}
               setSelected={setSelectedNFTs}
@@ -234,18 +225,17 @@ export const Wallet = ({
               selectedWNFTs={selectedWNFTs}
               setSelectedWNFTs={setSelectedWNFTs}
             />
-            <h3 style={{ display: "flex", justifyContent: "center" }}>Wrapped NFTs</h3>
             <NFTs
-              page="wallet"
+              page="wallet__miniNfts"
               address={address}
-              nfts={wrappedNfts}
+              nfts={miniNfts}
+              wrappedNfts={miniWrappedNfts}
               filt={filt}
               selected={selectedNFTs}
               setSelected={setSelectedNFTs}
               setSelectedToken={setSelectedToken}
               selectedWNFTs={selectedWNFTs}
               setSelectedWNFTs={setSelectedWNFTs}
-              wrapped={true}
             />
           </div>
         </>

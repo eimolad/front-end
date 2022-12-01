@@ -1,5 +1,5 @@
 /* global BigInt */
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { clipboardCopy, getAddress } from "../../../utils/utils";
 import { MenuBar } from "../../Blocks/MenuBar/MenuBar";
 import { Switch } from "../../UI/Switch/Switch";
@@ -149,7 +149,53 @@ const changeStakedPairs = (pairs, selected, address, task) => {
   return JSON.stringify(n);
 };
 
-export const Stake = ({ address, setAddress, nfts, setNfts, stakedPairs, setStakedPairs, task, setTask, balances }) => {
+export const transfer_stakings = async (selected, callback) => {
+  const authClient = await AuthClient.create();
+
+  const agent = new HttpAgent({
+    host: "https://boundary.ic0.app",
+    identity: authClient.getIdentity(),
+  });
+
+  const actor = Actor.createActor(kernelDid, {
+    agent: agent,
+    canisterId: kernelCanister,
+  });
+
+  const args = [];
+
+  for (let tid in JSON.parse(selected)) {
+    args.push(tid);
+  }
+  await actor.transfer_stakings(args).then((data) => {
+    callback(data);
+  });
+};
+
+const unStake = async (tid, type, callback) => {
+  const authClient = await AuthClient.create({ _storage: localStorage.getItem("ic-delegation") });
+  const agent = new HttpAgent({
+    host: "https://ic0.app",
+    identity: authClient.getIdentity(),
+  });
+  const actor = Actor.createActor(kernelDid, {
+    agent: agent,
+    canisterId: kernelCanister,
+  });
+  let data;
+  if (type == "egold") {
+    data = await actor.unStake(tid);
+  } else if (type == "ecoal") {
+    data = await actor.unStakeCoal(tid);
+  } else if (type == "eore") {
+    data = await actor.unStakeOre(tid);
+  } else {
+    data = await actor.unStakeAdit(tid);
+  }
+  callback(data);
+};
+
+export const Stake = ({ address, setAddress, nfts, setNfts, stakedPairs, setStakedPairs, task, setTask, wrappedNfts, setWrappedNfts, stakedNfts}) => {
   if (!address || address == "1c7a48ba6a562aa9eaa2481a9049cdf0433b9738c992d698c31d8abf89cadc79") {
     if (localStorage.getItem("ic-delegation") && localStorage.getItem("ic-delegation") !== "" && localStorage.getItem("ic-identity") !== "") {
       getAddress((addr) => setAddress(addr));
@@ -198,6 +244,18 @@ export const Stake = ({ address, setAddress, nfts, setNfts, stakedPairs, setStak
                   >
                     My staked pairs
                   </Button>
+                  <Button
+                    active={true}
+                    buttonType={"middleBtn"}
+                    style={{ margin: "auto 0" }}
+                    onClick={() => {
+                      transfer_stakings(nfts, (data) => {
+                        console.log(data);
+                      });
+                    }}
+                  >
+                    Fix staking
+                  </Button>
                   <div
                     className={classes.address}
                     onClick={() => {
@@ -237,12 +295,12 @@ export const Stake = ({ address, setAddress, nfts, setNfts, stakedPairs, setStak
                 </div>
               </MenuBar>
               {/*<Filter filt={filt} setFilt={setFilt}/>*/}
-              {task == 2 ? (
+              {task === 2 ? (
                 <>
                   <h2>COAL</h2>
                   <CollectionForCoalStake
                     collect="weapons"
-                    nfts={nfts}
+                    nfts={wrappedNfts}
                     task={task}
                     selectedWNTFs={selectedWWNFTs}
                     setSelectedWNFTs={setSelectedWWNFTs}
@@ -268,7 +326,7 @@ export const Stake = ({ address, setAddress, nfts, setNfts, stakedPairs, setStak
                 </>
               ) : (
                 <>
-                  <h2>{task == 1 ? "GOLD" : task == 3 ? "ORE" : "ADIT"}</h2>
+                  <h2>{task === 1 ? "GOLD" : task === 3 ? "ORE" : "ADIT"}</h2>
                   <CollectionsForStake
                     nfts={nfts}
                     address={address}
@@ -317,14 +375,23 @@ export const Stake = ({ address, setAddress, nfts, setNfts, stakedPairs, setStak
                   </div>
                 </div>
               </MenuBar>
+              {/* <div className={classes.resources}>
+                <Resources balances={balances} />
+              </div> */}
+              {/*<Filter filt={filt} setFilt={setFilt}/>*/}
               <ActivePairs
                 address={address}
-                nfts={nfts}
+                nfts={stakedNfts}
                 setNfts={setNfts}
                 setWait={setWait}
                 stakedPairs={stakedPairs}
                 setStakedPairs={setStakedPairs}
               />
+              <button onClick={()=>{
+                unStake('d7caq-makor-uwiaa-aaaaa-dmaau-4aqca-aaabl-a','egold',(data)=>{
+                  console.log(data);
+                })
+              }}>unstake</button>
             </div>
           )}
         </>

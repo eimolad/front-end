@@ -1,13 +1,13 @@
 export default ({ IDL }) => {
   const TokenIdentifier__6 = IDL.Text;
-  const AccountIdentifier__7 = IDL.Text;
-  const User__6 = IDL.Variant({
+  const AccountIdentifier__8 = IDL.Text;
+  const User__7 = IDL.Variant({
     'principal' : IDL.Principal,
-    'address' : AccountIdentifier__7,
+    'address' : AccountIdentifier__8,
   });
   const BalanceRequest__5 = IDL.Record({
     'token' : TokenIdentifier__6,
-    'user' : User__6,
+    'user' : User__7,
   });
   const Balance__5 = IDL.Nat;
   const CommonError__1__5 = IDL.Variant({
@@ -18,26 +18,26 @@ export default ({ IDL }) => {
     'ok' : Balance__5,
     'err' : CommonError__1__5,
   });
-  const SubAccount__5 = IDL.Vec(IDL.Nat8);
-  const Account = IDL.Record({
+  const SubAccount__6 = IDL.Vec(IDL.Nat8);
+  const Account__1 = IDL.Record({
     'owner' : IDL.Principal,
-    'subaccount' : IDL.Opt(SubAccount__5),
+    'subaccount' : IDL.Opt(SubAccount__6),
   });
+  const AccountIdentifier__7 = IDL.Text;
+  const User__6 = IDL.Variant({
+    'principal' : Account__1,
+    'address' : AccountIdentifier__7,
+  });
+  const Balance__8 = IDL.Nat;
+  const TokenIdentifier__5 = IDL.Text;
   const AccountIdentifier__6 = IDL.Text;
   const User__5 = IDL.Variant({
-    'principal' : Account,
-    'address' : AccountIdentifier__6,
-  });
-  const Balance__7 = IDL.Nat;
-  const TokenIdentifier__5 = IDL.Text;
-  const AccountIdentifier__5 = IDL.Text;
-  const User__4 = IDL.Variant({
     'principal' : IDL.Principal,
-    'address' : AccountIdentifier__5,
+    'address' : AccountIdentifier__6,
   });
   const BalanceRequest__4 = IDL.Record({
     'token' : TokenIdentifier__5,
-    'user' : User__4,
+    'user' : User__5,
   });
   const Balance__4 = IDL.Nat;
   const CommonError__1__4 = IDL.Variant({
@@ -49,14 +49,14 @@ export default ({ IDL }) => {
     'err' : CommonError__1__4,
   });
   const TokenIdentifier__4 = IDL.Text;
-  const AccountIdentifier__4 = IDL.Text;
-  const User__3 = IDL.Variant({
+  const AccountIdentifier__5 = IDL.Text;
+  const User__4 = IDL.Variant({
     'principal' : IDL.Principal,
-    'address' : AccountIdentifier__4,
+    'address' : AccountIdentifier__5,
   });
   const BalanceRequest__3 = IDL.Record({
     'token' : TokenIdentifier__4,
-    'user' : User__3,
+    'user' : User__4,
   });
   const Balance__3 = IDL.Nat;
   const CommonError__1__3 = IDL.Variant({
@@ -68,14 +68,14 @@ export default ({ IDL }) => {
     'err' : CommonError__1__3,
   });
   const TokenIdentifier__3 = IDL.Text;
-  const AccountIdentifier__3 = IDL.Text;
-  const User__2 = IDL.Variant({
+  const AccountIdentifier__4 = IDL.Text;
+  const User__3 = IDL.Variant({
     'principal' : IDL.Principal,
-    'address' : AccountIdentifier__3,
+    'address' : AccountIdentifier__4,
   });
   const BalanceRequest__2 = IDL.Record({
     'token' : TokenIdentifier__3,
-    'user' : User__2,
+    'user' : User__3,
   });
   const Balance__2 = IDL.Nat;
   const CommonError__1__2 = IDL.Variant({
@@ -86,9 +86,20 @@ export default ({ IDL }) => {
     'ok' : Balance__2,
     'err' : CommonError__1__2,
   });
-  const AccountIdentifier__10 = IDL.Vec(IDL.Nat8);
-  const AccountBalanceArgs = IDL.Record({ 'account' : AccountIdentifier__10 });
+  const AccountIdentifier__11 = IDL.Vec(IDL.Nat8);
+  const AccountBalanceArgs = IDL.Record({ 'account' : AccountIdentifier__11 });
   const Tokens__2 = IDL.Record({ 'e8s' : IDL.Nat64 });
+  const SubAccount__2 = IDL.Vec(IDL.Nat8);
+  const Account = IDL.Record({
+    'owner' : IDL.Principal,
+    'subaccount' : IDL.Opt(SubAccount__2),
+  });
+  const AccountIdentifier__3 = IDL.Text;
+  const User__2 = IDL.Variant({
+    'principal' : Account,
+    'address' : AccountIdentifier__3,
+  });
+  const Balance__7 = IDL.Nat;
   const TokenIdentifier__2 = IDL.Text;
   const AccountIdentifier__2 = IDL.Text;
   const User__1 = IDL.Variant({
@@ -232,17 +243,17 @@ export default ({ IDL }) => {
     'tokenInfo' : TokenInfo,
   });
   const TokenRarity = IDL.Record({ 'tokenRarity' : IDL.Text });
-  const Balance__8 = IDL.Nat;
-  const AccountIdentifier__9 = IDL.Text;
+  const Balance__9 = IDL.Nat;
+  const AccountIdentifier__10 = IDL.Text;
   const TokenIdentifier__8 = IDL.Text;
   const TransferResponse__7 = IDL.Variant({
-    'ok' : Balance__8,
+    'ok' : Balance__9,
     'err' : IDL.Variant({
-      'CannotNotify' : AccountIdentifier__9,
+      'CannotNotify' : AccountIdentifier__10,
       'InsufficientBalance' : IDL.Null,
       'InvalidToken' : TokenIdentifier__8,
       'Rejected' : IDL.Null,
-      'Unauthorized' : AccountIdentifier__9,
+      'Unauthorized' : AccountIdentifier__10,
       'Other' : IDL.Text,
     }),
   });
@@ -257,24 +268,25 @@ export default ({ IDL }) => {
       'Other' : IDL.Text,
     }),
   });
-  const Result_5 = IDL.Variant({ 'ok' : IDL.Nat, 'err' : IDL.Text });
+  const Result_6 = IDL.Variant({ 'ok' : IDL.Nat, 'err' : IDL.Text });
   const Result = IDL.Variant({ 'ok' : IDL.Text, 'err' : IDL.Null });
+  const Result_5 = IDL.Variant({ 'ok' : IDL.Text, 'err' : IDL.Text });
   const Result_4 = IDL.Variant({
     'ok' : IDL.Tuple(UpdatedUserAccount, IDL.Text),
     'err' : CommonError,
   });
-  const SubAccount__7 = IDL.Vec(IDL.Nat8);
+  const SubAccount__8 = IDL.Vec(IDL.Nat8);
   const Balance__6 = IDL.Nat;
-  const AccountIdentifier__8 = IDL.Text;
+  const AccountIdentifier__9 = IDL.Text;
   const TokenIdentifier__7 = IDL.Text;
   const TransferResponse__6 = IDL.Variant({
     'ok' : Balance__6,
     'err' : IDL.Variant({
-      'CannotNotify' : AccountIdentifier__8,
+      'CannotNotify' : AccountIdentifier__9,
       'InsufficientBalance' : IDL.Null,
       'InvalidToken' : TokenIdentifier__7,
       'Rejected' : IDL.Null,
-      'Unauthorized' : AccountIdentifier__8,
+      'Unauthorized' : AccountIdentifier__9,
       'Other' : IDL.Text,
     }),
   });
@@ -282,36 +294,53 @@ export default ({ IDL }) => {
     'ok' : IDL.Text,
     'err' : TransferResponse__6,
   });
-  const Memo__6 = IDL.Vec(IDL.Nat8);
-  const SubAccount__6 = IDL.Vec(IDL.Nat8);
+  const Tokens = IDL.Nat;
+  const TxIndex = IDL.Nat;
+  const Timestamp = IDL.Nat64;
+  const TransferError = IDL.Variant({
+    'GenericError' : IDL.Record({
+      'message' : IDL.Text,
+      'error_code' : IDL.Nat,
+    }),
+    'TemporarilyUnavailable' : IDL.Null,
+    'BadBurn' : IDL.Record({ 'min_burn_amount' : Tokens }),
+    'Duplicate' : IDL.Record({ 'duplicate_of' : TxIndex }),
+    'BadFee' : IDL.Record({ 'expected_fee' : Tokens }),
+    'CreatedInFuture' : IDL.Record({ 'ledger_time' : Timestamp }),
+    'TooOld' : IDL.Null,
+    'InsufficientFunds' : IDL.Record({ 'balance' : Tokens }),
+  });
+  const TransferResult = IDL.Variant({ 'Ok' : Tokens, 'Err' : TransferError });
+  const Memo__7 = IDL.Vec(IDL.Nat8);
+  const SubAccount__7 = IDL.Vec(IDL.Nat8);
   const TransferRequest__5 = IDL.Record({
-    'to' : User__6,
+    'to' : User__7,
     'token' : TokenIdentifier__6,
     'notify' : IDL.Bool,
-    'from' : User__6,
-    'memo' : Memo__6,
-    'subaccount' : IDL.Opt(SubAccount__6),
+    'from' : User__7,
+    'memo' : Memo__7,
+    'subaccount' : IDL.Opt(SubAccount__7),
     'amount' : Balance__5,
   });
   const TransferResponse__5 = IDL.Variant({
     'ok' : Balance__5,
     'err' : IDL.Variant({
-      'CannotNotify' : AccountIdentifier__7,
+      'CannotNotify' : AccountIdentifier__8,
       'InsufficientBalance' : IDL.Null,
       'InvalidToken' : TokenIdentifier__6,
       'Rejected' : IDL.Null,
-      'Unauthorized' : AccountIdentifier__7,
+      'Unauthorized' : AccountIdentifier__8,
       'Other' : IDL.Text,
     }),
   });
   const Tokens__1 = IDL.Nat;
-  const Memo__5 = IDL.Vec(IDL.Nat8);
+  const Memo__6 = IDL.Vec(IDL.Nat8);
   const Timestamp__1 = IDL.Nat64;
-  const Eimolad_ICRC1_Transfer = IDL.Record({
-    'to' : User__5,
+  const Eimolad_ICRC1_Transfer__1 = IDL.Record({
+    'to' : User__6,
     'fee' : IDL.Opt(Tokens__1),
-    'from' : User__5,
-    'memo' : IDL.Opt(Memo__5),
+    'from' : User__6,
+    'memo' : IDL.Opt(Memo__6),
     'created_at_time' : IDL.Opt(Timestamp__1),
     'amount' : Tokens__1,
   });
@@ -333,23 +362,45 @@ export default ({ IDL }) => {
     'Ok' : Tokens__1,
     'Err' : TransferError__1,
   });
-  const Memo__4 = IDL.Vec(IDL.Nat8);
-  const SubAccount__4 = IDL.Vec(IDL.Nat8);
+  const Memo__5 = IDL.Vec(IDL.Nat8);
+  const SubAccount__5 = IDL.Vec(IDL.Nat8);
   const TransferRequest__4 = IDL.Record({
-    'to' : User__4,
+    'to' : User__5,
     'token' : TokenIdentifier__5,
     'notify' : IDL.Bool,
-    'from' : User__4,
-    'memo' : Memo__4,
-    'subaccount' : IDL.Opt(SubAccount__4),
+    'from' : User__5,
+    'memo' : Memo__5,
+    'subaccount' : IDL.Opt(SubAccount__5),
     'amount' : Balance__4,
   });
   const TransferResponse__4 = IDL.Variant({
     'ok' : Balance__4,
     'err' : IDL.Variant({
-      'CannotNotify' : AccountIdentifier__5,
+      'CannotNotify' : AccountIdentifier__6,
       'InsufficientBalance' : IDL.Null,
       'InvalidToken' : TokenIdentifier__5,
+      'Rejected' : IDL.Null,
+      'Unauthorized' : AccountIdentifier__6,
+      'Other' : IDL.Text,
+    }),
+  });
+  const Memo__4 = IDL.Vec(IDL.Nat8);
+  const SubAccount__4 = IDL.Vec(IDL.Nat8);
+  const TransferRequest__3 = IDL.Record({
+    'to' : User__4,
+    'token' : TokenIdentifier__4,
+    'notify' : IDL.Bool,
+    'from' : User__4,
+    'memo' : Memo__4,
+    'subaccount' : IDL.Opt(SubAccount__4),
+    'amount' : Balance__3,
+  });
+  const TransferResponse__3 = IDL.Variant({
+    'ok' : Balance__3,
+    'err' : IDL.Variant({
+      'CannotNotify' : AccountIdentifier__5,
+      'InsufficientBalance' : IDL.Null,
+      'InvalidToken' : TokenIdentifier__4,
       'Rejected' : IDL.Null,
       'Unauthorized' : AccountIdentifier__5,
       'Other' : IDL.Text,
@@ -357,47 +408,34 @@ export default ({ IDL }) => {
   });
   const Memo__3 = IDL.Vec(IDL.Nat8);
   const SubAccount__3 = IDL.Vec(IDL.Nat8);
-  const TransferRequest__3 = IDL.Record({
+  const TransferRequest__2 = IDL.Record({
     'to' : User__3,
-    'token' : TokenIdentifier__4,
+    'token' : TokenIdentifier__3,
     'notify' : IDL.Bool,
     'from' : User__3,
     'memo' : Memo__3,
     'subaccount' : IDL.Opt(SubAccount__3),
-    'amount' : Balance__3,
+    'amount' : Balance__2,
   });
-  const TransferResponse__3 = IDL.Variant({
-    'ok' : Balance__3,
+  const TransferResponse__2 = IDL.Variant({
+    'ok' : Balance__2,
     'err' : IDL.Variant({
       'CannotNotify' : AccountIdentifier__4,
       'InsufficientBalance' : IDL.Null,
-      'InvalidToken' : TokenIdentifier__4,
+      'InvalidToken' : TokenIdentifier__3,
       'Rejected' : IDL.Null,
       'Unauthorized' : AccountIdentifier__4,
       'Other' : IDL.Text,
     }),
   });
   const Memo__2 = IDL.Vec(IDL.Nat8);
-  const SubAccount__2 = IDL.Vec(IDL.Nat8);
-  const TransferRequest__2 = IDL.Record({
+  const Eimolad_ICRC1_Transfer = IDL.Record({
     'to' : User__2,
-    'token' : TokenIdentifier__3,
-    'notify' : IDL.Bool,
+    'fee' : IDL.Opt(Tokens),
     'from' : User__2,
-    'memo' : Memo__2,
-    'subaccount' : IDL.Opt(SubAccount__2),
-    'amount' : Balance__2,
-  });
-  const TransferResponse__2 = IDL.Variant({
-    'ok' : Balance__2,
-    'err' : IDL.Variant({
-      'CannotNotify' : AccountIdentifier__3,
-      'InsufficientBalance' : IDL.Null,
-      'InvalidToken' : TokenIdentifier__3,
-      'Rejected' : IDL.Null,
-      'Unauthorized' : AccountIdentifier__3,
-      'Other' : IDL.Text,
-    }),
+    'memo' : IDL.Opt(Memo__2),
+    'created_at_time' : IDL.Opt(Timestamp),
+    'amount' : Tokens,
   });
   const Memo__1 = IDL.Vec(IDL.Nat8);
   const SubAccount__1 = IDL.Vec(IDL.Nat8);
@@ -432,24 +470,7 @@ export default ({ IDL }) => {
     'subaccount' : IDL.Opt(SubAccount),
     'amount' : Balance,
   });
-  const Result_2 = IDL.Variant({ 'ok' : IDL.Text, 'err' : IDL.Text });
-  const Tokens = IDL.Nat;
-  const TxIndex = IDL.Nat;
-  const Timestamp = IDL.Nat64;
-  const TransferError = IDL.Variant({
-    'GenericError' : IDL.Record({
-      'message' : IDL.Text,
-      'error_code' : IDL.Nat,
-    }),
-    'TemporarilyUnavailable' : IDL.Null,
-    'BadBurn' : IDL.Record({ 'min_burn_amount' : Tokens }),
-    'Duplicate' : IDL.Record({ 'duplicate_of' : TxIndex }),
-    'BadFee' : IDL.Record({ 'expected_fee' : Tokens }),
-    'CreatedInFuture' : IDL.Record({ 'ledger_time' : Timestamp }),
-    'TooOld' : IDL.Null,
-    'InsufficientFunds' : IDL.Record({ 'balance' : Tokens }),
-  });
-  const TransferResult = IDL.Variant({ 'Ok' : Tokens, 'Err' : TransferError });
+  const Result_2 = IDL.Variant({ 'ok' : AccountIdentifier, 'err' : IDL.Text });
   return IDL.Service({
     'acceptCycles' : IDL.Func([], [], []),
     'account_balance_Adit' : IDL.Func(
@@ -457,7 +478,7 @@ export default ({ IDL }) => {
         [BalanceResponse__5],
         [],
       ),
-    'account_balance_eBronze' : IDL.Func([User__5], [Balance__7], []),
+    'account_balance_eBronze' : IDL.Func([User__6], [Balance__8], []),
     'account_balance_eCoal' : IDL.Func(
         [BalanceRequest__4],
         [BalanceResponse__4],
@@ -474,12 +495,15 @@ export default ({ IDL }) => {
         [],
       ),
     'account_balance_ic' : IDL.Func([AccountBalanceArgs], [Tokens__2], []),
+    'account_balance_icrc' : IDL.Func([IDL.Text, User__2], [Balance__7], []),
     'account_balance_leather' : IDL.Func(
         [BalanceRequest__1],
         [BalanceResponse__1],
         [],
       ),
     'account_balance_lgs' : IDL.Func([BalanceRequest], [BalanceResponse], []),
+    'adminKillHeartBeat' : IDL.Func([], [], []),
+    'adminStartHeartBeat' : IDL.Func([], [], []),
     'availableCycles' : IDL.Func([], [IDL.Nat], ['query']),
     'changeName' : IDL.Func(
         [TokenIdentifier, IDL.Text, IDL.Vec(IDL.Nat8)],
@@ -498,11 +522,17 @@ export default ({ IDL }) => {
         [IDL.Vec(IDL.Tuple(TokenIdentifier, IDL.Text))],
         [],
       ),
+    'getCharacterAttributes' : IDL.Func(
+        [TokenIdentifier],
+        [IDL.Opt(IDL.Text)],
+        [],
+      ),
     'getCharacters' : IDL.Func(
         [],
         [IDL.Vec(IDL.Tuple(TokenIdentifier, CharactersMetadata))],
         [],
       ),
+    'getHeartBeatStatus' : IDL.Func([], [IDL.Bool], ['query']),
     'getNewAccount' : IDL.Func(
         [],
         [IDL.Vec(IDL.Tuple(TokenIdentifier, UserAccount))],
@@ -547,6 +577,11 @@ export default ({ IDL }) => {
         [IDL.Vec(IDL.Tuple(TokenIdentifier, Weapons))],
         [],
       ),
+    'mintNft' : IDL.Func(
+        [IDL.Text, AccountIdentifier, IDL.Text],
+        [IDL.Vec(IDL.Nat32)],
+        [],
+      ),
     'registryAcc' : IDL.Func(
         [TokenIdentifier, IDL.Text, IDL.Vec(IDL.Nat8)],
         [Result_1],
@@ -556,16 +591,20 @@ export default ({ IDL }) => {
     'rewardLgs' : IDL.Func([AccountIdentifier], [TransferResponse], []),
     'rewardLoot' : IDL.Func(
         [IDL.Text, IDL.Text, IDL.Vec(IDL.Nat8), IDL.Nat],
-        [Result_5],
+        [Result_6],
         [],
       ),
     'saveAllData' : IDL.Func([], [], []),
-    'saveProgress' : IDL.Func([UpdatedUserAccount], [Result_1], []),
+    'saveProgress' : IDL.Func(
+        [UpdatedUserAccount, IDL.Vec(IDL.Nat8)],
+        [Result_1],
+        [],
+      ),
     'sell' : IDL.Func([IDL.Vec(TokenIdentifier)], [Result], []),
-    'setStake' : IDL.Func([Stake], [], []),
-    'setStakeAdit' : IDL.Func([StakeAdit], [], []),
-    'setStakeCoal' : IDL.Func([StakeCoal], [], []),
-    'setStakeOre' : IDL.Func([StakeOre], [], []),
+    'setStake' : IDL.Func([Stake], [Result_5], []),
+    'setStakeAdit' : IDL.Func([StakeAdit], [Result_5], []),
+    'setStakeCoal' : IDL.Func([StakeCoal], [Result_5], []),
+    'setStakeOre' : IDL.Func([StakeOre], [Result_5], []),
     'setStatus' : IDL.Func([], [], []),
     'startGame' : IDL.Func(
         [TokenIdentifier, IDL.Vec(IDL.Nat8)],
@@ -574,16 +613,28 @@ export default ({ IDL }) => {
       ),
     'textToNat' : IDL.Func([IDL.Text], [IDL.Nat], []),
     'this_balance_eAdit' : IDL.Func([], [BalanceResponse__5], []),
-    'this_balance_eBronze' : IDL.Func([], [Balance__7], []),
+    'this_balance_eBronze' : IDL.Func([], [Balance__8], []),
     'this_balance_eCoal' : IDL.Func([], [BalanceResponse__4], []),
     'this_balance_eGold' : IDL.Func([], [BalanceResponse__3], []),
     'this_balance_eOre' : IDL.Func([], [BalanceResponse__2], []),
     'this_balance_ic' : IDL.Func([], [Tokens__2], []),
+    'this_balance_icrc' : IDL.Func([IDL.Text], [Balance__7], []),
     'this_balance_leather' : IDL.Func([], [BalanceResponse__1], []),
     'this_balance_lgs' : IDL.Func([], [BalanceResponse], []),
     'transferMany' : IDL.Func(
-        [AccountIdentifier, IDL.Vec(TokenIdentifier), SubAccount__7],
+        [AccountIdentifier, IDL.Vec(TokenIdentifier), SubAccount__8],
         [Result_3],
+        [],
+      ),
+    'transferToken' : IDL.Func(
+        [
+          CanisterIdentifier,
+          IDL.Text,
+          IDL.Vec(IDL.Nat8),
+          AccountIdentifier,
+          IDL.Nat,
+        ],
+        [TransferResult],
         [],
       ),
     'transfer_eAdit' : IDL.Func(
@@ -592,7 +643,7 @@ export default ({ IDL }) => {
         [],
       ),
     'transfer_eBronze' : IDL.Func(
-        [Eimolad_ICRC1_Transfer],
+        [Eimolad_ICRC1_Transfer__1],
         [TransferResult__1],
         [],
       ),
@@ -607,23 +658,33 @@ export default ({ IDL }) => {
         [],
       ),
     'transfer_eOre' : IDL.Func([TransferRequest__2], [TransferResponse__2], []),
+    'transfer_icrc' : IDL.Func(
+        [IDL.Text, Eimolad_ICRC1_Transfer],
+        [TransferResult],
+        [],
+      ),
+    'transfer_icrc_1_token' : IDL.Func(
+        [IDL.Text, IDL.Text, IDL.Vec(IDL.Nat8), IDL.Vec(IDL.Nat8), IDL.Nat],
+        [TransferResult],
+        [],
+      ),
     'transfer_leather' : IDL.Func(
         [TransferRequest__1],
         [TransferResponse__1],
         [],
       ),
     'transfer_lgs' : IDL.Func([TransferRequest], [TransferResponse], []),
-    'transfer_tokens' : IDL.Func(
-        [IDL.Text, AccountIdentifier, IDL.Nat],
-        [Result_2],
+    'transfer_stakings' : IDL.Func([IDL.Vec(TokenIdentifier)], [Result_2], []),
+    'unStake' : IDL.Func([TokenIdentifier], [Result], []),
+    'unStakeAdit' : IDL.Func([TokenIdentifier], [Result], []),
+    'unStakeCoal' : IDL.Func([TokenIdentifier], [Result], []),
+    'unStakeOre' : IDL.Func([TokenIdentifier], [Result], []),
+    'unWrap' : IDL.Func([IDL.Vec(TokenIdentifier)], [Result], []),
+    'updateAttributes' : IDL.Func(
+        [TokenIdentifier, IDL.Vec(IDL.Nat8), IDL.Text],
+        [Result_1],
         [],
       ),
-    'unStake' : IDL.Func([TokenIdentifier], [], []),
-    'unStakeAdit' : IDL.Func([TokenIdentifier], [], []),
-    'unStakeCoal' : IDL.Func([TokenIdentifier], [], []),
-    'unStakeOre' : IDL.Func([TokenIdentifier], [], []),
-    'unWrap' : IDL.Func([IDL.Vec(TokenIdentifier)], [Result], []),
-    'updateAttributes' : IDL.Func([TokenIdentifier, IDL.Text], [Result_1], []),
     'updateCharacter' : IDL.Func([TokenIdentifier, CharactersMetadata], [], []),
     'updateHashMap' : IDL.Func([], [], []),
     'updateTokenRarity' : IDL.Func([TokenIdentifier, TokenRarity], [], []),

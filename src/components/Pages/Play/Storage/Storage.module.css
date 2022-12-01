@@ -1,0 +1,239 @@
+.title {
+  padding-top: 160px;
+  text-align: center;
+}
+.title p {
+  margin-top: 0;
+  color: #ca7026;
+  cursor: pointer;
+}
+
+.depth {
+  margin-top: 0;
+  margin-bottom: 0;
+  font-style: normal;
+  font-weight: 900;
+  font-size: 70px;
+  letter-spacing: 0.03em;
+  color: #1d1d1d;
+  text-shadow: 0px 0px 5px rgba(0, 0, 0, 0.4);
+}
+
+.mainContainer {
+  width: 1110px;
+  display: flex;
+  margin-right: auto;
+  margin-left: auto;
+  justify-content: space-between;
+  position: relative;
+}
+
+.mainContainer h2 {
+  font-family: "Overlock";
+  font-style: normal;
+  font-weight: 700;
+  font-size: 28px;
+  line-height: 34px;
+  display: flex;
+  align-items: center;
+  text-align: center;
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+
+  /* gradient */
+  background: linear-gradient(130.7deg, #d24328 11.94%, #ec832e 95.54%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  text-fill-color: transparent;
+}
+
+.armament {
+  height: 520;
+  width: 360;
+  background: url("./player.png");
+}
+
+.armament__item {
+  width: 80px;
+  height: 80px;
+  background: linear-gradient(136.25deg, rgba(67, 67, 67, 0.9) 5.16%, rgba(78, 78, 78, 0.5) 96.94%);
+  box-shadow: 0px 0px 8.75px rgba(0, 0, 0, 0.5), inset -6.80556px -2.91667px 11.6667px rgba(255, 255, 255, 0.15),
+    inset 6.80556px 2.91667px 11.6667px rgba(0, 0, 0, 0.45);
+  backdrop-filter: blur(1.5px);
+  /* Note: backdrop-filter has minimal browser support */
+  border-radius: 15px;
+  position: relative;
+}
+
+.armament__item p {
+  width: 70px;
+  height: 40px;
+
+  font-family: "Comfortaa";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 13px;
+  line-height: 150%;
+  /* or 20px */
+
+  display: flex;
+  align-items: center;
+  text-align: center;
+  text-transform: uppercase;
+
+  color: #888888;
+
+  margin: 0;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  margin-right: -50%;
+  transform: translate(-50%, -50%);
+}
+
+.armament__helmet {
+  left: 140;
+}
+
+.armament__armor {
+  left: 140;
+  bottom: 40;
+}
+
+.armament__gloves {
+  top: 40;
+  left: 40;
+}
+
+.armament__pants {
+  left: 140;
+  bottom: 80;
+}
+
+.armament__weapon {
+  left: 40;
+}
+
+.armament__shield {
+  left: 240;
+  bottom: 160;
+}
+
+.armament__boots {
+  left: 140;
+  bottom: 80;
+}
+
+.accountChest {
+  height: 500;
+  width: 350;
+  z-index: 1;
+}
+
+.accountChest__title,
+.accountStorage__title {
+  display: flex;
+  justify-content: center;
+}
+
+.accountChest__inventory,
+.accountStorage__inventory {
+  margin: 0;
+  width: 350;
+  height: 438;
+  /* background-color: rgba(49, 49, 49, 0.6); */
+  background: url(./InventoryBG.png);
+  border: 1px solid #313131;
+  overflow-x: hidden;
+  overflow-y: scroll;
+}
+
+.accountChest__dragZone {
+  margin: 0;
+  width: 350;
+  height: 438;
+  background: url(./InventoryBG.png);
+  border: 1px solid #313131;
+}
+
+.dragZone__title {
+  /* margin: 50% 0 50% 0;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  align-items: center; */
+  /* background-color: red; */
+}
+
+/* .dragZone__title p {
+  margin: 0;
+  background: linear-gradient(130.7deg, #d24328 11.94%, #ec832e 95.54%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  text-fill-color: transparent;
+  font-size: 28px;
+  font-family: "Overlock";
+  font-style: normal;
+  font-weight: 700;
+  line-height: 34px;
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+} */
+
+.accountChest__itemsGrid {
+  width: 330;
+}
+
+.accountStorage {
+  height: 500;
+  width: 350;
+}
+
+.mainContainer ::-webkit-scrollbar {
+  /* background: url(./InventoryBG.png); */
+  background-color: #313131;
+  transform: matrix(-1, 0, 0, 1, 0, 0);
+  width: 20px;
+}
+
+.mainContainer ::-webkit-scrollbar-track {
+  border-radius: 5px;
+  -webkit-border-radius: 5px;
+  -moz-border-radius: 5px;
+  -ms-border-radius: 5px;
+  -o-border-radius: 5px;
+}
+
+.mainContainer ::-webkit-scrollbar-thumb {
+  background: linear-gradient(130.7deg, #d24328 11.94%, #ec832e 95.54%);
+  border-radius: 15px !important;
+  transform: matrix(-1, 0, 0, 1, 0, 0);
+  border: 7.5px #313131 solid;
+  /*border-image: url("./InventoryBG.png");
+  */
+  -webkit-transform: matrix(-1, 0, 0, 1, 0, 0);
+  -moz-transform: matrix(-1, 0, 0, 1, 0, 0);
+  -ms-transform: matrix(-1, 0, 0, 1, 0, 0);
+  -o-transform: matrix(-1, 0, 0, 1, 0, 0);
+  -webkit-border-radius: 15px !important;
+  -moz-border-radius: 15px !important;
+  -ms-border-radius: 15px !important;
+  -o-border-radius: 15px !important;
+}
+
+.loader img {
+  width: 150px;
+  position: relative !important;
+  margin: 130 35% 0 65%;
+}
+
+@media screen and (max-width: 1110px) {
+}
+
+@media screen and (max-width: 768px) {
+}
+
+@media screen and (max-width: 540px) {
+}

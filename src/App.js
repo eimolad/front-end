@@ -10,11 +10,9 @@ import { Demo } from "./components/Pages/Demo/Demo";
 import { Market } from "./components/Pages/Market/Market";
 import "./App.css";
 import { Actor, HttpAgent } from "@dfinity/agent";
-import { canisters, ICcanister, kernelCanister, tokenCanisters } from "./canisters";
+import { kernelCanister } from "./canisters";
 import kernelDid from "./utils/candid/kernel.did";
-import ICTokens from "./utils/candid/ic.did";
-import { getAllNFTs, getAllSignedAccounts, getAllUnsignedAccounts, getBalances } from "./utils/canisterUtils";
-
+import { getAllMiniNFTs, getAllNFTs, getAllSignedAccounts, getAllUnsignedAccounts, getBalances } from "./utils/canisterUtils";
 
 const getStakeFromAID = async (callback) => {
   const authClient = await AuthClient.create();
@@ -82,6 +80,55 @@ const App = () => {
 
   //test
   const [wrappedNfts, setWrappedNfts] = useState(null);
+  const [miniNfts, setMiniNfts] = useState(null);
+  const [miniWrappedNfts, setMiniWrappedNfts] = useState(null);
+  const [stakedNfts, setStakedNfts] = useState(null);
+
+  const updateStateNFTs = () => {
+    getAllNFTs(nfts, 0, (data) => {
+      if (data) {
+        setNfts(JSON.stringify(data));
+      }
+      setRefresh(!refresh);
+    });
+
+    getAllNFTs(wrappedNfts, 2, (data) => {
+      if (data) {
+        setWrappedNfts(JSON.stringify(data));
+      }
+    });
+
+    getAllSignedAccounts(signedAccounts, (data) => {
+      if (data) {
+        setSignedAccounts(JSON.stringify(data));
+        setRefresh(false);
+      }
+    });
+
+    getAllUnsignedAccounts(unsignedNFTs, (data) => {
+      setUnsignedNFTs(JSON.stringify(data));
+    });
+
+    getAllMiniNFTs(miniNfts, 0, (data) => {
+      if (data) {
+        setMiniNfts(JSON.stringify(data));
+        setRefresh(false);
+      }
+    });
+    getAllMiniNFTs(miniWrappedNfts, 2, (data) => {
+      if (data) {
+        setMiniWrappedNfts(JSON.stringify(data));
+        setRefresh(false);
+      }
+    });
+
+    getAllNFTs(nfts, 3, (data) => {
+      if (data) {
+        setStakedNfts(JSON.stringify(data));
+      }
+      setRefresh(!refresh);
+    });
+  };
 
   if (
     localStorage.getItem("ic-identity") !== "" &&
@@ -92,7 +139,9 @@ const App = () => {
     refresh &&
     unsignedNFTs === null &&
     signedAccounts === null &&
-    wrappedNfts === null 
+    wrappedNfts === null &&
+    miniNfts === null &&
+    stakedNfts === null
   ) {
     getAllNFTs(nfts, 0, (data) => {
       // console.log(data)
@@ -125,6 +174,28 @@ const App = () => {
         setRefresh(false);
       }
     });
+
+    getAllMiniNFTs(miniNfts, 0, (data) => {
+      if (data) {
+        setMiniNfts(JSON.stringify(data));
+        setRefresh(false);
+      }
+    });
+
+    getAllMiniNFTs(miniWrappedNfts, 2, (data) => {
+      if (data) {
+        setMiniWrappedNfts(JSON.stringify(data));
+        setRefresh(false);
+      }
+    });
+
+    getAllNFTs(nfts, 3, (data) => {
+      // console.log(data)
+      if (data) {
+        setStakedNfts(JSON.stringify(data));
+        setRefresh(false);
+      }
+    });
   }
 
   useEffect(() => {
@@ -148,7 +219,14 @@ const App = () => {
           setBalances(JSON.stringify(data));
         }
       });
-    }, 10000);
+
+      // getAllMiniNFTs(wrappedNfts, 0, (data) => {
+      //   if (data) {
+      //     setMiniNfts(JSON.stringify(data));
+      //   }
+      //   setRefresh(!refresh);
+      // });
+    }, 12000);
   }, [refresh]);
 
   return (
@@ -190,6 +268,7 @@ const App = () => {
               setPrincipal={setPrincipal}
               setAddress={setAddress}
               nfts={nfts}
+              miniNfts={miniNfts}
               signedAccounts={signedAccounts}
               setSignedAccounts={setSignedAccounts}
               unsignedNFTs={unsignedNFTs}
@@ -199,6 +278,7 @@ const App = () => {
               balances={balances}
               setBalances={setBalances}
               wrappedNfts={wrappedNfts}
+              updateStateNFTs={updateStateNFTs}
             />
           }
         />
@@ -211,6 +291,7 @@ const App = () => {
               setAddress={setAddress}
               nfts={nfts}
               setNfts={setNfts}
+              miniNfts={miniNfts}
               setTask={setTask}
               balances={balances}
               setBalances={setBalances}
@@ -221,8 +302,12 @@ const App = () => {
               principal={principal}
               setPrincipal={setPrincipal}
               wrappedNfts={wrappedNfts}
+              stakedNfts={stakedNfts}
               setWrappedNfts={setWrappedNfts}
+              miniWrappedNfts={miniWrappedNfts}
               wrappedAddress={wrappedAddress}
+              setRefresh={setRefresh}
+              updateStateNFTs={updateStateNFTs}
             />
           }
         />
@@ -233,6 +318,9 @@ const App = () => {
               address={address}
               setAddress={setAddress}
               nfts={nfts}
+              wrappedNfts={wrappedNfts}
+              stakedNfts={stakedNfts}
+              setWrappedNfts={setWrappedNfts}
               setNfts={setNfts}
               stakedPairs={stakedPairs}
               setStakedPairs={setStakedPairs}

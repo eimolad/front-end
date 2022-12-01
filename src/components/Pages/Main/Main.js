@@ -12,6 +12,17 @@ export const Main = ({ address, setAddress, wrappedAddress, setWrappedAddress, p
   const init = async () => {
     await AClient((id) => {
       setAddress(principalToAccountIdentifier(id.getPrincipal().toText()));
+      // getAddress((addr) => {
+      //   setAddress(addr);
+      // }, 0);
+      // getAddress((gameAddr) => {
+      //   setGameAddress(gameAddr);
+      // }, 1);
+      // getPrincipal((princ)=>{
+      //   setPrincipal(princ)
+      // })
+      // console.log("id ", id);
+      // console.log(principalToAccountIdentifier(id.getPrincipal().toText()));
     });
   };
 

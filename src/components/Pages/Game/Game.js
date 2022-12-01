@@ -24,6 +24,15 @@ export const Game = ({progression,confirm,unityContext,setConfirm}) => {
                 <span style={{ width: `${progression * 100}%` }}></span>
               </div>
               <p>Loading {progression.toFixed(2) * 100}%</p>
+              {/* <p>Loading {progression *100} %</p> */}
+              {/* {progression!=1 ? (
+                    <div>
+                      <img style={{width:100}} src={loader} alt="Wait" />
+                      <p>Loading...</p>
+                    </div>
+                    
+                  ) : null} */}
+
               <Button active={progression == 1 ? true : false} style={{}} buttonType="middleBtn" onClick={() => setConfirm(true)}>
                 Next
               </Button>

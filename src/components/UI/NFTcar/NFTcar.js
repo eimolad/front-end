@@ -298,7 +298,9 @@ export const NFTcar = ({
     default:
       return (
         <>
-          {nft.metadata.state === "wrapped" ? (
+          {/* {nft.metadata.state !== "wrapped" ? ( */}
+          {nft.metadata ? (
+
             task !== 2 ? (
               (nft.collection == "weapons" && nft.rare == "rare" && task == 3) ||
               (nft.collection == "weapons" && nft.rare == "superrare" && task == 4) ||
@@ -332,7 +334,8 @@ export const NFTcar = ({
                     }}
                   >
                     <div className={"lock stake"}>
-                      <h4>{nft.metadata.state == "wrapped" ? "Wrapped" : "Staked"}</h4>
+                      {/* <h4>{nft.metadata.state == "wrapped" ? "Wrapped" : "Staked"}</h4> */}
+                      <h4>{"Wrapped"}</h4>
                     </div>
                     <div
                       className={

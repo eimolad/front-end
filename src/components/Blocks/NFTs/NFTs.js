@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useRef } from "react";
+import React from "react";
 import { NFTsOfCollect } from "../NFTsOfCollect/NFTsOfCollect";
 import classes from "./NFTs.module.css";
 import { canisters } from "../../../canisters";
@@ -8,7 +8,6 @@ export const NFTs = ({
   setWeaponCount,
   weaponCount,
   characterCount,
-  address,
   nfts,
   selected,
   refresh,
@@ -19,28 +18,21 @@ export const NFTs = ({
   setSelectedWNFTs,
   filt,
   page,
-  wrapped
+  wrapped,
+  wrappedNfts,
+  stakedNfts
 }) => {
   let content = [];
   switch (page) {
     case "play":
       for (let collect in canisters) {
-        if (collect == "dwarves") {
+        if (collect === "dwarves") {
           content.push(
             <div className={classes.root} key={collect}>
               <NFTsOfCollect
-                setWeaponCount={setWeaponCount}
-                setCharacterCount={setCharacterCount}
-                weaponCount={weaponCount}
-                characterCount={characterCount}
                 page={page}
                 collect={collect}
                 nfts={nfts}
-                selected={selected}
-                refresh={refresh}
-                setRefresh={setRefresh}
-                setSelected={setSelected}
-                setSelectedToken={setSelectedToken}
                 selectedWNTFs={selectedWNFTs}
                 setSelectedWNFTs={setSelectedWNFTs}
               />
@@ -57,12 +49,10 @@ export const NFTs = ({
             <div className={classes.root} key={collect}>
               <NFTsOfCollect
                 page={page}
-                setWeaponCount={setWeaponCount}
-                setCharacterCount={setCharacterCount}
-                weaponCount={weaponCount}
-                characterCount={characterCount}
                 collect={collect}
                 nfts={nfts}
+                wrappedNfts={wrappedNfts}
+                stakedNfts={stakedNfts}
                 selected={selected}
                 refresh={refresh}
                 setRefresh={setRefresh}
@@ -78,30 +68,53 @@ export const NFTs = ({
       }
       break;
 
-      case "registration":
-        if (JSON.parse(filt)['dwarves']) {
-          content.push(
-            <div className={classes.root} key={'dwarves'}>
-              <NFTsOfCollect
-                page={page}
-                setWeaponCount={setWeaponCount}
-                setCharacterCount={setCharacterCount}
-                weaponCount={weaponCount}
-                characterCount={characterCount}
-                collect={'dwarves'}
-                nfts={nfts}
-                selected={selected}
-                refresh={refresh}
-                setRefresh={setRefresh}
-                setSelected={setSelected}
-                setSelectedToken={setSelectedToken}
-                selectedWNTFs={selectedWNFTs}
-                setSelectedWNFTs={setSelectedWNFTs}
-              />
-            </div>
-          );
-        }
-      
+    case "wallet__miniNfts":
+      if (JSON.parse(filt)["nfts"]) {
+        content.push(
+          <div className={classes.root} key={"dwarves"}>
+            <NFTsOfCollect
+              page={page}
+              collect={"Eimolad nfts"}
+              nfts={nfts}
+              wrappedNfts={wrappedNfts}
+              selected={selected}
+              refresh={refresh}
+              setRefresh={setRefresh}
+              setSelected={setSelected}
+              setSelectedToken={setSelectedToken}
+              selectedWNTFs={selectedWNFTs}
+              setSelectedWNFTs={setSelectedWNFTs}
+            />
+          </div>
+        );
+      }
+
+      break;
+
+    case "registration":
+      if (JSON.parse(filt)["dwarves"]) {
+        content.push(
+          <div className={classes.root} key={"dwarves"}>
+            <NFTsOfCollect
+              page={page}
+              setWeaponCount={setWeaponCount}
+              setCharacterCount={setCharacterCount}
+              weaponCount={weaponCount}
+              characterCount={characterCount}
+              collect={"dwarves"}
+              nfts={nfts}
+              selected={selected}
+              refresh={refresh}
+              setRefresh={setRefresh}
+              setSelected={setSelected}
+              setSelectedToken={setSelectedToken}
+              selectedWNTFs={selectedWNFTs}
+              setSelectedWNFTs={setSelectedWNFTs}
+            />
+          </div>
+        );
+      }
+
       break;
 
     default:

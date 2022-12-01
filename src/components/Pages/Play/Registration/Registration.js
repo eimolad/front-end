@@ -20,7 +20,7 @@ import { CollectionsForStake } from "../../../Blocks/CollectionsForStake/Collect
 import loader from "./../../../../media/loader.gif";
 import { getAllUnsignedAccounts } from "../../../../utils/canisterUtils";
 
-const registryAcc = async (selectedCharacter, nickname,subAccArr, callback) => {
+const registryAcc = async (selectedCharacter, nickname, subAccArr, callback) => {
   const authClient = await AuthClient.create({
     _storage: localStorage.getItem("ic-delegation"),
   });
@@ -45,7 +45,7 @@ const registryAcc = async (selectedCharacter, nickname,subAccArr, callback) => {
   }
   nickname = nickname + nickEnd;
 
-  actor.registryAcc(charID, nickname,subAccArr).then((data) => {
+  actor.registryAcc(charID, nickname, subAccArr).then((data) => {
     callback(data);
   });
 };
@@ -81,15 +81,14 @@ export const Registration = ({
 
   const [loading, setLoading] = useState(false);
 
-  useEffect(() => {
-    setLoading(true);
-    getAllUnsignedAccounts(unsignedNFTs, (data) => {
-      setUnsignedNFTs(JSON.stringify(data));
-      setLoading(false);
-    });
-  }, [nfts]);
-
-  return (
+  // useEffect(() => {
+  //   setLoading(true);
+  //   getAllUnsignedAccounts(unsignedNFTs, (data) => {
+  //     setUnsignedNFTs(JSON.stringify(data));
+  //     setLoading(false);
+  //   });
+  // }, [nfts]);
+ return (
     <div
       className={active ? "modal act" : "modal"}
       onClick={() => {
@@ -100,7 +99,12 @@ export const Registration = ({
         <img className="cornerDecorLeft" src={cornerDecorLeft} alt="Corner Decor" />
         <img className="cornerDecorRight" src={cornerDecorRight} alt="Corner Decor" />
         <div className="forBorderMarket">
-          <div className="close__container" onClick={()=>{setActive(false)}}>
+          <div
+            className="close__container"
+            onClick={() => {
+              setActive(false);
+            }}
+          >
             <span className="close"></span>
           </div>
 
@@ -156,7 +160,7 @@ export const Registration = ({
               },
             }}
           />
-          {selectedWNFTs !== "{}" ? (
+          {selectedWNFTs !== "{}" && Object.keys(JSON.parse(selectedWNFTs)).length === 1 ? (
             <Button
               active={true}
               style={{}}
@@ -164,7 +168,7 @@ export const Registration = ({
               onClick={() => {
                 if (nickname !== "" && nickname.length < 11 && !nickname.includes("_")) {
                   setWait(true);
-                  registryAcc(selectedWNFTs, nickname,getSubAccountArray(2), (data) => {
+                  registryAcc(selectedWNFTs, nickname, getSubAccountArray(2), (data) => {
                     console.log(data);
                     setAccountIsRegistered(true);
                   });
